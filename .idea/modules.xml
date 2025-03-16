@@ -3,6 +3,11 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/CE216-Project.iml" filepath="$PROJECT_DIR$/CE216-Project.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Project-Gradle.iml" filepath="$PROJECT_DIR$/Project-Gradle.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Project-Gradle.main.iml" filepath="$PROJECT_DIR$/.idea/modules/Project-Gradle.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Project-Gradle.test.iml" filepath="$PROJECT_DIR$/.idea/modules/Project-Gradle.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/untitled.main.iml" filepath="$PROJECT_DIR$/.idea/modules/untitled.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/untitled.test.iml" filepath="$PROJECT_DIR$/.idea/modules/untitled.test.iml" />
     </modules>
   </component>
 </project>
