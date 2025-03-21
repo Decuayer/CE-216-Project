@@ -1,10 +1,5 @@
 public class Main {
     public static void main(String[] args) {
         System.out.println("Hello CE-216-Project");
-        System.out.println("Alp-Salın ");
-        System.out.println("Alp-Salın ");
-        System.out.println("Alp-Salın ");
     }
-
-
 }
