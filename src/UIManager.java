@@ -18,7 +18,11 @@ public class UIManager extends Application {
 
     @Override
     public void start(Stage primaryStage) {
+        System.out.println("UI is being initialized...");
         primaryStage.setTitle("Game Collection Manager");
+
+        Button libraryButton = new Button("Library");
+        libraryButton.setOnAction(e -> showLibrary());
 
         TableColumn<Game, String> titleColumn = new TableColumn<>("Title");
         titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
@@ -38,7 +42,7 @@ public class UIManager extends Application {
         Button removeButton = new Button("Remove Selected");
         removeButton.setOnAction(e -> removeSelectedGame());
 
-        HBox buttonBox = new HBox(10, addButton, removeButton);
+        HBox buttonBox = new HBox(10, addButton, removeButton, libraryButton);
         buttonBox.setAlignment(Pos.CENTER);
 
         VBox layout = new VBox(10, tableView, buttonBox);
@@ -60,4 +64,28 @@ public class UIManager extends Application {
             gameList.remove(selectedGame);
         }
     }
+    private void showLibrary() {
+        System.out.println("Library button clicked!"); // Debugging
+
+        // Clear existing list
+        gameList.clear();
+
+        // Add some sample games
+        gameList.addAll(
+                new Game("The Witcher 3", Arrays.asList("RPG"), "CD Projekt Red", "CD Projekt",
+                        Arrays.asList("PC", "PS4"), Arrays.asList("English"), "123456", 2015,
+                        150.0, "Digital", "English", 4.9, Arrays.asList("Open World", "Fantasy"), "witcher3.jpg"),
+
+                new Game("Cyberpunk 2077", Arrays.asList("RPG"), "CD Projekt Red", "CD Projekt",
+                        Arrays.asList("PC", "PS5"), Arrays.asList("English"), "789012", 2020,
+                        80.0, "Digital", "English", 4.2, Arrays.asList("Sci-Fi", "Open World"), "cyberpunk2077.jpg"),
+
+                new Game("Elden Ring", Arrays.asList("Action RPG"), "FromSoftware", "Bandai Namco",
+                        Arrays.asList("PC", "Xbox"), Arrays.asList("English"), "345678", 2022,
+                        120.0, "Digital", "English", 4.8, Arrays.asList("Soulslike", "Open World"), "eldenring.jpg")
+        );
+
+        tableView.refresh(); // Refresh the TableView to show new games
+    }
+
 }
