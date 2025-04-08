@@ -7,6 +7,7 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="356.0" prefWidth="573.0" style="-fx-background-color: #1f2833;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.ce216.gamecatalog.InitalPage">
@@ -16,12 +17,13 @@
             <Image url="@images/lol.png" />
          </image>
       </ImageView>
-      <PasswordField fx:id="passwordField" layoutX="27.0" layoutY="176.0" prefHeight="26.0" prefWidth="278.0" style="-fx-background-color: #27323f;" />
-      <TextField fx:id="usernamefield" layoutX="27.0" layoutY="120.0" prefHeight="26.0" prefWidth="278.0" style="-fx-background-color: #27323f;">
+      <PasswordField fx:id="passwordField" layoutX="27.0" layoutY="176.0" prefHeight="26.0" prefWidth="278.0" style="-fx-background-color: #27323f; -fx-text-fill: #000000;" />
+      <TextField fx:id="usernamefield" layoutX="27.0" layoutY="120.0" prefHeight="26.0" prefWidth="278.0" style="-fx-background-color: #27323f; -fx-text-fill: #FFFFFF;">
          <font>
             <Font name="Arial" size="12.0" />
-         </font></TextField>
-      <Label layoutX="27.0" layoutY="101.0" prefHeight="18.0" prefWidth="250.0" text="SIGN IN WTH ACCOUNT NAME" textFill="#66fcf1">
+         </font>
+      </TextField>
+      <Label layoutX="27.0" layoutY="101.0" prefHeight="18.0" prefWidth="250.0" text="SIGN IN WITH ACCOUNT NAME" textFill="#66fcf1">
          <font>
             <Font name="Arial Bold" size="12.0" />
          </font>
@@ -31,12 +33,18 @@
             <Font name="System Bold" size="13.0" />
          </font>
       </Label>
-      <Button layoutX="68.0" layoutY="216.0" mnemonicParsing="false" onAction="#switchScenetoMainMenu" prefHeight="36.0" prefWidth="196.0" style="-fx-background-color: #66fcf1; -fx-font-family: Arial;" text="Sign In" textFill="WHITE">
+      <Button layoutX="68.0" layoutY="216.0" mnemonicParsing="false" onAction="#switchScenetoMainMenu" prefHeight="36.0" prefWidth="196.0" style="-fx-background-color: #66fcf1; -fx-cursor: hand; -fx-font-family: Arial;" text="Sign In" textFill="WHITE">
          <font>
             <Font size="16.0" />
          </font>
       </Button>
-      <Label layoutX="338.0" layoutY="298.0" text="Don't have a account?" textFill="#66fcf1" />
-      <Button layoutX="456.0" layoutY="294.0" mnemonicParsing="false" onAction="#switchScenetoRegisterPage" style="-fx-background-color: transparent; -fx-cursor: hand;" text="Create a One" textFill="#66fcf1" underline="true" />
+      <Label layoutX="338.0" layoutY="298.0" text="Don't have an account?" textFill="#66fcf1" />
+      <Button layoutX="460.0" layoutY="294.0" mnemonicParsing="false" onAction="#switchScenetoRegisterPage" style="-fx-background-color: transparent; -fx-cursor: hand;" text="Create One" textFill="#66fcf1" underline="true" />
+      <Pane fx:id="topPaneInitalPage" layoutX="9.0" onMouseClicked="#handleClickAction" onMouseDragged="#handleMovementAction" prefHeight="27.0" prefWidth="574.0" scaleShape="false">
+         <children>
+            <Button fx:id="btClose" layoutX="550.0" layoutY="1.0" mnemonicParsing="false" onAction="#CloseWindow" onMouseEntered="#setOnMouseEnteredX" onMouseExited="#setOnMouseExitedX" style="-fx-background-color: transparent;" text="X" textFill="#66fcf1" />
+            <Button fx:id="btMin" layoutX="529.0" layoutY="1.0" mnemonicParsing="false" onAction="#MinWindow" onMouseEntered="#setOnMouseEnteredY" onMouseExited="#setOnMouseExitedY" prefHeight="6.0" prefWidth="5.0" style="-fx-background-color: transparent;" text="-" textFill="#66fcf1" />
+         </children>
+      </Pane>
    </children>
 </AnchorPane>

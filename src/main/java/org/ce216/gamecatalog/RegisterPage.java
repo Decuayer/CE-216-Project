@@ -5,6 +5,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -14,13 +16,54 @@ public class RegisterPage {
     private Stage stage;
     @FXML
     private Scene scene;
+    @FXML
+    private Button btCloseReg;
+    @FXML
+    private Button btMinReg;
+
+    protected double offsetX;
+    protected double offsetY;
 
     public void switchScenetoMainMenu(ActionEvent event) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("main-screen.fxml"));
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(fxmlLoader.load());
         stage.setScene(scene);
+        stage.setResizable(true);
         stage.setTitle("Main Screen");
         stage.show();
     }
+    public void CloseWindow(ActionEvent event) {
+        Stage stageCurrent = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        btCloseReg.getScene().getWindow();
+        stageCurrent.close();
+    }
+
+    public void MinWindow(ActionEvent event) {
+        Stage stageCurrent = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        btMinReg.getScene().getWindow();
+        stageCurrent.setIconified(true);
+    }
+    public void handleClickAction(MouseEvent event) {
+        offsetX = event.getSceneX();
+        offsetY = event.getSceneY();
+    }
+    public void handleMovementAction(MouseEvent event) {
+        Stage stageCurrent = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stageCurrent.setX(event.getScreenX() - offsetX);
+        stageCurrent.setY(event.getScreenY() - offsetY);
+    }
+    public void setOnMouseEnteredY() {
+        btMinReg.setStyle("-fx-background-color: rgba(0, 0, 0, 0.4);");
+    }
+    public void setOnMouseExitedY() {
+        btMinReg.setStyle("-fx-background-color: transparent;");
+    }
+    public void setOnMouseEnteredX() {
+        btCloseReg.setStyle("-fx-background-color: rgba(196, 30, 58);");
+    }
+    public void setOnMouseExitedX() {
+        btCloseReg.setStyle("-fx-background-color: transparent;");
+    }
 }
+
