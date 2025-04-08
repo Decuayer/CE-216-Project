@@ -8,11 +8,11 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="356.0" prefWidth="573.0" style="-fx-background-color: #1f2833;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.ce216.gamecatalog.RegisterPage">
+<AnchorPane fx:id="btFullScreenMain" prefHeight="356.0" prefWidth="573.0" style="-fx-background-color: #1f2833;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.ce216.gamecatalog.RegisterPage">
    <children>
       <Pane layoutX="33.0" layoutY="79.0" prefHeight="39.0" prefWidth="274.0" style="-fx-background-color: #1d252f;">
          <children>
-            <TextField id="emailaddressfield" fx:id="emailaddresfield" layoutX="6.0" layoutY="7.0" prefHeight="26.0" prefWidth="220.0" style="-fx-background-color: #27323f;" />
+            <TextField id="emailaddressfield" fx:id="emailaddresfield" layoutX="6.0" layoutY="7.0" prefHeight="26.0" prefWidth="220.0" style="-fx-background-color: #27323f; -fx-text-fill: #FFFFFF;" />
          </children>
       </Pane>
       <Label layoutX="75.0" layoutY="14.0" prefHeight="32.0" prefWidth="274.0" text="CREATE YOUR ACCOUNT" textFill="#66fcf1">
@@ -27,12 +27,12 @@
       </Label>
       <Pane layoutX="33.0" layoutY="163.0" prefHeight="39.0" prefWidth="274.0" style="-fx-background-color: #1d252f;">
          <children>
-            <PasswordField fx:id="passwordregisterfield" layoutX="6.0" layoutY="7.0" prefHeight="26.0" prefWidth="220.0" style="-fx-background-color: #27323f;" />
+            <PasswordField fx:id="passwordregisterfield" layoutX="6.0" layoutY="7.0" prefHeight="26.0" prefWidth="220.0" style="-fx-background-color: #27323f; -fx-text-fill: #000000;" />
          </children>
       </Pane>
       <Pane layoutX="33.0" layoutY="251.0" prefHeight="39.0" prefWidth="274.0" style="-fx-background-color: #1d252f;">
          <children>
-            <PasswordField fx:id="passwordregisteragainfield" layoutX="6.0" layoutY="7.0" prefHeight="26.0" prefWidth="220.0" style="-fx-background-color: #27323f;" />
+            <PasswordField fx:id="passwordregisteragainfield" layoutX="6.0" layoutY="7.0" prefHeight="26.0" prefWidth="220.0" style="-fx-background-color: #27323f; -fx-text-fill: #000000;" />
          </children>
       </Pane>
       <Label layoutX="34.0" layoutY="138.0" prefHeight="32.0" prefWidth="274.0" text="Password" textFill="#66fcf1">
@@ -50,5 +50,8 @@
             <Font name="Arial" size="16.0" />
          </font>
       </Button>
+      <Pane fx:id="topPaneInitalPage" layoutX="4.0" onMouseClicked="#handleClickAction" onMouseDragged="#handleMovementAction" prefHeight="27.0" prefWidth="574.0" scaleShape="false" />
+      <Button fx:id="btCloseReg" layoutX="557.0" layoutY="1.0" mnemonicParsing="false" onAction="#CloseWindow" onMouseEntered="#setOnMouseEnteredX" onMouseExited="#setOnMouseExitedX" style="-fx-background-color: UNDECORATED;" text="X" textFill="#66fcf1" />
+      <Button fx:id="btMinReg" layoutX="536.0" layoutY="1.0" mnemonicParsing="false" onAction="#MinWindow" onMouseEntered="#setOnMouseEnteredY" onMouseExited="#setOnMouseExitedY" prefHeight="6.0" prefWidth="5.0" style="-fx-background-color: UNDECORATED;" text="-" textFill="#66fcf1" />
    </children>
 </AnchorPane>
