@@ -25,8 +25,8 @@ tasks.withType(JavaCompile) {
 }
 
 application {
-  mainModule = 'ce216game.demo'
-  mainClass = 'ce216game.demo.HelloApplication'
+  mainModule = 'org.ce216.gamecatalog'
+  mainClass = 'org.ce216.gamecatalog.UIManager'
 }
 
 javafx {
