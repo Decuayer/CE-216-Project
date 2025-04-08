@@ -6,7 +6,7 @@ plugins {
   id 'org.beryx.jlink' version '2.25.0'
 }
 
-group 'ce216game'
+group 'org.CE216'
 version '1.0-SNAPSHOT'
 
 repositories {
@@ -34,7 +34,7 @@ javafx {
   modules = ['javafx.controls', 'javafx.fxml']
 }
 
-// Test bağımlılıkları
+
 dependencies {
   testImplementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
   testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")
@@ -47,7 +47,7 @@ test {
   useJUnitPlatform()
 }
 
-// JLink yapılandırması
+
 jlink {
   imageZip = project.file("${buildDir}/distributions/app-${javafx.platform.classifier}.zip")
   options = ['--strip-debug', '--compress', '2', '--no-header-files', '--no-man-pages']
@@ -56,12 +56,12 @@ jlink {
   }
 }
 
-// JLink Zip dağıtımı
+
 jlinkZip {
   group = 'distribution'
 }
 
-// JavaFX için JVM argümanlarını ekleyin
+
 tasks.withType(JavaExec) {
   jvmArgs = [
           '--module-path', configurations.runtimeClasspath.asPath,
