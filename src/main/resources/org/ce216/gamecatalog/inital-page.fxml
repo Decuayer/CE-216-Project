@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="356.0" prefWidth="573.0" style="-fx-background-color: #1f2833;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.ce216.gamecatalog.InitalPage">
+   <children>
+      <ImageView fitHeight="116.0" fitWidth="134.0" layoutX="27.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@images/lol.png" />
+         </image>
+      </ImageView>
+      <PasswordField fx:id="passwordField" layoutX="27.0" layoutY="176.0" prefHeight="26.0" prefWidth="278.0" style="-fx-background-color: #27323f;" />
+      <TextField fx:id="usernamefield" layoutX="27.0" layoutY="120.0" prefHeight="26.0" prefWidth="278.0" style="-fx-background-color: #27323f;">
+         <font>
+            <Font name="Arial" size="12.0" />
+         </font></TextField>
+      <Label layoutX="27.0" layoutY="101.0" prefHeight="18.0" prefWidth="250.0" text="SIGN IN WTH ACCOUNT NAME" textFill="#66fcf1">
+         <font>
+            <Font name="Arial Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label layoutX="27.0" layoutY="159.0" text="PASSWORD" textFill="#66fcf1">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </Label>
+      <Button layoutX="68.0" layoutY="216.0" mnemonicParsing="false" onAction="#switchScenetoMainMenu" prefHeight="36.0" prefWidth="196.0" style="-fx-background-color: #66fcf1; -fx-font-family: Arial;" text="Sign In" textFill="WHITE">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Button>
+      <Label layoutX="338.0" layoutY="298.0" text="Don't have a account?" textFill="#66fcf1" />
+      <Button layoutX="456.0" layoutY="294.0" mnemonicParsing="false" onAction="#switchScenetoRegisterPage" style="-fx-background-color: transparent; -fx-cursor: hand;" text="Create a One" textFill="#66fcf1" underline="true" />
+   </children>
+</AnchorPane>
