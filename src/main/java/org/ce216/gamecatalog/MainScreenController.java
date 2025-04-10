@@ -1,6 +1,7 @@
 package org.ce216.gamecatalog;
 
 import javafx.fxml.FXML;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.control.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -9,6 +10,7 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -29,6 +31,7 @@ public class MainScreenController {
     private Button btMinMain;
     @FXML
     private Button btFullScrenMain;
+    private boolean isCustomFullScreen = false;
 
     @FXML
     private void handleButtonClick() {
@@ -72,9 +75,22 @@ public class MainScreenController {
     public void setOnMouseExitedA() {
         btFullScrenMain.setStyle("-fx-background-color: transparent;");
     }
+
     public void makeFullScren(ActionEvent event) {
-        Stage stageCurrent = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        btFullScrenMain.getScene().getWindow();
-        stageCurrent.setFullScreen(true);
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            Rectangle2D visualBounds = Screen.getPrimary().getVisualBounds();
+
+            if (!isCustomFullScreen) {
+                stage.setX(visualBounds.getMinX());
+                stage.setY(visualBounds.getMinY());
+                stage.setWidth(visualBounds.getWidth());
+                stage.setHeight(visualBounds.getHeight());
+                isCustomFullScreen = true;
+            } else {
+                stage.setWidth(1300); // Orijinal boyut neyse onu yaz
+                stage.setHeight(850);
+                stage.centerOnScreen();
+                isCustomFullScreen = false;
+            }
+        }
     }
-}
