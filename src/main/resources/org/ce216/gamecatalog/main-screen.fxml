@@ -494,7 +494,7 @@
             </Tab>
         </tabs>
       </TabPane>
-      <Pane layoutX="255.0" layoutY="-2.0" onMouseClicked="#handleClickAction" onMouseDragged="#handleMovementAction" prefHeight="32.0" prefWidth="1052.0" scaleShape="false">
+      <Pane layoutX="255.0" layoutY="-2.0" onMouseDragged="#handleMovementAction" onMousePressed="#handleClickAction" prefHeight="32.0" prefWidth="1052.0" scaleShape="false">
          <children>
             <Button fx:id="btMinMain" layoutX="960.0" layoutY="2.0" mnemonicParsing="false" onAction="#MinWindow" onMouseEntered="#setOnMouseEnteredY" onMouseExited="#setOnMouseExitedY" prefHeight="6.0" prefWidth="5.0" style="-fx-background-color: UNDECORATED;" text="-" textFill="#66fcf1" />
             <Button fx:id="btCloseMain" layoutX="1015.0" layoutY="2.0" mnemonicParsing="false" onAction="#CloseWindow" onMouseEntered="#setOnMouseEnteredX" onMouseExited="#setOnMouseExitedX" prefHeight="25.0" prefWidth="24.0" style="-fx-background-color: UNDECORATED;" text="X" textFill="#66fcf1" />
