@@ -1,0 +1,15 @@
+[
+  {
+    "username": "travis",
+    "passwordHash": "12a303c224c250d07c81691de6e0fd74699ce6bd78c234057de70413a58457cf",
+    "age": 21,
+    "email": "travisscott@gmail.com",
+    "gameCatalog": {
+      "games": []
+    },
+    "favoriteGames": {
+      "games": []
+    },
+    "favoriteGenre": "Action"
+  }
+]
