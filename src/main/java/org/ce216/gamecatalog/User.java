@@ -10,16 +10,20 @@ public class User extends FileHandler {
     private String email;
     private GameCatalog gameCatalog;
     private GameCatalog favoriteGames;
+    private String favoriteGenre;
+    // user için farklı bi json oluştur
 
     public User() {}
 
-    public User(String username, String password, int age, String email, GameCatalog gameCatalog, GameCatalog favoriteGames) {
+    public User(String username, String password, int age, String email,
+                GameCatalog gameCatalog, GameCatalog favoriteGames, String favoriteGenre) {
         this.username = username;
         this.passwordHash = hashPassword(password);
         this.age = age;
         this.email = email;
         this.gameCatalog = gameCatalog;
         this.favoriteGames = favoriteGames;
+        this.favoriteGenre = favoriteGenre;
     }
 
     public String getUsername() {
@@ -54,7 +58,9 @@ public class User extends FileHandler {
         return this.passwordHash.equals(hashPassword(password));
     }
 
-    private String hashPassword(String password) {
+    public String getPasswordHash() { return passwordHash; }
+
+    public String hashPassword(String password) {
         try {
             MessageDigest md = MessageDigest.getInstance("SHA-256");
             byte[] hash = md.digest(password.getBytes());

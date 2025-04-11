@@ -8,10 +8,16 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import javafx.scene.control.TextField;
 
 import java.io.IOException;
+import java.util.List;
 
 public class InitalPage {
+
+    @FXML private TextField usernameField;
+    @FXML private TextField passwordField;
+
     @FXML
     private Stage stage;
     @FXML
@@ -76,5 +82,40 @@ public class InitalPage {
     }
     public void setOnMouseExitedX() {
         btClose.setStyle("-fx-background-color: transparent;");
+    }
+
+    //login methodu
+    public void loginButton(ActionEvent event) throws IOException {
+        String username = usernameField.getText();
+        String password = passwordField.getText();
+
+        if(username.isEmpty() || password.isEmpty()) {
+            System.out.println("Username or Password is empty");
+            return;
+        }
+
+        try {
+            List<User> users = UserManager.getUsers();
+
+            //kullanıcı var mı bakıyo
+            User user = users.stream().filter(u -> u.getUsername().equals(username)).findFirst().orElse(null);
+
+            if (user == null) {
+                System.out.println("User not found");
+                return;
+            }
+
+            if (user.getPasswordHash().equals(user.hashPassword(password))) {
+                System.out.println("User logged in");
+                switchScenetoMainMenu(event);
+            } else {
+                System.out.println("Password is wrong");
+            }
+
+        }  catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("Error logging in");
+        }
+
     }
 }

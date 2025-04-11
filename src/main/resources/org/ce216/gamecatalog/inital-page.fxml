@@ -20,7 +20,7 @@
             <Image url="@images/background.png" />
          </image>
          <effect>
-            <GaussianBlur radius="20.01" />
+            <GaussianBlur radius="20.0" />
          </effect>
       </ImageView>
       <ImageView fitHeight="20.0" fitWidth="20.0" layoutX="334.0" layoutY="200.0" pickOnBounds="true" style="-fx-opacity: .5;">
@@ -28,7 +28,7 @@
             <Image url="@images/locklogin.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="31.0" fitWidth="27.0" layoutX="330.0" layoutY="119.0" pickOnBounds="true" preserveRatio="true" style="-fx-opacity: .5;">
+      <ImageView fitHeight="31.0" fitWidth="27.0" layoutX="331.0" layoutY="133.0" pickOnBounds="true" preserveRatio="true" style="-fx-opacity: .5;">
          <image>
             <Image url="@images/loginface.png" />
          </image>
@@ -37,12 +37,12 @@
          <font>
             <Font name="Arial Bold" size="15.0" />
          </font></PasswordField>
-      <TextField fx:id="usernamefield" layoutX="50.0" layoutY="111.0" prefHeight="42.0" prefWidth="320.0" promptText="  Username" style="-fx-background-color: #27323f; -fx-text-fill: #FFFFFF; -fx-background-radius: 25; -fx-opacity: 0.50; -fx-prompt-text-fill: #FFFFFF;">
+      <TextField fx:id="usernameField" layoutX="50.0" layoutY="125.0" prefHeight="42.0" prefWidth="320.0" promptText="  Username" style="-fx-background-color: #27323f; -fx-text-fill: #FFFFFF; -fx-background-radius: 25; -fx-opacity: 0.50; -fx-prompt-text-fill: #FFFFFF;">
          <font>
             <Font name="Arial Bold" size="15.0" />
          </font>
       </TextField>
-      <Button layoutX="50.0" layoutY="263.0" mnemonicParsing="false" onAction="#switchScenetoMainMenu" prefHeight="42.0" prefWidth="320.0" style="-fx-background-color: #ffffff; -fx-font-family: Arial; -fx-background-radius: 25;" text="Sign In">
+      <Button layoutX="50.0" layoutY="263.0" mnemonicParsing="false" onAction="#loginButton" prefHeight="42.0" prefWidth="320.0" style="-fx-background-color: #ffffff; -fx-font-family: Arial; -fx-background-radius: 25;" text="Sign In">
          <font>
             <Font size="16.0" />
          </font>
