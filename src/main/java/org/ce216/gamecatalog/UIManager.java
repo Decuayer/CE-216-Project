@@ -25,7 +25,7 @@ public class UIManager extends Application {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("inital-page.fxml"));
             Parent root = loader.load();
-            primaryStage.setTitle("Main Screen");
+            primaryStage.setTitle("Main Screen"); // uygulamanın ismini yaz buraya
             primaryStage.setScene(new Scene(root));
             primaryStage.setResizable(false);
             primaryStage.initStyle(StageStyle.UNDECORATED);

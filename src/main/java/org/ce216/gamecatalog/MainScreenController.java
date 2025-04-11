@@ -85,6 +85,7 @@ public class MainScreenController {
                 stage.setY(visualBounds.getMinY());
                 stage.setWidth(visualBounds.getWidth());
                 stage.setHeight(visualBounds.getHeight());
+
                 isCustomFullScreen = true;
             } else {
                 stage.setWidth(1300); // Orijinal boyut neyse onu yaz
