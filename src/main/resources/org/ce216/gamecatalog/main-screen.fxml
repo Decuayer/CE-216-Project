@@ -25,7 +25,7 @@
 <?import javafx.scene.text.Text?>
 <?import javafx.scene.text.TextFlow?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="850.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="850.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.ce216.gamecatalog.MainScreenController">
    <children>
       <TabPane tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <tabs>
@@ -494,5 +494,12 @@
             </Tab>
         </tabs>
       </TabPane>
+      <Pane layoutX="255.0" layoutY="-2.0" onMouseDragged="#handleMovementAction" onMousePressed="#handleClickAction" prefHeight="32.0" prefWidth="1052.0" scaleShape="false">
+         <children>
+            <Button fx:id="btMinMain" layoutX="960.0" layoutY="2.0" mnemonicParsing="false" onAction="#MinWindow" onMouseEntered="#setOnMouseEnteredY" onMouseExited="#setOnMouseExitedY" prefHeight="6.0" prefWidth="5.0" style="-fx-background-color: UNDECORATED;" text="-" textFill="#66fcf1" />
+            <Button fx:id="btCloseMain" layoutX="1015.0" layoutY="2.0" mnemonicParsing="false" onAction="#CloseWindow" onMouseEntered="#setOnMouseEnteredX" onMouseExited="#setOnMouseExitedX" prefHeight="25.0" prefWidth="24.0" style="-fx-background-color: UNDECORATED;" text="X" textFill="#66fcf1" />
+            <Button fx:id="btFullScrenMain" layoutX="985.0" layoutY="2.0" mnemonicParsing="false" onAction="#makeFullScren" onMouseEntered="#setOnMouseEnteredA" onMouseExited="#setOnMouseExitedA" style="-fx-background-color: UNDECORATED;" text="A" textFill="#66fcf1" />
+         </children>
+      </Pane>
    </children>
 </AnchorPane>
