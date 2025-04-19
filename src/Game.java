@@ -38,6 +38,9 @@ public class Game {
     public List<String> getTags() {
         return tags;
     }
+    public String getCoverImagePath() {
+        return coverImagePath;
+    }
 
     public Game(String title, List<String> genre, String developer, String publisher, List<String> platforms, List<String> translators, String steamID, int releaseYear, double playtime, String format, String language, double rating, List<String> tags, String coverImagePath) {
         this.title = title;

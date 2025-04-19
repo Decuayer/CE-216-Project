@@ -1,6 +1,12 @@
+import java.awt.*;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
 import javafx.application.Application;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -19,11 +25,25 @@ public class UIManager extends Application {
     @Override
     public void start(Stage primaryStage) {
         System.out.println("UI is being initialized...");
-        primaryStage.setTitle("Game Collection Manager");
+        primaryStage.setTitle("🎮 Game Collection Manager");
 
-        Button libraryButton = new Button("Library");
+        // === Buttons ===
+        Button libraryButton = new Button("📚 Library");
         libraryButton.setOnAction(e -> showLibrary());
 
+        Button addButton = new Button("➕ Add Game");
+        addButton.setOnAction(e -> addGame());
+
+        Button removeButton = new Button("🗑️ Remove Selected");
+        removeButton.setOnAction(e -> removeSelectedGame());
+
+        // === Top bar ===
+        HBox topBar = new HBox(libraryButton);
+        topBar.setAlignment(Pos.CENTER_LEFT);
+        topBar.setSpacing(10);
+        topBar.setStyle("-fx-padding: 10; -fx-background-color: #f4f4f4;");
+
+        // === Table columns ===
         TableColumn<Game, String> titleColumn = new TableColumn<>("Title");
         titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
 
@@ -35,19 +55,21 @@ public class UIManager extends Application {
 
         tableView.getColumns().addAll(titleColumn, developerColumn, yearColumn);
         tableView.setItems(gameList);
+        tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        tableView.setPlaceholder(new Label("No games in library."));
+        tableView.setStyle("-fx-font-size: 13px;");
 
-        Button addButton = new Button("Add Game");
-        addButton.setOnAction(e -> addGame());
+        // === Bottom buttons ===
+        HBox bottomBar = new HBox(10, addButton, removeButton);
+        bottomBar.setAlignment(Pos.CENTER);
+        bottomBar.setStyle("-fx-padding: 10;");
 
-        Button removeButton = new Button("Remove Selected");
-        removeButton.setOnAction(e -> removeSelectedGame());
+        // === Layout ===
+        VBox layout = new VBox(15, topBar, tableView, bottomBar);
+        layout.setStyle("-fx-padding: 20; -fx-background-color: white; -fx-font-family: 'Segoe UI';");
 
-        HBox buttonBox = new HBox(10, addButton, removeButton, libraryButton);
-        buttonBox.setAlignment(Pos.CENTER);
-
-        VBox layout = new VBox(10, tableView, buttonBox);
-        layout.setAlignment(Pos.CENTER);
-        primaryStage.setScene(new Scene(layout, 600, 400));
+        Scene scene = new Scene(layout, 700, 500);
+        primaryStage.setScene(scene);
         primaryStage.show();
     }
 
@@ -88,4 +110,18 @@ public class UIManager extends Application {
         tableView.refresh(); // Refresh the TableView to show new games
     }
 
+   /* private void updateCoverImage(Game game) {
+        if (game != null && game.getCoverImagePath() != null) {
+            try {
+                Image image = new Image(Files.newInputStream(Paths.get("covers/" + game.getCoverImagePath())));
+                coverImageView.setImage(image);
+            } catch (IOException e) {
+                System.err.println("Image load failed: " + e.getMessage());
+                coverImageView.setImage(null); // or load a default fallback image
+            }
+        } else {
+            coverImageView.setImage(null);
+        }
+        }
+    */
 }
