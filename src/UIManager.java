@@ -37,13 +37,12 @@ public class UIManager extends Application {
         Button removeButton = new Button("🗑️ Remove Selected");
         removeButton.setOnAction(e -> removeSelectedGame());
 
-        // === Top bar ===
         HBox topBar = new HBox(libraryButton);
         topBar.setAlignment(Pos.CENTER_LEFT);
         topBar.setSpacing(10);
         topBar.setStyle("-fx-padding: 10; -fx-background-color: #f4f4f4;");
 
-        // === Table columns ===
+
         TableColumn<Game, String> titleColumn = new TableColumn<>("Title");
         titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
 
@@ -89,10 +88,8 @@ public class UIManager extends Application {
     private void showLibrary() {
         System.out.println("Library button clicked!"); // Debugging
 
-        // Clear existing list
         gameList.clear();
 
-        // Add some sample games
         gameList.addAll(
                 new Game("The Witcher 3", Arrays.asList("RPG"), "CD Projekt Red", "CD Projekt",
                         Arrays.asList("PC", "PS4"), Arrays.asList("English"), "123456", 2015,
@@ -107,7 +104,7 @@ public class UIManager extends Application {
                         120.0, "Digital", "English", 4.8, Arrays.asList("Soulslike", "Open World"), "eldenring.jpg")
         );
 
-        tableView.refresh(); // Refresh the TableView to show new games
+        tableView.refresh();
     }
 
    /* private void updateCoverImage(Game game) {
