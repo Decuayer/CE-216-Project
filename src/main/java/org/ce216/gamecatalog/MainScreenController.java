@@ -32,6 +32,28 @@ public class MainScreenController {
     @FXML
     private Button btFullScrenMain;
     private boolean isCustomFullScreen = false;
+    /*
+    Initialize library button
+    When clicked call load game method
+    private void loadGame() {
+        try {
+            Gson gson = new Gson();
+            FileReader reader = new FileReader("gameLibrary.json");
+            Type listType = new TypeToken<List<Game>>() {}.getType();
+            List<Game> games = gson.fromJson(reader, listType);
+            reader.close();
+
+            ObservableList<String> gameTitles = FXCollections.observableArrayList();
+            for (Game game : games) {
+                gameTitles.add(game.getTitle());
+            }
+
+            gameListView.setItems(gameTitles);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+     */
 
     @FXML
     private void handleButtonClick() {
