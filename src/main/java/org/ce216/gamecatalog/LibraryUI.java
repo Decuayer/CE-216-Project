@@ -1,9 +1,7 @@
-import java.awt.*;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+package org.ce216.gamecatalog;
+
 import java.util.Arrays;
-import java.util.List;
+
 import javafx.application.Application;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -18,20 +16,20 @@ import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
 
 
-public class UIManager extends Application {
+public class LibraryUI extends Application {
     private TableView<Game> tableView = new TableView<>();
     private ObservableList<Game> gameList = FXCollections.observableArrayList();
 
     @Override
     public void start(Stage primaryStage) {
         System.out.println("UI is being initialized...");
-        primaryStage.setTitle("🎮 Game Collection Manager");
+        primaryStage.setTitle("🎮 org.ce216.gamecatalog.Game Collection Manager");
 
         // === Buttons ===
         Button libraryButton = new Button("📚 Library");
         libraryButton.setOnAction(e -> showLibrary());
 
-        Button addButton = new Button("➕ Add Game");
+        Button addButton = new Button("➕ Add org.ce216.gamecatalog.Game");
         addButton.setOnAction(e -> addGame());
 
         Button removeButton = new Button("🗑️ Remove Selected");
@@ -73,7 +71,7 @@ public class UIManager extends Application {
     }
 
     private void addGame() {
-        Game newGame = new Game("Example Game", Arrays.asList("RPG"), "Dev Studio", "Big Publisher",
+        Game newGame = new Game("Example org.ce216.gamecatalog.Game", Arrays.asList("RPG"), "Dev Studio", "Big Publisher",
                 Arrays.asList("PC"), Arrays.asList("English"), "123456", 2024,
                 10.5, "Digital", "English", 4.5, Arrays.asList("Action"), "cover.jpg");
         gameList.add(newGame);
@@ -107,7 +105,7 @@ public class UIManager extends Application {
         tableView.refresh();
     }
 
-   /* private void updateCoverImage(Game game) {
+   /* private void updateCoverImage(org.ce216.gamecatalog.Game game) {
         if (game != null && game.getCoverImagePath() != null) {
             try {
                 Image image = new Image(Files.newInputStream(Paths.get("covers/" + game.getCoverImagePath())));
