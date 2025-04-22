@@ -15,55 +15,73 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
 
-
+//Used a listview instead of
 public class LibraryUI extends Application {
+
     private TableView<Game> tableView = new TableView<>();
     private ObservableList<Game> gameList = FXCollections.observableArrayList();
-
-    @Override
+    private ListView<Game> gameListView = new ListView<>(gameList);
     public void start(Stage primaryStage) {
-        System.out.println("UI is being initialized...");
-        primaryStage.setTitle("🎮 org.ce216.gamecatalog.Game Collection Manager");
 
-        // === Buttons ===
+        primaryStage.setTitle("🎮 Game Collection Manager");
+        ObservableList<Game> gameList = FXCollections.observableArrayList();
         Button libraryButton = new Button("📚 Library");
         libraryButton.setOnAction(e -> showLibrary());
 
-        Button addButton = new Button("➕ Add org.ce216.gamecatalog.Game");
+        Button addButton = new Button("➕ Add Game");
         addButton.setOnAction(e -> addGame());
 
         Button removeButton = new Button("🗑️ Remove Selected");
         removeButton.setOnAction(e -> removeSelectedGame());
 
+
         HBox topBar = new HBox(libraryButton);
         topBar.setAlignment(Pos.CENTER_LEFT);
-        topBar.setSpacing(10);
-        topBar.setStyle("-fx-padding: 10; -fx-background-color: #f4f4f4;");
+        topBar.setStyle("-fx-padding: 10; -fx-background-color: #f0f0f0;");
 
 
-        TableColumn<Game, String> titleColumn = new TableColumn<>("Title");
-        titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
 
-        TableColumn<Game, String> developerColumn = new TableColumn<>("Developer");
-        developerColumn.setCellValueFactory(new PropertyValueFactory<>("developer"));
+        gameListView.setPrefWidth(200);
+        gameListView.setCellFactory(list -> new ListCell<>() {
+            @Override
+            protected void updateItem(Game game, boolean empty) {
+                super.updateItem(game, empty);
+                setText(empty || game == null ? null : game.getTitle());
+            }
+        });
 
-        TableColumn<Game, Integer> yearColumn = new TableColumn<>("Release Year");
-        yearColumn.setCellValueFactory(new PropertyValueFactory<>("releaseYear"));
+        Label titleLabel = new Label();
+        Label developerLabel = new Label();
+        Label yearLabel = new Label();
+        Label genreLabel = new Label();
+        Label tagsLabel = new Label();
+        Label playtimeLabel = new Label();
 
-        tableView.getColumns().addAll(titleColumn, developerColumn, yearColumn);
-        tableView.setItems(gameList);
-        tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-        tableView.setPlaceholder(new Label("No games in library."));
-        tableView.setStyle("-fx-font-size: 13px;");
+        VBox gameInfoBox = new VBox(10);
+        gameInfoBox.getChildren().addAll(titleLabel, developerLabel, yearLabel, genreLabel, tagsLabel, playtimeLabel);
+        gameInfoBox.setStyle("-fx-padding: 10;");
+        gameInfoBox.setPrefWidth(400);
 
-        // === Bottom buttons ===
+        gameListView.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> {
+            if (newVal != null) {
+                titleLabel.setText("🎮 Title: " + newVal.getTitle());
+                developerLabel.setText("👨‍💻 Developer: " + newVal.getDeveloper());
+                yearLabel.setText("📅 Release Year: " + newVal.getReleaseYear());
+                genreLabel.setText("🎲 Genre: " + String.join(", ", newVal.getGenre()));
+                tagsLabel.setText("🏷️ Tags: " + String.join(", ", newVal.getTags()));
+            }
+        });
+
+        HBox contentBox = new HBox(gameListView, gameInfoBox);
+        contentBox.setSpacing(20);
+        contentBox.setStyle("-fx-padding: 15;");
+
         HBox bottomBar = new HBox(10, addButton, removeButton);
         bottomBar.setAlignment(Pos.CENTER);
         bottomBar.setStyle("-fx-padding: 10;");
 
-        // === Layout ===
-        VBox layout = new VBox(15, topBar, tableView, bottomBar);
-        layout.setStyle("-fx-padding: 20; -fx-background-color: white; -fx-font-family: 'Segoe UI';");
+        VBox layout = new VBox(10, topBar, contentBox, bottomBar);
+        layout.setStyle("-fx-padding: 20; -fx-font-family: 'Segoe UI'; -fx-background-color: #ffffff;");
 
         Scene scene = new Scene(layout, 700, 500);
         primaryStage.setScene(scene);
@@ -78,11 +96,12 @@ public class LibraryUI extends Application {
     }
 
     private void removeSelectedGame() {
-        Game selectedGame = tableView.getSelectionModel().getSelectedItem();
+        Game selectedGame = gameListView.getSelectionModel().getSelectedItem();
         if (selectedGame != null) {
             gameList.remove(selectedGame);
         }
     }
+
     private void showLibrary() {
         System.out.println("Library button clicked!"); // Debugging
 
@@ -105,18 +124,6 @@ public class LibraryUI extends Application {
         tableView.refresh();
     }
 
-   /* private void updateCoverImage(org.ce216.gamecatalog.Game game) {
-        if (game != null && game.getCoverImagePath() != null) {
-            try {
-                Image image = new Image(Files.newInputStream(Paths.get("covers/" + game.getCoverImagePath())));
-                coverImageView.setImage(image);
-            } catch (IOException e) {
-                System.err.println("Image load failed: " + e.getMessage());
-                coverImageView.setImage(null); // or load a default fallback image
-            }
-        } else {
-            coverImageView.setImage(null);
-        }
-        }
-    */
 }
+
+
