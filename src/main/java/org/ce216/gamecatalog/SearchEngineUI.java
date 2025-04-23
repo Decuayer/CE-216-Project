@@ -42,9 +42,10 @@ public class SearchEngineUI extends Application {
 
     private void performSearch() {
         String query = searchField.getText().trim();
-        List<Game> results = SearchEngine.searchByTitle(allGames, query); //searchEngine here
+        List<Game> results = SearchEngine.searchGames(allGames, query);
+
         try{
-            allGames=FileHandler.loadGamesFromFile("game.json");
+            allGames=FileHandler.loadFromJSON("game.json");
         }
         catch(IOException e){
             System.err.println("Failed to load games"+e.getMessage());

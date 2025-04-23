@@ -40,6 +40,25 @@ public class Game {
     public List<String> getTags() {
         return tags;
     }
+    public String getPublisher() {
+        return publisher;
+    }
+
+    public List<String> getPlatforms() {
+        return platforms;
+    }
+
+    public double getRating() {
+        return rating;
+    }
+
+    public String getLanguage() {
+        return language;
+    }
+
+    public List<String> getTranslators() {
+        return translators;
+    }
 
     public Game(String title, List<String> genre, String developer, String publisher, List<String> platforms, List<String> translators, String steamID, int releaseYear, double playtime, String format, String language, double rating, List<String> tags, String coverImagePath) {
         this.title = title;
@@ -105,6 +124,7 @@ public class Game {
         }
         return list;
     }
+
 
 
 }

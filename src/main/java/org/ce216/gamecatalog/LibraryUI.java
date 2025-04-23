@@ -27,25 +27,17 @@ public class LibraryUI extends Application {
     public void start(Stage primaryStage) {
 
         primaryStage.setTitle("🎮 Game Collection Manager");
-
         Button libraryButton = new Button("📚 Library");
         libraryButton.setOnAction(e -> showLibrary());
-
         Button addButton = new Button("➕ Add Game");
         addButton.setOnAction(e -> addGame());
-
         Button removeButton = new Button("🗑️ Remove Selected");
         removeButton.setOnAction(e -> removeSelectedGame());
         Button resetButton = new Button("🔄 Reset Library");
         resetButton.setOnAction(e -> resetLibrary());
-
-
         HBox topBar = new HBox(libraryButton);
         topBar.setAlignment(Pos.CENTER_LEFT);
         topBar.setStyle("-fx-padding: 10; -fx-background-color: #f0f0f0;");
-
-
-
         gameListView.setPrefWidth(200);
         gameListView.setCellFactory(list -> new ListCell<>() {
             @Override
@@ -100,7 +92,7 @@ public class LibraryUI extends Application {
 
         gameList.add(newGame);
 
-        FileHandler.saveGamesToFile(gameList, "game.json");
+        FileHandler.saveToJSON(gameList, "game.json");
     }
 
 
@@ -109,8 +101,8 @@ public class LibraryUI extends Application {
         if (selectedGame != null) {
             gameList.remove(selectedGame);
 
-            FileHandler.saveGamesToFile(new ArrayList<>(gameList), "game.json");
-
+            FileHandler.saveToJSON(new ArrayList<>(gameList), "game.json");
+            System.out.println("Selected game has been removed");
         }
     }
 
@@ -121,7 +113,7 @@ public class LibraryUI extends Application {
         gameList.clear();
 
         try {
-            gameList.addAll(FileHandler.loadGamesFromFile("game.json"));
+            gameList.addAll(FileHandler.loadFromJSON("game.json"));
         } catch (IOException e) {
             System.err.println("Failed to load games: " + e.getMessage());Alert alert = new Alert(Alert.AlertType.ERROR, "Could not load game list from file.");
         }
@@ -144,7 +136,7 @@ public class LibraryUI extends Application {
         );
 
         gameList.setAll(defaultGames);
-        FileHandler.saveGamesToFile(new ArrayList<>(defaultGames), "game.json");
+        FileHandler.saveToJSON(new ArrayList<>(defaultGames), "game.json");
         System.out.println("Library reset to default.");
     }
 

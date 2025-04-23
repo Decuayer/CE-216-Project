@@ -10,7 +10,7 @@ import org.json.*;
 
 public class FileHandler {
 
-    public static List<Game> loadGamesFromFile(String filePath) throws IOException {
+    public static List<Game> loadFromJSON(String filePath) throws IOException {
         String content = new String(Files.readAllBytes(new File(filePath).toPath()));
         JSONArray jsonArray = new JSONArray(content);
         List<Game> games = new ArrayList<>();
@@ -19,7 +19,7 @@ public class FileHandler {
         }
         return games;
     }
-    public static void saveGamesToFile(List<Game> games, String filePath) {
+    public static void saveToJSON(List<Game> games, String filePath) {
         File file = new File(filePath);
         if (!file.exists()) {
             System.out.println("File does not exist.");
@@ -27,7 +27,7 @@ public class FileHandler {
             System.out.println("File exists.");
         }
 
-        // Create a JSON array to store game data
+        // Oyunu storelayan Json arrayi
         JSONArray jsonArray = new JSONArray();
         for (Game game : games) {
             jsonArray.put(new JSONObject(game.toJSON()));

@@ -1,0 +1,90 @@
+[
+    {
+        "format": "Digital",
+        "rating": 4.9,
+        "language": "English",
+        "playtime": 150,
+        "title": "The Witcher 3",
+        "platforms": [
+            "PC",
+            "PS4"
+        ],
+        "tags": [
+            "Open World",
+            "Fantasy"
+        ],
+        "steamID": "123456",
+        "translators": ["English"],
+        "coverImagePath": "witcher3.jpg",
+        "genre": ["RPG"],
+        "publisher": "CD Projekt",
+        "developer": "CD Projekt Red",
+        "releaseYear": 2015
+    },
+    {
+        "format": "Digital",
+        "rating": 4.2,
+        "language": "English",
+        "playtime": 80,
+        "title": "Cyberpunk 2077",
+        "platforms": [
+            "PC",
+            "PS5"
+        ],
+        "tags": [
+            "Sci-Fi",
+            "Open World"
+        ],
+        "steamID": "789012",
+        "translators": ["English"],
+        "coverImagePath": "cyberpunk2077.jpg",
+        "genre": ["RPG"],
+        "publisher": "CD Projekt",
+        "developer": "CD Projekt Red",
+        "releaseYear": 2020
+    },
+    {
+        "format": "Digital",
+        "rating": 4.8,
+        "language": "English",
+        "playtime": 120,
+        "title": "Elden Ring",
+        "platforms": [
+            "PC",
+            "Xbox"
+        ],
+        "tags": [
+            "Soulslike",
+            "Open World"
+        ],
+        "steamID": "345678",
+        "translators": ["English"],
+        "coverImagePath": "eldenring.jpg",
+        "genre": ["Action RPG"],
+        "publisher": "Bandai Namco",
+        "developer": "FromSoftware",
+        "releaseYear": 2022
+    },
+    {
+        "format": "Digital",
+        "rating": 4.8,
+        "language": "English",
+        "playtime": 120,
+        "title": "Elden Ring",
+        "platforms": [
+            "PC",
+            "Xbox"
+        ],
+        "tags": [
+            "Soulslike",
+            "Open World"
+        ],
+        "steamID": "345678",
+        "translators": ["English"],
+        "coverImagePath": "eldenring.jpg",
+        "genre": ["Action RPG"],
+        "publisher": "Bandai Namco",
+        "developer": "FromSoftware",
+        "releaseYear": 2022
+    }
+]
