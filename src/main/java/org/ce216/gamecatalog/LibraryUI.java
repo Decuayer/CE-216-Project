@@ -1,5 +1,7 @@
 package org.ce216.gamecatalog;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 import javafx.application.Application;
@@ -19,12 +21,13 @@ import javafx.geometry.Pos;
 public class LibraryUI extends Application {
 
     private TableView<Game> tableView = new TableView<>();
+    //ObservableList<Game> gameList = FXCollections.observableArrayList();
     private ObservableList<Game> gameList = FXCollections.observableArrayList();
     private ListView<Game> gameListView = new ListView<>(gameList);
     public void start(Stage primaryStage) {
 
         primaryStage.setTitle("🎮 Game Collection Manager");
-        ObservableList<Game> gameList = FXCollections.observableArrayList();
+
         Button libraryButton = new Button("📚 Library");
         libraryButton.setOnAction(e -> showLibrary());
 
@@ -33,6 +36,8 @@ public class LibraryUI extends Application {
 
         Button removeButton = new Button("🗑️ Remove Selected");
         removeButton.setOnAction(e -> removeSelectedGame());
+        Button resetButton = new Button("🔄 Reset Library");
+        resetButton.setOnAction(e -> resetLibrary());
 
 
         HBox topBar = new HBox(libraryButton);
@@ -76,7 +81,7 @@ public class LibraryUI extends Application {
         contentBox.setSpacing(20);
         contentBox.setStyle("-fx-padding: 15;");
 
-        HBox bottomBar = new HBox(10, addButton, removeButton);
+        HBox bottomBar = new HBox(10, addButton, removeButton,resetButton);
         bottomBar.setAlignment(Pos.CENTER);
         bottomBar.setStyle("-fx-padding: 10;");
 
@@ -89,25 +94,42 @@ public class LibraryUI extends Application {
     }
 
     private void addGame() {
-        Game newGame = new Game("Example org.ce216.gamecatalog.Game", Arrays.asList("RPG"), "Dev Studio", "Big Publisher",
-                Arrays.asList("PC"), Arrays.asList("English"), "123456", 2024,
+        Game newGame = new Game("Example Game", Arrays.asList("RPG"), "Dev Studio", "Big Publisher",
+                Arrays.asList("PC"), Arrays.asList("English"), "999999", 2024,
                 10.5, "Digital", "English", 4.5, Arrays.asList("Action"), "cover.jpg");
+
         gameList.add(newGame);
+
+        FileHandler.saveGamesToFile(gameList, "game.json");
     }
+
 
     private void removeSelectedGame() {
         Game selectedGame = gameListView.getSelectionModel().getSelectedItem();
         if (selectedGame != null) {
             gameList.remove(selectedGame);
+
+            FileHandler.saveGamesToFile(new ArrayList<>(gameList), "game.json");
+
         }
     }
 
+
     private void showLibrary() {
-        System.out.println("Library button clicked!"); // Debugging
+        System.out.println("Library button clicked!");
 
         gameList.clear();
 
-        gameList.addAll(
+        try {
+            gameList.addAll(FileHandler.loadGamesFromFile("game.json"));
+        } catch (IOException e) {
+            System.err.println("Failed to load games: " + e.getMessage());Alert alert = new Alert(Alert.AlertType.ERROR, "Could not load game list from file.");
+        }
+
+    }
+    private void resetLibrary() {
+
+        ObservableList<Game> defaultGames = FXCollections.observableArrayList(
                 new Game("The Witcher 3", Arrays.asList("RPG"), "CD Projekt Red", "CD Projekt",
                         Arrays.asList("PC", "PS4"), Arrays.asList("English"), "123456", 2015,
                         150.0, "Digital", "English", 4.9, Arrays.asList("Open World", "Fantasy"), "witcher3.jpg"),
@@ -121,8 +143,13 @@ public class LibraryUI extends Application {
                         120.0, "Digital", "English", 4.8, Arrays.asList("Soulslike", "Open World"), "eldenring.jpg")
         );
 
-        tableView.refresh();
+        gameList.setAll(defaultGames);
+        FileHandler.saveGamesToFile(new ArrayList<>(defaultGames), "game.json");
+        System.out.println("Library reset to default.");
     }
+
+
+
 
 }
 
