@@ -9,6 +9,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,27 +23,17 @@ public class SearchEngineUI extends Application {
     @Override
     public void start(Stage primaryStage) {
         primaryStage.setTitle("Game Library Search");
-
-
         searchField = new TextField();
         searchField.setPromptText("Type to search for a game...");
-
-
         displayedResults = FXCollections.observableArrayList();
         resultsList = new ListView<>(displayedResults);
-
-
         Button searchButton = new Button("Search");
         searchButton.setOnAction(e -> performSearch());
-
-
         VBox layout = new VBox(10);
         layout.setPadding(new Insets(10));
         layout.getChildren().addAll(searchField, searchButton, resultsList);
-
         //this calls performSearch on every typing(real time search)
         searchField.textProperty().addListener((observable, oldValue, newValue) -> performSearch());
-
 
         Scene scene = new Scene(layout, 500, 400);
         primaryStage.setScene(scene);
@@ -51,9 +42,14 @@ public class SearchEngineUI extends Application {
 
     private void performSearch() {
         String query = searchField.getText().trim();
+        List<Game> results = SearchEngine.searchGames(allGames, query);
 
-        List<Game> results = SearchEngine.searchByTitle(allGames, query); //searchEngine here
-
+        try{
+            allGames=FileHandler.loadFromJSON("game.json");
+        }
+        catch(IOException e){
+            System.err.println("Failed to load games"+e.getMessage());
+        }
 
         displayedResults.clear();
         for (Game game : results) {
