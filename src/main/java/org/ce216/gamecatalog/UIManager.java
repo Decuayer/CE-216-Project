@@ -23,7 +23,7 @@ public class UIManager extends Application {
     @Override
     public void start(Stage primaryStage) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("inital-page.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("main-screen.fxml"));
             Parent root = loader.load();
             primaryStage.setTitle("Main Screen"); // uygulamanın ismini yaz buraya
             primaryStage.setScene(new Scene(root));

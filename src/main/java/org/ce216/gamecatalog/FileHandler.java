@@ -5,11 +5,16 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
+
+import javafx.print.PrintColor;
 import org.json.*;
 
 public class FileHandler {
-    public static List<Game> loadFromJSON(String filePath) throws IOException {
-        String content = new String(Files.readAllBytes(new File(filePath).toPath()));
+    private static final String GAMESPATH = "data/games.json";
+    private static final String USERSPATH = "data/users.json";
+
+    public static List<Game> loadFromJSONGames() throws IOException {
+        String content = new String(Files.readAllBytes(new File(GAMESPATH).toPath()));
         JSONArray jsonArray = new JSONArray(content);
         List<Game> games = new ArrayList<>();
         for (int i = 0; i < jsonArray.length(); i++) {
@@ -24,6 +29,15 @@ public class FileHandler {
             jsonArray.put(new JSONObject(game.toJSON()));
         }
         Files.write(new File(filePath).toPath(), jsonArray.toString(4).getBytes());
+    }
+
+    public static void main(String[] args) throws IOException {
+        FileHandler fh = new FileHandler();
+        List<Game> test = fh.loadFromJSONGames();
+
+        for(Game game : test) {
+            System.out.println(game.getTitle());
+        }
     }
 }
 
