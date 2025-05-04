@@ -1,6 +1,7 @@
 package org.ce216.gamecatalog;
 
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.ArrayList;
@@ -8,6 +9,7 @@ import java.util.List;
 import org.json.*;
 
 public class FileHandler {
+
     public static List<Game> loadFromJSON(String filePath) throws IOException {
         String content = new String(Files.readAllBytes(new File(filePath).toPath()));
         JSONArray jsonArray = new JSONArray(content);
@@ -17,13 +19,25 @@ public class FileHandler {
         }
         return games;
     }
+    public static void saveToJSON(List<Game> games, String filePath) {
+        File file = new File(filePath);
+        if (!file.exists()) {
+            System.out.println("File does not exist.");
+        } else {
+            System.out.println("File exists.");
+        }
 
-    public static void saveToJSON(String filePath, List<Game> games) throws IOException {
+        // Oyunu storelayan Json arrayi
         JSONArray jsonArray = new JSONArray();
         for (Game game : games) {
             jsonArray.put(new JSONObject(game.toJSON()));
         }
-        Files.write(new File(filePath).toPath(), jsonArray.toString(4).getBytes());
+
+        try (FileWriter writer = new FileWriter(filePath)) {
+            writer.write(jsonArray.toString(4));  // Write with indentation for readability
+            System.out.println("Game data saved to " + filePath);
+        } catch (IOException e) {
+            System.err.println("Failed to save file: " + e.getMessage());
+        }
     }
 }
-
