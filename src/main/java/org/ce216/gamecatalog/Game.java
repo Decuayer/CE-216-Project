@@ -20,45 +20,24 @@ public class Game {
     private double rating;
     private List<String> tags;
     private String coverImagePath;
+    private String description;
 
+    public String getTitle() {return title;}
+    public List<String> getGenre() {return genre;}
+    public String getDeveloper() {return developer;}
+    public String getPublisher() {return publisher;}
+    public List<String> getPlatforms() {return platforms;}
+    public String getSteamID() {return steamID;}
+    public List<String> getTranslators() {return translators;}
+    public int getReleaseYear() {return releaseYear;}
+    public double getPlaytime() {return playtime;}
+    public String getFormat() {return format;}
+    public String getLanguage() {return language;}
+    public double getRating() {return rating;}
+    public List<String> getTags() {return tags;}
+    public String getCoverImagePath() {return coverImagePath;}
+    public String getDescription() {return description;}
 
-    public String getTitle() {
-        return title;
-    }
-    public String getDeveloper() {
-        return developer;
-    }
-    public List<String> getGenre() {
-        return genre;
-    }
-    public String getSteamID() {
-        return steamID;
-    }
-    public int getReleaseYear() {
-        return releaseYear;
-    }
-    public List<String> getTags() {
-        return tags;
-    }
-    public String getPublisher() {
-        return publisher;
-    }
-
-    public List<String> getPlatforms() {
-        return platforms;
-    }
-
-    public double getRating() {
-        return rating;
-    }
-
-    public String getLanguage() {
-        return language;
-    }
-
-    public List<String> getTranslators() {
-        return translators;
-    }
 
     public Game(String title, List<String> genre, String developer, String publisher, List<String> platforms, List<String> translators, String steamID, int releaseYear, double playtime, String format, String language, double rating, List<String> tags, String coverImagePath) {
         this.title = title;
@@ -67,7 +46,7 @@ public class Game {
         this.publisher = publisher;
         this.platforms = platforms;
         this.translators = translators;
-        this.steamID = UUID.randomUUID().toString();
+        this.steamID = steamID;
         this.releaseYear = releaseYear;
         this.playtime = playtime;
         this.format = format;
@@ -124,7 +103,6 @@ public class Game {
         }
         return list;
     }
-
 
 
 }

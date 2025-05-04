@@ -19,13 +19,12 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 <?import javafx.scene.text.TextFlow?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="850.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.ce216.gamecatalog.MainScreenController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="850.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.ce216.gamecatalog.StoreController">
    <children>
       <TabPane tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <tabs>
@@ -71,106 +70,10 @@
                               </AnchorPane>
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="460.0" prefWidth="807.0">
                                  <children>
-                                    <ScrollPane fitToHeight="true" hbarPolicy="ALWAYS" prefWidth="1188.0" vbarPolicy="NEVER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="6.0" AnchorPane.topAnchor="0.0">
+                                    <ScrollPane fx:id="StoreGames" fitToHeight="true" hbarPolicy="ALWAYS" prefWidth="1188.0" vbarPolicy="NEVER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="6.0" AnchorPane.topAnchor="0.0">
                                        <content>
-                                          <HBox prefHeight="600.0">
-                                             <children>
-                                                <Pane prefWidth="400.0">
-                                                   <children>
-                                                      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="100.0" layoutY="44.0" nodeOrientation="INHERIT" pickOnBounds="true">
-                                                         <image>
-                                                            <Image url="@images/gta.png" />
-                                                         </image>
-                                                      </ImageView>
-                                                      <TextFlow layoutX="59.0" layoutY="221.0" prefHeight="234.0" prefWidth="282.0">
-                                                         <children>
-                                                            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum." wrappingWidth="270.1028594970703" />
-                                                         </children>
-                                                      </TextFlow>
-                                                      <Button contentDisplay="CENTER" layoutX="130.0" layoutY="496.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="140.0" text="Detail">
-                                                         <font>
-                                                            <Font size="24.0" />
-                                                         </font>
-                                                      </Button>
-                                                   </children>
-                                                </Pane>
-                                                <Pane prefWidth="400.0">
-                                                   <children>
-                                                      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="100.0" layoutY="44.0" nodeOrientation="INHERIT" pickOnBounds="true">
-                                                         <image>
-                                                            <Image url="@images/gta.png" />
-                                                         </image>
-                                                      </ImageView>
-                                                      <TextFlow layoutX="59.0" layoutY="221.0" prefHeight="234.0" prefWidth="282.0">
-                                                         <children>
-                                                            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum." wrappingWidth="270.1028594970703" />
-                                                         </children>
-                                                      </TextFlow>
-                                                      <Button contentDisplay="CENTER" layoutX="130.0" layoutY="496.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="140.0" text="Detail">
-                                                         <font>
-                                                            <Font size="24.0" />
-                                                         </font>
-                                                      </Button>
-                                                   </children>
-                                                </Pane>
-                                                <Pane prefWidth="400.0">
-                                                   <children>
-                                                      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="100.0" layoutY="44.0" nodeOrientation="INHERIT" pickOnBounds="true">
-                                                         <image>
-                                                            <Image url="@images/gta.png" />
-                                                         </image>
-                                                      </ImageView>
-                                                      <TextFlow layoutX="59.0" layoutY="221.0" prefHeight="234.0" prefWidth="282.0">
-                                                         <children>
-                                                            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum." wrappingWidth="270.1028594970703" />
-                                                         </children>
-                                                      </TextFlow>
-                                                      <Button contentDisplay="CENTER" layoutX="130.0" layoutY="496.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="140.0" text="Detail">
-                                                         <font>
-                                                            <Font size="24.0" />
-                                                         </font>
-                                                      </Button>
-                                                   </children>
-                                                </Pane>
-                                                <Pane prefWidth="400.0">
-                                                   <children>
-                                                      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="100.0" layoutY="44.0" nodeOrientation="INHERIT" pickOnBounds="true">
-                                                         <image>
-                                                            <Image url="@images/gta.png" />
-                                                         </image>
-                                                      </ImageView>
-                                                      <TextFlow layoutX="59.0" layoutY="221.0" prefHeight="234.0" prefWidth="282.0">
-                                                         <children>
-                                                            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum." wrappingWidth="270.1028594970703" />
-                                                         </children>
-                                                      </TextFlow>
-                                                      <Button contentDisplay="CENTER" layoutX="130.0" layoutY="496.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="140.0" text="Detail">
-                                                         <font>
-                                                            <Font size="24.0" />
-                                                         </font>
-                                                      </Button>
-                                                   </children>
-                                                </Pane>
-                                                <Pane prefWidth="400.0">
-                                                   <children>
-                                                      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="100.0" layoutY="44.0" nodeOrientation="INHERIT" pickOnBounds="true">
-                                                         <image>
-                                                            <Image url="@images/gta.png" />
-                                                         </image>
-                                                      </ImageView>
-                                                      <TextFlow layoutX="59.0" layoutY="221.0" prefHeight="234.0" prefWidth="282.0">
-                                                         <children>
-                                                            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum." wrappingWidth="270.1028594970703" />
-                                                         </children>
-                                                      </TextFlow>
-                                                      <Button contentDisplay="CENTER" layoutX="130.0" layoutY="496.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="140.0" text="Detail">
-                                                         <font>
-                                                            <Font size="24.0" />
-                                                         </font>
-                                                      </Button>
-                                                   </children>
-                                                </Pane>
-                                             </children>
+                                          <HBox fx:id="gamesContainer" prefHeight="600.0">
+
                                           </HBox>
                                        </content>
                                     </ScrollPane>

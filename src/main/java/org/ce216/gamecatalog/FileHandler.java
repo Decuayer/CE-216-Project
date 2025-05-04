@@ -1,17 +1,20 @@
 package org.ce216.gamecatalog;
 
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
+
+import javafx.print.PrintColor;
 import org.json.*;
 
 public class FileHandler {
+    private static final String GAMESPATH = "data/games.json";
+    private static final String USERSPATH = "data/users.json";
 
-    public static List<Game> loadFromJSON(String filePath) throws IOException {
-        String content = new String(Files.readAllBytes(new File(filePath).toPath()));
+    public static List<Game> loadFromJSONGames() throws IOException {
+        String content = new String(Files.readAllBytes(new File(GAMESPATH).toPath()));
         JSONArray jsonArray = new JSONArray(content);
         List<Game> games = new ArrayList<>();
         for (int i = 0; i < jsonArray.length(); i++) {
@@ -19,25 +22,22 @@ public class FileHandler {
         }
         return games;
     }
-    public static void saveToJSON(List<Game> games, String filePath) {
-        File file = new File(filePath);
-        if (!file.exists()) {
-            System.out.println("File does not exist.");
-        } else {
-            System.out.println("File exists.");
-        }
 
-        // Oyunu storelayan Json arrayi
+    public static void saveToJSON(String filePath, List<Game> games) throws IOException {
         JSONArray jsonArray = new JSONArray();
         for (Game game : games) {
             jsonArray.put(new JSONObject(game.toJSON()));
         }
+        Files.write(new File(filePath).toPath(), jsonArray.toString(4).getBytes());
+    }
 
-        try (FileWriter writer = new FileWriter(filePath)) {
-            writer.write(jsonArray.toString(4));  // Write with indentation for readability
-            System.out.println("Game data saved to " + filePath);
-        } catch (IOException e) {
-            System.err.println("Failed to save file: " + e.getMessage());
+    public static void main(String[] args) throws IOException {
+        FileHandler fh = new FileHandler();
+        List<Game> test = fh.loadFromJSONGames();
+
+        for(Game game : test) {
+            System.out.println(game.getTitle());
         }
     }
 }
+
