@@ -47,7 +47,7 @@ public class SearchEngineUI extends Application {
 
         loadFilters();
 
-        Button searchButton = new Button("Search"); //search
+        Button searchButton = new Button("Search"); 
         searchButton.setOnAction(e -> performSearch());
 
         searchField.textProperty().addListener((observable, oldValue, newValue) -> performSearch());
