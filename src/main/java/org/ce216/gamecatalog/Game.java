@@ -39,7 +39,7 @@ public class Game {
     public String getDescription() {return description;}
 
 
-    public Game(String title, List<String> genre, String developer, String publisher, List<String> platforms, List<String> translators, String steamID, int releaseYear, double playtime, String format, String language, double rating, List<String> tags, String coverImagePath) {
+    public Game(String title, List<String> genre, String developer, String publisher, List<String> platforms, List<String> translators, String steamID, int releaseYear, double playtime, String format, String language, double rating, List<String> tags, String coverImagePath, String description) {
         this.title = title;
         this.genre = genre;
         this.developer = developer;
@@ -54,6 +54,7 @@ public class Game {
         this.rating = rating;
         this.tags = tags;
         this.coverImagePath = coverImagePath;
+        this.description = description;
     }
 
 
@@ -73,6 +74,7 @@ public class Game {
         json.put("rating", rating);
         json.put("tags", tags);
         json.put("coverImagePath", coverImagePath);
+        json.put("description", description);
         return json.toString(4);
     }
 
@@ -92,7 +94,8 @@ public class Game {
                 json.getString("language"),
                 json.has("rating") ? json.getDouble("rating") : 0.0,
                 json.has("tags") ? jsonArrayToList(json.getJSONArray("tags")) : new ArrayList<>(),
-                json.getString("coverImagePath")
+                json.getString("coverImagePath"),
+                json.getString("description")
         );
     }
 
@@ -102,6 +105,11 @@ public class Game {
             list.add(jsonArray.getString(i));
         }
         return list;
+    }
+
+    @Override
+    public String toString() {
+        return this.title;
     }
 
 

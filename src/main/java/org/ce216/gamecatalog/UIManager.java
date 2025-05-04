@@ -6,6 +6,7 @@ import java.util.List;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -23,12 +24,12 @@ public class UIManager extends Application {
     @Override
     public void start(Stage primaryStage) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("main-screen.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("inital-page.fxml"));
             Parent root = loader.load();
-            primaryStage.setTitle("Main Screen"); // uygulamanın ismini yaz buraya
+            Image icon = new Image(getClass().getResourceAsStream("/org/ce216/gamecatalog/images/logo.png"));
+            primaryStage.getIcons().add(icon);
+            primaryStage.setTitle("Login Page");
             primaryStage.setScene(new Scene(root));
-            primaryStage.setResizable(false);
-            primaryStage.initStyle(StageStyle.UNDECORATED);
             primaryStage.show();
         } catch (IOException e) {
             e.printStackTrace();
