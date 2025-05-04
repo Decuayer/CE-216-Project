@@ -40,7 +40,6 @@ dependencies {
   testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")
   implementation files('libs/json-20250107.jar')
   implementation 'org.json:json:20210307'
-  implementation 'com.google.code.gson:gson:2.10.1'
 }
 
 test {

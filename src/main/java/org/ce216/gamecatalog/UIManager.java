@@ -5,9 +5,8 @@ import java.util.Arrays;
 import java.util.List;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
-import javafx.stage.Screen;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -25,18 +24,13 @@ public class UIManager extends Application {
     @Override
     public void start(Stage primaryStage) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("store-page.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("inital-page.fxml"));
             Parent root = loader.load();
-            primaryStage.setTitle("Main Screen"); // uygulamanın ismini yaz buraya
+            Image icon = new Image(getClass().getResourceAsStream("/org/ce216/gamecatalog/images/logo.png"));
+            primaryStage.getIcons().add(icon);
+            primaryStage.setTitle("Login Page");
             primaryStage.setScene(new Scene(root));
-            primaryStage.setResizable(false);
-            primaryStage.initStyle(StageStyle.UNDECORATED);
             primaryStage.show();
-            Rectangle2D visualBounds = Screen.getPrimary().getVisualBounds();
-            primaryStage.setX(visualBounds.getMinX());
-            primaryStage.setY(visualBounds.getMinY());
-            primaryStage.setWidth(visualBounds.getWidth());
-            primaryStage.setHeight(visualBounds.getHeight());
         } catch (IOException e) {
             e.printStackTrace();
         }
