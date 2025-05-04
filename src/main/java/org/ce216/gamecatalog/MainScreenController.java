@@ -31,7 +31,7 @@ public class MainScreenController {
     private Button btMinMain;
     @FXML
     private Button btFullScrenMain;
-    private boolean isCustomFullScreen = false;
+    private boolean isCustomFullScreen = true;
 
     @FXML
     private void handleButtonClick() {
@@ -60,9 +60,7 @@ public class MainScreenController {
     public void setOnMouseEnteredY() {
         btMinMain.setStyle("-fx-background-color: rgba(0, 0, 0, 0.4);");
     }
-    public void setOnMouseExitedY() {
-        btMinMain.setStyle("-fx-background-color: transparent;");
-    }
+    public void setOnMouseExitedY() { btMinMain.setStyle("-fx-background-color: transparent;");}
     public void setOnMouseEnteredX() {
         btCloseMain.setStyle("-fx-background-color: rgba(196, 30, 58);");
     }

@@ -48,7 +48,7 @@ public class Game {
         this.publisher = publisher;
         this.platforms = platforms;
         this.translators = translators;
-        this.steamID = steamID;
+        this.steamID = UUID.randomUUID().toString();
         this.releaseYear = releaseYear;
         this.playtime = playtime;
         this.format = format;

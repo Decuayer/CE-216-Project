@@ -3,10 +3,12 @@ package org.ce216.gamecatalog;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.scene.control.TextField;
 
@@ -39,6 +41,12 @@ public class InitalPage {
         stage.setResizable(true);
         stage.setTitle("Main Screen");
         stage.show();
+        Rectangle2D visualBounds = Screen.getPrimary().getVisualBounds();
+        stage.setX(visualBounds.getMinX());
+        stage.setY(visualBounds.getMinY());
+        stage.setWidth(visualBounds.getWidth());
+        stage.setHeight(visualBounds.getHeight());
+
     }
 
     public void switchScenetoRegisterPage(ActionEvent event) throws IOException {
