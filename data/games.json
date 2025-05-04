@@ -1,0 +1,47 @@
+[
+  {
+    "title": "Elden Ring",
+    "genre": ["Action RPG", "Fantasy"],
+    "developer": "FromSoftware",
+    "publisher": "Bandai Namco",
+    "platforms": ["PC", "PS5", "Xbox Series X"],
+    "translators": ["Translator1", "Translator2"],
+    "releaseYear": 2022,
+    "format": "Digital",
+    "language": "English",
+    "rating": 9.5,
+    "tags": ["Open World", "Soulslike", "Boss Fights"],
+    "coverImagePath": "/org/ce216/gamecatalog/images/gta.png",
+    "description": "A dark and expansive open-world RPG filled with challenging enemies and intricate lore, crafted by FromSoftware."
+  },
+  {
+    "title": "The Witcher 3",
+    "genre": ["RPG", "Adventure"],
+    "developer": "CD Projekt Red",
+    "publisher": "CD Projekt",
+    "platforms": ["PC", "PS4", "Xbox One", "Switch"],
+    "translators": ["Translator3"],
+    "releaseYear": 2015,
+    "format": "Physical",
+    "language": "English",
+    "rating": 9.8,
+    "tags": ["Story Rich", "Open World", "Choices Matter"],
+    "coverImagePath": "/org/ce216/gamecatalog/images/gta.png",
+    "description": "Step into the shoes of Geralt of Rivia in this epic tale of monster hunting, deep narrative, and rich fantasy world."
+  },
+  {
+    "title": "Hollow Knight",
+    "genre": ["Metroidvania", "Platformer"],
+    "developer": "Team Cherry",
+    "publisher": "Team Cherry",
+    "platforms": ["PC", "Switch", "PS4", "Xbox One"],
+    "translators": ["Translator4", "Translator5"],
+    "releaseYear": 2017,
+    "format": "Digital",
+    "language": "English",
+    "rating": 9.1,
+    "tags": ["Indie", "Exploration", "Challenging"],
+    "coverImagePath": "/org/ce216/gamecatalog/images/lol.png",
+    "description": "Descend into a beautifully hand-drawn world of insects and mystery in this challenging and atmospheric platformer."
+  }
+]
