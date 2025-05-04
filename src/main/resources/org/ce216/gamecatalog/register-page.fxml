@@ -11,7 +11,6 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane fx:id="btFullScreenMain" prefHeight="420.0" prefWidth="420.0" style="-fx-background-color: linear-gradient(to bottom right, #7f00ff, #e100ff);" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.ce216.gamecatalog.RegisterPage">
@@ -49,19 +48,6 @@
             <Font name="Arial" size="16.0" />
          </font>
       </Button>
-      <Pane fx:id="topPaneInitalPage" layoutX="2.0" onMouseDragged="#handleMovementAction" onMousePressed="#handleClickAction" prefHeight="27.0" prefWidth="420.0" scaleShape="false">
-         <children>
-            <Button fx:id="btCloseReg" layoutX="390.0" layoutY="-2.0" mnemonicParsing="false" onAction="#CloseWindow" onMouseEntered="#setOnMouseEnteredX" onMouseExited="#setOnMouseExitedX" prefHeight="30.6" prefWidth="26.8" style="-fx-background-color: UNDECORATED;" text="X" textFill="WHITE">
-               <font>
-                  <Font size="15.0" />
-               </font>
-            </Button>
-            <Button fx:id="btMinReg" layoutX="363.0" layoutY="-2.0" mnemonicParsing="false" onAction="#MinWindow" onMouseEntered="#setOnMouseEnteredY" onMouseExited="#setOnMouseExitedY" prefHeight="30.6" prefWidth="26.8" style="-fx-background-color: UNDECORATED;" text="-" textFill="WHITE">
-               <font>
-                  <Font size="15.0" />
-               </font>
-            </Button>
-         </children></Pane>
       <TextField id="emailaddressfield" fx:id="emailaddresfield" layoutX="51.0" layoutY="210.0" prefHeight="42.0" prefWidth="320.0" promptText="  Email Address" style="-fx-background-color: #27323f; -fx-text-fill: #FFFFFF; -fx-background-radius: 25; -fx-opacity: 0.5; -fx-prompt-text-fill: #FFFFFF;">
          <font>
             <Font name="Arial Bold" size="15.0" />

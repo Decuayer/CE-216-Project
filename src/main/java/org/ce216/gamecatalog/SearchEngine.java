@@ -1,30 +1,57 @@
 package org.ce216.gamecatalog;
-
 import java.util.ArrayList;
 import java.util.List;
 
 public class SearchEngine {
-    public static List<Game> searchGames(List<Game> games, String query) {
+    public static List<Game> searchByTitle(List<Game> games, String title) {
         List<Game> results = new ArrayList<>();
-        String lowerQuery = query.toLowerCase();
-
         for (Game game : games) {
-            if (
-                    game.getTitle().toLowerCase().contains(lowerQuery) ||
-                            game.getDeveloper().toLowerCase().contains(lowerQuery) ||
-                            game.getPublisher().toLowerCase().contains(lowerQuery) ||
-                            String.valueOf(game.getReleaseYear()).contains(lowerQuery) ||
-                            game.getGenre().stream().anyMatch(g -> g.toLowerCase().contains(lowerQuery)) ||
-                            game.getTags().stream().anyMatch(tag -> tag.toLowerCase().contains(lowerQuery)) ||
-                            game.getPlatforms().stream().anyMatch(p -> p.toLowerCase().contains(lowerQuery)) ||
-                            game.getTranslators().stream().anyMatch(t -> t.toLowerCase().contains(lowerQuery)) ||
-                            game.getLanguage().toLowerCase().contains(lowerQuery)||
-                        String.valueOf(game.getSteamID()).contains(lowerQuery)
-            ) {
+            if (game.getTitle().toLowerCase().contains(title.toLowerCase())) {
                 results.add(game);
             }
         }
-
         return results;
     }
+
+    public static List<Game> searchByDeveloper(List<Game> games, String developer) {
+        List<Game> results = new ArrayList<>();
+        for (Game game : games) {
+            if (game.getDeveloper().equalsIgnoreCase(developer)) {
+                results.add(game);
+            }
+        }
+        return results;
+    }
+
+    public static List<Game> searchByGenre(List<Game> games, String genre) {
+        List<Game> results = new ArrayList<>();
+        for (Game game : games) {
+            if (game.getGenre().contains(genre)) {
+                results.add(game);
+            }
+        }
+        return results;
+    }
+
+    public static List<Game> searchByYear(List<Game> games, int year) {
+        List<Game> results = new ArrayList<>();
+        for (Game game : games) {
+            if (game.getReleaseYear() == year) {
+                results.add(game);
+            }
+        }
+        return results;
+    }
+
+    public static List<Game> searchByTag(List<Game> games, String tag) {
+        List<Game> results = new ArrayList<>();
+        for (Game game : games) {
+            if (game.getTags().contains(tag)) {
+                results.add(game);
+            }
+        }
+        return results;
+    }
+    // tryout push pull for github, tryout 1
 }
+
