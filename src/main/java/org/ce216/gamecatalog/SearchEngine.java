@@ -2,7 +2,7 @@ package org.ce216.gamecatalog;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SearchEngine extends User {
+public class SearchEngine {
     public static List<Game> searchByTitle(List<Game> games, String title) {
         List<Game> results = new ArrayList<>();
         for (Game game : games) {

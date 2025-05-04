@@ -3,41 +3,58 @@ package org.ce216.gamecatalog;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.scene.control.TextField;
 
 import java.io.IOException;
 import java.util.List;
 
+
+// TODO
+// Terminale giriş yaptınız veya hata falan diye yazılan şeyler ya popup ekran şekilde çıkacak ya da menün içersinde bir yerde belirecek.
+
+
 public class InitalPage {
 
-    @FXML private TextField usernameField;
-    @FXML private TextField passwordField;
+    // Giriş yapan kullanıcı bilgisi
+    private static User loggedInUser;
 
+    public static User getLoggedInUser() {
+        return loggedInUser;
+    }
+
+
+    @FXML
+    private TextField usernameField;
+    @FXML
+    private TextField passwordField;
     @FXML
     private Stage stage;
     @FXML
     private Scene scene;
-    @FXML
-    private Button btClose;
-    @FXML
-    private Button btMin;
-
-    protected double offsetX;
-    protected double offsetY;
-
 
     public void switchScenetoMainMenu(ActionEvent event) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("main-screen.fxml"));
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         scene = new Scene(fxmlLoader.load());
-        stage.setScene(scene);
+        Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
+        double screenWidth = screenBounds.getWidth();
+        double screenHeight = screenBounds.getHeight();
+        stage.setWidth(1300);
+        stage.setHeight(850);
         stage.setResizable(true);
-        stage.setTitle("Main Screen");
+        // Ekranın ortasına açılmasını sağlıyor
+        stage.setX((screenWidth - stage.getWidth()) / 2);
+        stage.setY((screenHeight - stage.getHeight()) / 2);
+        //
+        stage.setTitle("Main Page");
+        stage.setScene(scene);
         stage.show();
     }
 
@@ -50,41 +67,7 @@ public class InitalPage {
         stage.setTitle("Register Page");
         stage.show();
     }
-
-    public void CloseWindow(ActionEvent event) {
-        Stage stageCurrent = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        btClose.getScene().getWindow();
-        stageCurrent.close();
-    }
-
-    public void MinWindow(ActionEvent event) {
-        Stage stageCurrent = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        btMin.getScene().getWindow();
-        stageCurrent.setIconified(true);
-    }
-    public void handleClickAction(MouseEvent event) {
-        offsetX = event.getSceneX();
-        offsetY = event.getSceneY();
-    }
-    public void handleMovementAction(MouseEvent event) {
-        Stage stageCurrent = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stageCurrent.setX(event.getScreenX() - offsetX);
-        stageCurrent.setY(event.getScreenY() - offsetY);
-    }
-    public void setOnMouseEnteredY() {
-        btMin.setStyle("-fx-background-color: rgba(0, 0, 0, 0.4);");
-    }
-    public void setOnMouseExitedY() {
-        btMin.setStyle("-fx-background-color: transparent;");
-    }
-    public void setOnMouseEnteredX() {
-        btClose.setStyle("-fx-background-color: rgba(196, 30, 58);");
-    }
-    public void setOnMouseExitedX() {
-        btClose.setStyle("-fx-background-color: transparent;");
-    }
-
-    //login methodu
+    // Login Function
     public void loginButton(ActionEvent event) throws IOException {
         String username = usernameField.getText();
         String password = passwordField.getText();
@@ -95,7 +78,7 @@ public class InitalPage {
         }
 
         try {
-            List<User> users = UserManager.getUsers();
+            List<User> users = FileHandler.loadFromJSONUsers();
 
             //kullanıcı var mı bakıyo
             User user = users.stream().filter(u -> u.getUsername().equals(username)).findFirst().orElse(null);
@@ -104,9 +87,11 @@ public class InitalPage {
                 System.out.println("User not found");
                 return;
             }
+            System.out.println("Sifre: 1234");
 
             if (user.getPasswordHash().equals(user.hashPassword(password))) {
                 System.out.println("User logged in");
+                loggedInUser = user;
                 switchScenetoMainMenu(event);
             } else {
                 System.out.println("Password is wrong");

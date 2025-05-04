@@ -23,12 +23,14 @@ public class FileHandler {
         return games;
     }
 
-    public static void saveToJSON(String filePath, List<Game> games) throws IOException {
-        JSONArray jsonArray = new JSONArray();
-        for (Game game : games) {
-            jsonArray.put(new JSONObject(game.toJSON()));
+    public static List<User> loadFromJSONUsers() throws IOException {
+        String content = new String(Files.readAllBytes(new File(USERSPATH).toPath()));
+        JSONArray jsonArray = new JSONArray(content);
+        List<User> users = new ArrayList<>();
+        for(int i = 0; i < jsonArray.length(); i++) {
+            users.add(User.fromJSON(jsonArray.getJSONObject(i).toString()));
         }
-        Files.write(new File(filePath).toPath(), jsonArray.toString(4).getBytes());
+        return users;
     }
 
     public static void main(String[] args) throws IOException {

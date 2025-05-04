@@ -13,7 +13,13 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
+
+// TODO
+// Terminale kayıt oldunuz hata falan diye yazılan şeyler ya popup ekran şekilde çıkacak ya da menün içersinde bir yerde belirecek.
+
+
 
 public class RegisterPage {
     @FXML private TextField registeragefield;
@@ -119,12 +125,12 @@ public class RegisterPage {
             String email  = emailaddresfield.getText();
             String favoriteGenre = registerselectionBox.getSelectionModel().getSelectedItem();
 
-            GameCatalog userLibrary= new GameCatalog();
-            GameCatalog gameLibrary= new GameCatalog();
+            List<Game> userLibrary = new ArrayList<>();
+            List<Game> gameLibrary = new ArrayList<>();
 
             User newUser = new User (username,password,age,email,gameLibrary,userLibrary,favoriteGenre);
 
-            List<User> users = UserManager.getUsers();
+            List<User> users = FileHandler.loadFromJSONUsers();
 
             boolean userExists = users.stream().anyMatch(u -> u.getUsername().equalsIgnoreCase(username));
             if (userExists) {
@@ -133,7 +139,13 @@ public class RegisterPage {
             }
 
             users.add(newUser);
-            UserManager.saveUsers(users);
+            // TODO
+            // User Manager classı kaldırıldı GSON kütüphnaesi kaldırıldığı için
+            // File Handler içerisine saveUsers() fonksiyonu yazılacak.
+            // FONKSİYONUN İSMİ DÜZGÜN OLSUN => saveFromUsersToJSON()
+            // UserManager.saveUsers(users); (KALDIRILDI).
+
+
             System.out.println("User added");
         } catch (Exception e) {
             e.printStackTrace();
