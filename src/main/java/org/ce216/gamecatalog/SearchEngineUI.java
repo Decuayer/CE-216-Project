@@ -42,19 +42,19 @@ public class SearchEngineUI extends Application {
 
     private void performSearch() {
         String query = searchField.getText().trim();
-        List<Game> results = SearchEngine.searchGames(allGames, query);
+        //List<Game> results = SearchEngine.searchGames(allGames, query);
 
         try{
-            allGames=FileHandler.loadFromJSON("game.json");
+            allGames=FileHandler.loadFromJSONGames();
         }
         catch(IOException e){
             System.err.println("Failed to load games"+e.getMessage());
         }
 
         displayedResults.clear();
-        for (Game game : results) {
-            displayedResults.add(game.getTitle()); //add the game to display results
-        }
+        //for (Game game : results) {
+        //    displayedResults.add(game.getTitle()); //add the game to display results
+        //}
     }
 
     public static void main(String[] args) {

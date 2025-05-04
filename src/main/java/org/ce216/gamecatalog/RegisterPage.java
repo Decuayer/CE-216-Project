@@ -51,69 +51,6 @@ public class RegisterPage {
         stage.setTitle("Main Screen");
         stage.show();
     }
-    public void switchScenetoNextRegisterMenu(ActionEvent event) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("next-register-page.fxml"));
-        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        scene = new Scene(fxmlLoader.load());
-        stage.setScene(scene);
-        stage.setResizable(false);
-        stage.setTitle("Register Page");
-        stage.show();
-    }
-    public void CloseWindow(ActionEvent event) {
-        Stage stageCurrent = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        btCloseReg.getScene().getWindow();
-        stageCurrent.close();
-    }
-
-    public boolean isAgeValid() {
-        String ageText = registeragefield.getText().trim();
-
-
-        if (!ageText.matches("\\d+")) {
-            System.out.println("Yaş sadece rakamlardan oluşmalı.");
-            return false;
-        }
-
-        int age = Integer.parseInt(ageText);
-
-
-        if (age < 0 || age > 99) {
-            System.out.println("Yaş 0 ile 99 arasında olmalı.");
-            return false;
-        }
-
-        return true;
-    }
-
-    public void MinWindow(ActionEvent event) {
-        Stage stageCurrent = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        btMinReg.getScene().getWindow();
-        stageCurrent.setIconified(true);
-    }
-    public void handleClickAction(MouseEvent event) {
-        offsetX = event.getSceneX();
-        offsetY = event.getSceneY();
-    }
-    public void handleMovementAction(MouseEvent event) {
-        Stage stageCurrent = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stageCurrent.setX(event.getScreenX() - offsetX);
-        stageCurrent.setY(event.getScreenY() - offsetY);
-    }
-
-
-    public void setOnMouseEnteredY() {
-        btMinReg.setStyle("-fx-background-color: rgba(0, 0, 0, 0.4);");
-    }
-    public void setOnMouseExitedY() {
-        btMinReg.setStyle("-fx-background-color: transparent;");
-    }
-    public void setOnMouseEnteredX() {
-        btCloseReg.setStyle("-fx-background-color: rgba(196, 30, 58);");
-    }
-    public void setOnMouseExitedX() {
-        btCloseReg.setStyle("-fx-background-color: transparent;");
-    }
 
     //kayıt json methodu.
     public void registerButton(ActionEvent event) throws Exception {

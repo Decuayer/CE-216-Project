@@ -86,7 +86,7 @@ public class InitalPage {
         try {
             List<User> users = FileHandler.loadFromJSONUsers();
 
-            //kullanıcı var mı bakıyo
+            // Username Control
             User user = users.stream().filter(u -> u.getUsername().equals(username)).findFirst().orElse(null);
 
             if (user == null) {

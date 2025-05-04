@@ -61,9 +61,6 @@
                                           <MenuItem mnemonicParsing="false" text="Low to High Playtime" />
                                        </items>
                                     </SplitMenuButton>
-                                    <Button fx:id="btMinMain" layoutX="168.0" layoutY="61.0" mnemonicParsing="false" onAction="#MinWindow" onMouseEntered="#setOnMouseEnteredY" onMouseExited="#setOnMouseExitedY" prefHeight="6.0" prefWidth="5.0" style="-fx-background-color: UNDECORATED;" text="-" />
-                                    <Button fx:id="btFullScrenMain" layoutX="127.0" layoutY="61.0" mnemonicParsing="false" onAction="#makeFullScren" onMouseEntered="#setOnMouseEnteredA" onMouseExited="#setOnMouseExitedA" style="-fx-background-color: UNDECORATED;" text="A" />
-                                    <Button fx:id="btCloseMain" layoutX="103.0" layoutY="74.0" mnemonicParsing="false" onAction="#CloseWindow" onMouseEntered="#setOnMouseEnteredX" onMouseExited="#setOnMouseExitedX" prefHeight="25.0" prefWidth="24.0" style="-fx-background-color: UNDECORATED;" text="X" />
                                  </children>
                               </AnchorPane>
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="460.0" prefWidth="807.0">
