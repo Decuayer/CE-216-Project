@@ -3,13 +3,14 @@ package org.ce216.gamecatalog;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
-import javafx.scene.control.Control;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
+import javafx.geometry.Rectangle2D;
+import javafx.scene.Node;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
@@ -19,6 +20,8 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
+import javafx.stage.Screen;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
@@ -33,6 +36,12 @@ public class GeneralController implements Initializable {
     private ListView<Game> libraryGames;
     @FXML
     private VBox libraryPane;
+
+    @FXML
+    private ObservableList<Game> gamesObservableList = FXCollections.observableArrayList();
+
+    @FXML
+    private Button logout;
 
 
     @Override
@@ -55,9 +64,11 @@ public class GeneralController implements Initializable {
         }
 
         // LIBRARY SECTION
-        List<Game> userGameList = loggedInUser.getGameCatalog();
 
-        ObservableList<Game> gamesObservableList = FXCollections.observableArrayList(userGameList);
+        System.out.println("initialize: " + loggedInUser.getGameCatalog());
+
+
+        gamesObservableList.setAll(loggedInUser.getGameCatalog());
         libraryGames.setItems(gamesObservableList);
 
         libraryGames.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
@@ -65,6 +76,34 @@ public class GeneralController implements Initializable {
             if (newValue != null) {
                 Pane libraryPaneGame = createGameLibrary(newValue);  // Seçilen oyun bilgilerini sağ panelde güncelle
                 libraryPane.getChildren().addAll(libraryPaneGame);
+            }
+        });
+
+        logout.setOnAction(event -> {
+            try {
+                InitalPage.setLoggedInUser(null);
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("inital-page.fxml"));
+                Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                Scene scene = new Scene(loader.load());
+                Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
+                double screenWidth = screenBounds.getWidth();
+                double screenHeight = screenBounds.getHeight();
+                stage.setWidth(420);
+                stage.setHeight(420);
+                stage.setResizable(true);
+                stage.setX((screenWidth - stage.getWidth()) / 2);
+                stage.setY((screenHeight - stage.getHeight()) / 2);
+                stage.setScene(scene);
+                stage.setTitle("Login Page");
+                stage.setResizable(false);
+                stage.show();
+            } catch (IOException e) {
+                e.printStackTrace();
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Logout Failed");
+                alert.setHeaderText(null);
+                alert.setContentText("An error occurred while logging out.");
+                alert.showAndWait();
             }
         });
 
@@ -146,6 +185,42 @@ public class GeneralController implements Initializable {
         secondPane.getChildren().addAll(titleBox, descBox,infoBox,buttonBox);
 
         pane.getChildren().addAll(firstPane, secondPane);
+
+        addLibraryButton.setOnAction(event -> {
+            User loggedInUser = InitalPage.getLoggedInUser();
+
+            boolean alreadyExists = loggedInUser.getGameCatalog().stream()
+                    .anyMatch(g -> g.getSteamID().equals(game.getSteamID()));
+
+            if (!alreadyExists) {
+                loggedInUser.getGameCatalog().add(game);
+
+                try {
+                    FileHandler.addGameToUserCatalog(loggedInUser.getUsername(), game.getSteamID());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+                    errorAlert.setTitle("Error");
+                    errorAlert.setHeaderText("Could not save game to file");
+                    errorAlert.setContentText("An error occurred while saving the game to your library.");
+                    errorAlert.showAndWait();
+                    return;
+                }
+                refreshLibrary();
+
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Game Added");
+                alert.setHeaderText(null);
+                alert.setContentText(game.getTitle() + " has been added to your library!");
+                alert.showAndWait();
+            } else {
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Already in Library");
+                alert.setHeaderText(null);
+                alert.setContentText(game.getTitle() + " is already in your library.");
+                alert.showAndWait();
+            }
+        });
 
         return pane;
     }
@@ -229,6 +304,42 @@ public class GeneralController implements Initializable {
 
         pane.getChildren().addAll(firstPane, secondPane);
 
+        deleteLibraryButton.setOnAction(event -> {
+            User loggedInUser = InitalPage.getLoggedInUser();
+
+            boolean removed = loggedInUser.getGameCatalog().removeIf(g -> g.getSteamID().equals(game.getSteamID()));
+
+            if (removed) {
+                try {
+                    FileHandler.removeGameFromUserCatalog(loggedInUser.getUsername(), game.getSteamID());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+                    errorAlert.setTitle("Error");
+                    errorAlert.setHeaderText("Could not remove game from file");
+                    errorAlert.setContentText("An error occurred while removing the game from your library.");
+                    errorAlert.showAndWait();
+                    return;
+                }
+
+                refreshLibrary();
+                libraryPane.getChildren().clear();
+
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Game Removed");
+                alert.setHeaderText(null);
+                alert.setContentText(game.getTitle() + " has been removed from your library.");
+                alert.showAndWait();
+            } else {
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Not Found");
+                alert.setHeaderText(null);
+                alert.setContentText("This game was not found in your library.");
+                alert.showAndWait();
+            }
+        });
+
+
         return pane;
     }
 
@@ -240,6 +351,11 @@ public class GeneralController implements Initializable {
         valueText.setFont(Font.font("Arial", FontWeight.NORMAL, 12));
 
         return new TextFlow(labelText, valueText);
+    }
+
+    private void refreshLibrary() {
+        User loggedInUser = InitalPage.getLoggedInUser();
+        gamesObservableList.setAll(loggedInUser.getGameCatalog());
     }
 
 

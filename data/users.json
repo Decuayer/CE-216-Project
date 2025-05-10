@@ -1,47 +1,85 @@
 [
-  {
-    "username": "travis",
-    "passwordHash": "03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4",
-    "age": 21,
-    "email": "travisscott@gmail.com",
-    "gameCatalog": ["1", "2", "3", "4"],
-    "favoriteGames": ["3", "4"],
-    "favoriteGenre": "Action"
-  },
-  {
-    "username": "demir",
-    "passwordHash": "03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4",
-    "age": 20,
-    "email": "demircucu@gmail.com",
-    "gameCatalog": ["1", "2", "3", "4", "5", "6", "7"],
-    "favoriteGames": ["3", "4"],
-    "favoriteGenre": "Action"
-  },
-  {
-    "username": "tutku",
-    "passwordHash": "03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4",
-    "age": 21,
-    "email": "tutkubayır@gmail.com",
-    "gameCatalog": ["3", "4"],
-    "favoriteGames": ["3", "4"],
-    "favoriteGenre": "Action"
-  },
-  {
-    "username": "cenker",
-    "passwordHash": "03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4",
-    "age": 21,
-    "email": "ahmetcenker@gmail.com",
-    "gameCatalog": ["3", "4"],
-    "favoriteGames": ["3", "4"],
-    "favoriteGenre": "Action"
-  },
-  {
-    "username": "alp",
-    "passwordHash": "03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4",
-    "age": 22,
-    "email": "ahmetcenker@gmail.com",
-    "gameCatalog": ["3", "4","6", "8"],
-    "favoriteGames": ["3", "4"],
-    "favoriteGenre": "Action"
-  }
+    {
+        "favoriteGenre": "Action",
+        "favoriteGames": [
+            "3",
+            "4"
+        ],
+        "passwordHash": "03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4",
+        "age": 21,
+        "email": "travisscott@gmail.com",
+        "gameCatalog": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "6",
+            "5",
+            "7",
+            "8"
+        ],
+        "username": "travis"
+    },
+    {
+        "favoriteGenre": "Action",
+        "favoriteGames": [
+            "3",
+            "4"
+        ],
+        "passwordHash": "03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4",
+        "age": 20,
+        "email": "demircucu@gmail.com",
+        "gameCatalog": [
+            "2",
+            "4"
+        ],
+        "username": "demir"
+    },
+    {
+        "favoriteGenre": "Action",
+        "favoriteGames": [
+            "3",
+            "4"
+        ],
+        "passwordHash": "03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4",
+        "age": 21,
+        "email": "tutkubayır@gmail.com",
+        "gameCatalog": [
+            "3",
+            "4"
+        ],
+        "username": "tutku"
+    },
+    {
+        "favoriteGenre": "Action",
+        "favoriteGames": [
+            "3",
+            "4"
+        ],
+        "passwordHash": "03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4",
+        "age": 21,
+        "email": "ahmetcenker@gmail.com",
+        "gameCatalog": [
+            "3",
+            "4"
+        ],
+        "username": "cenker"
+    },
+    {
+        "favoriteGenre": "Action",
+        "favoriteGames": [
+            "3",
+            "4"
+        ],
+        "passwordHash": "03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4",
+        "age": 22,
+        "email": "ahmetcenker@gmail.com",
+        "gameCatalog": [
+            "3",
+            "4",
+            "6",
+            "8"
+        ],
+        "username": "alp"
+    }
 ]
