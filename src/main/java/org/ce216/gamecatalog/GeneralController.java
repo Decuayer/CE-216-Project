@@ -222,6 +222,10 @@ public class GeneralController implements Initializable {
             }
         });
 
+        detailButton.setOnAction(event -> {
+            showGameDetailPopup(game);
+        });
+
         return pane;
     }
 
@@ -339,6 +343,9 @@ public class GeneralController implements Initializable {
             }
         });
 
+        detailButton.setOnAction(event -> {
+            showGameDetailPopup(game);
+        });
 
         return pane;
     }
@@ -356,6 +363,54 @@ public class GeneralController implements Initializable {
     private void refreshLibrary() {
         User loggedInUser = InitalPage.getLoggedInUser();
         gamesObservableList.setAll(loggedInUser.getGameCatalog());
+    }
+
+    private void showGameDetailPopup(Game game) {
+        Stage popupStage = new Stage();
+        popupStage.setTitle(game.getTitle() + " - Details");
+
+        VBox detailPane = new VBox(10);
+        detailPane.setPadding(new Insets(15));
+        detailPane.setStyle("-fx-background-color: white;");
+        detailPane.setAlignment(Pos.TOP_LEFT);
+
+        Image image = new Image(getClass().getResourceAsStream(game.getCoverImagePath()), 300, 200, true, true);
+        ImageView imageView = new ImageView(image);
+        imageView.setPreserveRatio(true);
+        imageView.setSmooth(true);
+        imageView.setCache(true);
+
+        Label title = new Label(game.getTitle());
+        title.setFont(Font.font("Arial", FontWeight.BOLD, 20));
+
+        TextFlow descriptionFlow = new TextFlow(new Text(game.getDescription()));
+        descriptionFlow.setMaxWidth(400);
+
+        VBox infoBox = new VBox(5);
+        infoBox.getChildren().addAll(
+                boldLabel("Genre", String.join(", ", game.getGenre())),
+                boldLabel("Developer", game.getDeveloper()),
+                boldLabel("Publisher", game.getPublisher()),
+                boldLabel("Platforms", String.join(", ", game.getPlatforms())),
+                boldLabel("Translators", String.join(", ", game.getTranslators())),
+                boldLabel("Steam ID", game.getSteamID()),
+                boldLabel("Release Year", String.valueOf(game.getReleaseYear())),
+                boldLabel("Playtime", game.getPlaytime() + " hrs"),
+                boldLabel("Format", game.getFormat()),
+                boldLabel("Language", game.getLanguage()),
+                boldLabel("Rating", game.getRating() + "/10"),
+                boldLabel("Tags", String.join(", ", game.getTags()))
+        );
+
+        ScrollPane scrollPane = new ScrollPane();
+        VBox content = new VBox(15, imageView, title, descriptionFlow, infoBox);
+        content.setPadding(new Insets(10));
+        scrollPane.setContent(content);
+        scrollPane.setFitToWidth(true);
+
+        Scene popupScene = new Scene(scrollPane, 500, 600);
+        popupStage.setScene(popupScene);
+        popupStage.show();
     }
 
 
