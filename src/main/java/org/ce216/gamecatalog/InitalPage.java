@@ -28,6 +28,9 @@ public class InitalPage {
     public static User getLoggedInUser() {
         return loggedInUser;
     }
+    public static void setLoggedInUser(User user) {
+        loggedInUser = user;
+    }
 
 
     @FXML
@@ -73,6 +76,8 @@ public class InitalPage {
         stage.setTitle("Register Page");
         stage.show();
     }
+
+
     // Login Function
     public void loginButton(ActionEvent event) throws IOException {
         String username = usernameField.getText();
@@ -96,7 +101,7 @@ public class InitalPage {
             System.out.println("Sifre: 1234");
 
             if (user.getPasswordHash().equals(user.hashPassword(password))) {
-                System.out.println("User logged in");
+                System.out.println("User logged in " + user.getUsername());
                 loggedInUser = user;
                 switchScenetoMainMenu(event);
             } else {
@@ -109,4 +114,5 @@ public class InitalPage {
         }
 
     }
+
 }

@@ -41,5 +41,65 @@ public class FileHandler {
             System.out.println(game.getTitle());
         }
     }
+
+    public static void addGameToUserCatalog(String username, String steamID) throws IOException {
+        File userFile = new File(USERSPATH);
+        String content = new String(Files.readAllBytes(userFile.toPath()));
+        JSONArray usersArray = new JSONArray(content);
+
+        for (int i = 0; i < usersArray.length(); i++) {
+            JSONObject userObj = usersArray.getJSONObject(i);
+            if (userObj.getString("username").equals(username)) {
+                JSONArray gameCatalog = userObj.getJSONArray("gameCatalog");
+
+                boolean alreadyExists = false;
+                for (int j = 0; j < gameCatalog.length(); j++) {
+                    if (gameCatalog.getString(j).equals(steamID)) {
+                        alreadyExists = true;
+                        break;
+                    }
+                }
+
+                if (!alreadyExists) {
+                    gameCatalog.put(steamID);
+                    System.out.println("SteamID " + steamID + " added to user " + username);
+                } else {
+                    System.out.println("SteamID " + steamID + " already exists for user " + username);
+                }
+
+                Files.write(userFile.toPath(), usersArray.toString(4).getBytes());
+                return;
+            }
+        }
+
+        System.out.println("User not found: " + username);
+    }
+
+    public static void removeGameFromUserCatalog(String username, String steamID) throws IOException {
+        File userFile = new File(USERSPATH);
+        String content = new String(Files.readAllBytes(userFile.toPath()));
+        JSONArray usersArray = new JSONArray(content);
+
+        for (int i = 0; i < usersArray.length(); i++) {
+            JSONObject userObj = usersArray.getJSONObject(i);
+            if (userObj.getString("username").equals(username)) {
+                JSONArray gameCatalog = userObj.getJSONArray("gameCatalog");
+
+                for (int j = 0; j < gameCatalog.length(); j++) {
+                    if (gameCatalog.getString(j).equals(steamID)) {
+                        gameCatalog.remove(j);
+                        System.out.println("SteamID " + steamID + " removed from user " + username);
+                        break;
+                    }
+                }
+
+                Files.write(userFile.toPath(), usersArray.toString(4).getBytes());
+                return;
+            }
+        }
+
+        System.out.println("User not found: " + username);
+    }
+
 }
 
