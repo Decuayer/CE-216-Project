@@ -28,7 +28,7 @@ javafx {
 
 run {
   jvmArgs = [
-          '--module-path', 'C:/Java/lib', // Bu yolu güncellemeniz gerekebilir
+          '--module-path', 'C:/Java/lib',  // Burada doğru JavaFX modül yolunu belirtmelisin
           '--add-modules', 'javafx.controls,javafx.fxml'
   ]
 }

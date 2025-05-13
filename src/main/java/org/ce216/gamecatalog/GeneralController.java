@@ -23,6 +23,8 @@ import javafx.scene.text.TextFlow;
 import javafx.stage.FileChooser;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -47,6 +49,9 @@ public class GeneralController implements Initializable {
     private ObservableList<Game> gamesObservableList = FXCollections.observableArrayList();
 
     @FXML
+    private ListView<Game> allGamesList;
+
+    @FXML
     private Button logout;
 
     @FXML
@@ -62,12 +67,11 @@ public class GeneralController implements Initializable {
         // Login Control
         User loggedInUser = InitalPage.getLoggedInUser();
 
-        // STORE SECTION
+        // REFRESH METHOD
         refreshGames();
 
         // ADD GAME SECTION
         addGameButton.setOnAction(e -> showAddGameDialog());
-
 
         // LIBRARY SECTION
 
@@ -508,7 +512,7 @@ public class GeneralController implements Initializable {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Error");
                 alert.setHeaderText("Could Not Add Game");
-                alert.setContentText("Please ensure all fields are filled out correctly.");
+                alert.setContentText(ex.getMessage());
                 alert.showAndWait();
             } finally {
                 refreshGames();
@@ -562,7 +566,7 @@ public class GeneralController implements Initializable {
             Pane gamePane = createGamePane(game);
             gamesContainer.getChildren().add(gamePane);
         }
-
+        initializeAllGames();
         initializeGameJsonFileList();
     }
 
@@ -623,13 +627,14 @@ public class GeneralController implements Initializable {
         File selectedFile = fileChooser.showOpenDialog(null); // veya sahne referansını ver
 
         if (selectedFile != null) {
+            File copiedFile = null;  // try dışına alındı
             try {
                 File targetDir = new File("data/added");
                 if (!targetDir.exists()) {
                     targetDir.mkdirs();
                 }
 
-                File copiedFile = new File(targetDir, selectedFile.getName());
+                copiedFile = new File(targetDir, selectedFile.getName());
                 Files.copy(selectedFile.toPath(), copiedFile.toPath(), java.nio.file.StandardCopyOption.REPLACE_EXISTING);
 
                 FileHandler.importGameFromJsonFile(copiedFile.getPath());
@@ -641,20 +646,19 @@ public class GeneralController implements Initializable {
                 alert.showAndWait();
 
             } catch (IOException e) {
-                e.printStackTrace();
-                showError("Dosya yüklenemedi veya format hatalı.");
+                if (copiedFile != null && copiedFile.exists()) {
+                    copiedFile.delete();
+                }
+
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText("Could Not Add Game");
+                alert.setContentText(e.getMessage());
+                alert.showAndWait();
             } finally {
                 refreshGames();
             }
         }
-    }
-
-    private void showError(String message) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Hata");
-        alert.setHeaderText("İşlem başarısız");
-        alert.setContentText(message);
-        alert.showAndWait();
     }
 
     private void initializeGameJsonFileList() {
@@ -674,6 +678,92 @@ public class GeneralController implements Initializable {
             }
         } else {
             System.out.println("Klasör bulunamadı: " + ADDED_FOLDER_PATH);
+        }
+    }
+
+    private void initializeAllGames() {
+        try {
+            allGamesList.getItems().clear();
+            List<Game> games = FileHandler.loadFromJSONGames();
+            allGamesList.getItems().addAll(games);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void handleDeleteSelectedGame(ActionEvent event) {
+        Game selectedGame = allGamesList.getSelectionModel().getSelectedItem();
+
+        if (selectedGame != null) {
+            Alert confirm = new Alert(Alert.AlertType.CONFIRMATION);
+            confirm.setTitle("Deletion Confirmation");
+            confirm.setHeaderText("Delete Game");
+            confirm.setContentText("\" Are you sure you want to delete the game titled " + selectedGame.getTitle() + "\"?");
+
+            Optional<ButtonType> result = confirm.showAndWait();
+            if (result.isPresent() && result.get() == ButtonType.OK) {
+                try {
+                    FileHandler.removeGameFromJson(selectedGame.getSteamID());
+
+                    allGamesList.getItems().remove(selectedGame);
+
+                    Alert success = new Alert(Alert.AlertType.INFORMATION);
+                    success.setTitle("Successful");
+                    success.setHeaderText("Game Deleted");
+                    success.setContentText("The selected game has been successfully deleted.");
+                    success.showAndWait();
+
+                    refreshGames();
+                } catch (IOException e) {
+                    Alert error = new Alert(Alert.AlertType.ERROR);
+                    error.setTitle("Error");
+                    error.setHeaderText("Deletion Failed");
+                    error.setContentText(e.getMessage());
+                    error.showAndWait();
+                }
+            }
+        } else {
+            Alert warning = new Alert(Alert.AlertType.WARNING);
+            warning.setTitle("Warning");
+            warning.setHeaderText("No Game Selected");
+            warning.setContentText("Please select a game to delete.");
+            warning.showAndWait();
+        }
+    }
+
+    @FXML
+    private void handleDeleteMatchingGames(ActionEvent event) {
+        String selectedFileName = gameJsonFileList.getSelectionModel().getSelectedItem();
+
+        if (selectedFileName == null) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Warning");
+            alert.setHeaderText("No File Selected");
+            alert.setContentText("Please select a JSON file from the list.");
+            alert.showAndWait();
+            return;
+        }
+
+        File selectedFile = new File("data/added", selectedFileName);
+
+        try {
+            int deletedCount = FileHandler.removeGamesMatchingSteamIDsFromFile(selectedFile);
+
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Deletion Complete");
+            alert.setHeaderText("Games Deleted");
+            alert.setContentText(deletedCount + " game(s) were removed from your collection.");
+            alert.showAndWait();
+
+            refreshGames();
+
+        } catch (IOException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Deletion Failed");
+            alert.setContentText("An error occurred while deleting games: " + e.getMessage());
+            alert.showAndWait();
         }
     }
 
