@@ -33,15 +33,6 @@ public class FileHandler {
         return users;
     }
 
-    public static void main(String[] args) throws IOException {
-        FileHandler fh = new FileHandler();
-        List<Game> test = fh.loadFromJSONGames();
-
-        for(Game game : test) {
-            System.out.println(game.getTitle());
-        }
-    }
-
     public static void addGameToUserCatalog(String username, String steamID) throws IOException {
         File userFile = new File(USERSPATH);
         String content = new String(Files.readAllBytes(userFile.toPath()));
@@ -99,6 +90,46 @@ public class FileHandler {
         }
 
         System.out.println("User not found: " + username);
+    }
+
+    public static void addGameToJson(Game game) throws IOException {
+        File file = new File(GAMESPATH);
+        String content = new String(Files.readAllBytes(file.toPath()));
+        JSONArray jsonArray = new JSONArray(content);
+
+        JSONObject newGameJson = new JSONObject(game.toJSON());
+        jsonArray.put(newGameJson);
+
+        Files.write(file.toPath(), jsonArray.toString(4).getBytes());
+    }
+
+    public static void importGameFromJsonFile(String filePath) throws IOException {
+        File importFile = new File(filePath);
+
+        if (!importFile.exists()) {
+            throw new IOException("Belirtilen dosya bulunamadı: " + filePath);
+        }
+
+        try {
+            String content = new String(Files.readAllBytes(importFile.toPath()));
+            JSONArray gameJson = new JSONArray(content);
+
+            List<Game> games = new ArrayList<>();
+            for (int i = 0; i < gameJson.length(); i++) {
+                games.add(Game.fromJSON(gameJson.getJSONObject(i).toString()));
+            }
+            for (Game game : games) {
+                addGameToJson(game);
+                System.out.println("Yeni oyun başarıyla eklendi: " + game.getTitle());
+            }
+
+        } catch (JSONException je) {
+            System.err.println("JSON formatı hatalı: " + je.getMessage());
+            throw new IOException("Geçersiz JSON formatı.");
+        } catch (Exception e) {
+            System.err.println("Bir hata oluştu: " + e.getMessage());
+            throw new IOException("Game nesnesi oluşturulamadı.");
+        }
     }
 
 }

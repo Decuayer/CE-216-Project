@@ -24,7 +24,7 @@ public class UIManager extends Application {
     @Override
     public void start(Stage primaryStage) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("inital-page.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/ce216/gamecatalog/inital-page.fxml"));
             Parent root = loader.load();
             Image icon = new Image(getClass().getResourceAsStream("/org/ce216/gamecatalog/images/logo.png"));
             primaryStage.getIcons().add(icon);

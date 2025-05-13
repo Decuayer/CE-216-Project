@@ -2,9 +2,11 @@ package org.ce216.gamecatalog;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
@@ -13,20 +15,24 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
+import javafx.stage.FileChooser;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+import java.util.*;
 
 public class GeneralController implements Initializable {
 
@@ -43,6 +49,13 @@ public class GeneralController implements Initializable {
     @FXML
     private Button logout;
 
+    @FXML
+    private Button addGameButton;
+
+    @FXML
+    private ListView<String> gameJsonFileList;
+    private static final String ADDED_FOLDER_PATH = "data/added";
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -50,23 +63,15 @@ public class GeneralController implements Initializable {
         User loggedInUser = InitalPage.getLoggedInUser();
 
         // STORE SECTION
-        FileHandler fh = new FileHandler();
-        List<Game> gameList;
-        try {
-            gameList = fh.loadFromJSONGames();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        refreshGames();
 
-        for(Game game: gameList) {
-            Pane gamePane = createGamePane(game);
-            gamesContainer.getChildren().add(gamePane);
-        }
+        // ADD GAME SECTION
+        addGameButton.setOnAction(e -> showAddGameDialog());
+
 
         // LIBRARY SECTION
 
         System.out.println("initialize: " + loggedInUser.getGameCatalog());
-
 
         gamesObservableList.setAll(loggedInUser.getGameCatalog());
         libraryGames.setItems(gamesObservableList);
@@ -123,7 +128,25 @@ public class GeneralController implements Initializable {
         firstPane.setAlignment(Pos.CENTER);
 
         // Photo
-        Image image = new Image(getClass().getResourceAsStream(game.getCoverImagePath()), 200, 150, true, true);
+        Image image;
+        String imagePath = game.getCoverImagePath();
+        try {
+            File file = new File(imagePath);
+            if(file.exists()) {
+                image = new Image(file.toURI().toString(), 200, 150, true, true);
+            }else {
+                URL imageUrl = getClass().getResource(imagePath.startsWith("/") ? imagePath : "/" + imagePath);
+                if(imageUrl != null) {
+                    image = new Image(imageUrl.toExternalForm(), 200, 150, true, true);
+                } else {
+                    throw new FileNotFoundException("Resim Bulunamadı: " + imagePath);
+                }
+            }
+        } catch (Exception ex) {
+            System.out.println("Resim yükleme hatası: " + ex.getMessage());
+            image = new Image(getClass().getResource("/org/ce216/gamecatalog/images/lol.png").toExternalForm(), 200, 150, true, true);
+        }
+
         ImageView imageView = new ImageView(image);
         imageView.setPreserveRatio(true);
         imageView.setSmooth(true);
@@ -350,6 +373,165 @@ public class GeneralController implements Initializable {
         return pane;
     }
 
+    public void showAddGameDialog() {
+        Stage addGameStage = new Stage();
+        addGameStage.setTitle("Add New Game");
+
+        GridPane grid = new GridPane();
+        grid.setHgap(10);
+        grid.setVgap(10);
+        grid.setPadding(new Insets(20));
+
+        ColumnConstraints col1 = new ColumnConstraints();
+        col1.setHalignment(HPos.RIGHT);
+        ColumnConstraints col2 = new ColumnConstraints();
+        col2.setHgrow(Priority.ALWAYS);
+
+        grid.getColumnConstraints().addAll(col1, col2);
+
+
+        TextField titleField = new TextField("Test111");
+        TextField genreField = new TextField("Test"); // comma-separated
+        TextField developerField = new TextField("Test");
+        TextField publisherField = new TextField("Test");
+        TextField platformsField = new TextField("Test"); // comma-separated
+        TextField translatorsField = new TextField("Test"); // comma-separated
+        TextField steamIDField = new TextField("Test");
+        TextField releaseYearField = new TextField("1");
+        TextField playTimeField = new TextField("1");
+        TextField formatField = new TextField("Test");
+        TextField languageField = new TextField("Test");
+        TextField ratingField = new TextField("1");
+        TextField tagsField = new TextField("Test"); // comma-separated
+        TextField coverImagePathField = new TextField();
+        coverImagePathField.setEditable(false); // Elle yazılamasın
+        TextArea descriptionArea = new TextArea("Test");
+
+        Button browseButton = new Button("Browse...");
+        browseButton.setOnAction(event -> {
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.setTitle("Select Cover Image");
+            fileChooser.getExtensionFilters().addAll(
+                    new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg", "*.gif")
+            );
+            File selectedFile = fileChooser.showOpenDialog(addGameStage);
+            if (selectedFile != null) {
+                try {
+                    // Dosyayı resources/images içine kopyala
+                    Path destinationDir = Paths.get("src/main/resources/org/ce216/gamecatalog/images/");
+                    Files.createDirectories(destinationDir); // klasör yoksa oluştur
+
+                    Path destinationPath = destinationDir.resolve(selectedFile.getName());
+                    Files.copy(selectedFile.toPath(), destinationPath, StandardCopyOption.REPLACE_EXISTING);
+
+                    // TextField'a göreli path'i yaz
+                    coverImagePathField.setText("/org/ce216/gamecatalog/images/" + selectedFile.getName());
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                    Alert alert = new Alert(Alert.AlertType.ERROR, "Failed to copy image to resources/images.");
+                    alert.showAndWait();
+                }
+            }
+        });
+
+        HBox coverImageBox = new HBox(10, coverImagePathField, browseButton);
+        coverImageBox.setAlignment(Pos.CENTER_LEFT);
+
+        grid.add(new Label("Title:"), 0, 0);
+        grid.add(titleField, 1, 0);
+        grid.add(new Label("Genre:"), 0, 1);
+        grid.add(genreField, 1, 1);
+        grid.add(new Label("Developer:"), 0, 2);
+        grid.add(developerField, 1, 2);
+        grid.add(new Label("Publisher:"), 0, 3);
+        grid.add(publisherField, 1, 3);
+        grid.add(new Label("Platforms:"), 0, 4);
+        grid.add(platformsField, 1, 4);
+        grid.add(new Label("Translators:"), 0, 5);
+        grid.add(translatorsField, 1, 5);
+        grid.add(new Label("SteamID:"), 0, 6);
+        grid.add(steamIDField, 1, 6);
+        grid.add(new Label("Release Year:"), 0, 7);
+        grid.add(releaseYearField, 1, 7);
+        grid.add(new Label("Playtime (hrs):"), 0, 8);
+        grid.add(playTimeField, 1, 8);
+        grid.add(new Label("Format:"), 0, 9);
+        grid.add(formatField, 1, 9);
+        grid.add(new Label("Language:"), 0, 10);
+        grid.add(languageField, 1, 10);
+        grid.add(new Label("Rating (0-10):"), 0, 11);
+        grid.add(ratingField, 1, 11);
+        grid.add(new Label("Tags:"), 0, 12);
+        grid.add(tagsField, 1, 12);
+        grid.add(new Label("Cover Image Path:"), 0, 13);
+        grid.add(coverImageBox, 1, 13);
+        grid.add(new Label("Description:"), 0, 14);
+        grid.add(descriptionArea, 1, 14);
+
+        Button addButton = new Button("Add Game");
+        Button cancelButton = new Button("Cancel");
+
+
+        addButton.setOnAction(e -> {
+            System.out.println(coverImagePathField.getText());
+            try {
+                Game newGame = new Game(
+                        titleField.getText(),
+                        Arrays.asList(genreField.getText().split(",")),
+                        developerField.getText(),
+                        publisherField.getText(),
+                        Arrays.asList(platformsField.getText().split(",")),
+                        Arrays.asList(translatorsField.getText().split(",")),
+                        steamIDField.getText(),
+                        Integer.parseInt(releaseYearField.getText()),
+                        Integer.parseInt(playTimeField.getText()),
+                        formatField.getText(),
+                        languageField.getText(),
+                        Double.parseDouble(ratingField.getText()),
+                        Arrays.asList(tagsField.getText().split(",")),
+                        coverImagePathField.getText(),
+                        descriptionArea.getText()
+                );
+                FileHandler.addGameToJson(newGame);
+
+
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Success");
+                alert.setHeaderText("Game Added");
+                alert.setContentText("Game \"" + newGame.getTitle() + "\" was successfully added.");
+                alert.showAndWait();
+
+                addGameStage.close();
+            } catch (Exception ex) {
+                ex.printStackTrace();
+
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText("Could Not Add Game");
+                alert.setContentText("Please ensure all fields are filled out correctly.");
+                alert.showAndWait();
+            } finally {
+                refreshGames();
+            }
+        });
+
+        cancelButton.setOnAction(e -> addGameStage.close());
+
+        HBox buttonBox = new HBox(10, addButton, cancelButton);
+        buttonBox.setAlignment(Pos.CENTER);
+
+        VBox layout = new VBox(20, grid, buttonBox);
+        layout.setAlignment(Pos.CENTER);
+        layout.setPadding(new Insets(20));
+
+        Scene scene = new Scene(layout);
+        addGameStage.setScene(scene);
+        addGameStage.setWidth(700);
+        addGameStage.setHeight(780);
+        addGameStage.show();
+    }
+
+
     private TextFlow boldLabel(String label, String value) {
         Text labelText = new Text(label + ": ");
         labelText.setFont(Font.font("Arial", FontWeight.BOLD, 12));
@@ -363,6 +545,25 @@ public class GeneralController implements Initializable {
     private void refreshLibrary() {
         User loggedInUser = InitalPage.getLoggedInUser();
         gamesObservableList.setAll(loggedInUser.getGameCatalog());
+    }
+
+    private void refreshGames() {
+        FileHandler fh = new FileHandler();
+        List<Game> gameList;
+        gamesContainer.getChildren().clear();
+        gameJsonFileList.getItems().clear();
+        try {
+            gameList = fh.loadFromJSONGames();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        for(Game game: gameList) {
+            Pane gamePane = createGamePane(game);
+            gamesContainer.getChildren().add(gamePane);
+        }
+
+        initializeGameJsonFileList();
     }
 
     private void showGameDetailPopup(Game game) {
@@ -411,6 +612,69 @@ public class GeneralController implements Initializable {
         Scene popupScene = new Scene(scrollPane, 500, 600);
         popupStage.setScene(popupScene);
         popupStage.show();
+    }
+
+    @FXML
+    private void handleAddGameJson(ActionEvent event) {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Select Game JSON File");
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("JSON files", "*.json"));
+
+        File selectedFile = fileChooser.showOpenDialog(null); // veya sahne referansını ver
+
+        if (selectedFile != null) {
+            try {
+                File targetDir = new File("data/added");
+                if (!targetDir.exists()) {
+                    targetDir.mkdirs();
+                }
+
+                File copiedFile = new File(targetDir, selectedFile.getName());
+                Files.copy(selectedFile.toPath(), copiedFile.toPath(), java.nio.file.StandardCopyOption.REPLACE_EXISTING);
+
+                FileHandler.importGameFromJsonFile(copiedFile.getPath());
+
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Başarılı");
+                alert.setHeaderText("Oyun başarıyla eklendi");
+                alert.setContentText("Eklenen dosya: " + copiedFile.getName());
+                alert.showAndWait();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+                showError("Dosya yüklenemedi veya format hatalı.");
+            } finally {
+                refreshGames();
+            }
+        }
+    }
+
+    private void showError(String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Hata");
+        alert.setHeaderText("İşlem başarısız");
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+
+    private void initializeGameJsonFileList() {
+        File addedFolder = new File(ADDED_FOLDER_PATH);
+
+        if (addedFolder.exists() && addedFolder.isDirectory()) {
+            File[] files = addedFolder.listFiles();
+
+            if (files != null) {
+                List<String> fileNames = new ArrayList<>();
+                for (File file : files) {
+                    if (file.isFile()) {
+                        fileNames.add(file.getName());
+                    }
+                }
+                gameJsonFileList.getItems().addAll(fileNames);
+            }
+        } else {
+            System.out.println("Klasör bulunamadı: " + ADDED_FOLDER_PATH);
+        }
     }
 
 
