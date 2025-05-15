@@ -4,7 +4,7 @@ plugins {
   id 'org.openjfx.javafxplugin' version '0.0.13'
 }
 
-group 'org.CE216'
+group 'org.CE'
 version '1.0'
 
 repositories {
@@ -18,7 +18,7 @@ dependencies {
 }
 
 application {
-  mainClass = 'org.ce216.gamecatalog.UIManager'
+  mainClass = 'org.ce.gamecatalog.UIManager'
 }
 
 javafx {
@@ -36,7 +36,7 @@ run {
 jar {
   manifest {
     attributes(
-            'Main-Class': 'org.ce216.gamecatalog.UIManager'
+            'Main-Class': 'org.ce.gamecatalog.UIManager'
     )
   }
 }

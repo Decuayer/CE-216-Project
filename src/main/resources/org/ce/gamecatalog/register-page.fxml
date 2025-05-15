@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="btFullScreenMain" prefHeight="420.0" prefWidth="420.0" style="-fx-background-color: linear-gradient(to bottom right, #7f00ff, #e100ff);" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.ce216.gamecatalog.RegisterPage">
+<AnchorPane fx:id="btFullScreenMain" prefHeight="420.0" prefWidth="420.0" style="-fx-background-color: linear-gradient(to bottom right, #7f00ff, #e100ff);" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.ce.gamecatalog.RegisterPage">
    <children>
       <ImageView fitHeight="420.0" fitWidth="422.0" pickOnBounds="true" style="-fx-preserve-ratio: 0.9;">
          <image>
