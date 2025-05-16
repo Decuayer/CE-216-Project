@@ -1,4 +1,4 @@
-package org.ce216.gamecatalog;
+package org.ce.gamecatalog;
 import java.util.ArrayList;
 import java.util.List;
 

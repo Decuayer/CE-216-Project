@@ -11,8 +11,9 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="420.0" prefWidth="420.0" style="-fx-background-color: linear-gradient(to bottom right, #7f00ff, #e100ff); -fx-border-radius: 20;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.ce216.gamecatalog.InitalPage">
+<AnchorPane prefHeight="420.0" prefWidth="420.0" style="-fx-background-color: linear-gradient(to bottom right, #7f00ff, #e100ff); -fx-border-radius: 20;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.ce.gamecatalog.InitalPage">
    <children>
       <ImageView fitHeight="420.0" fitWidth="420.0" pickOnBounds="true" style="-fx-opacity: .9;">
          <image>
@@ -46,19 +47,20 @@
          <font>
             <Font name="Arial Bold" size="15.0" />
          </font></PasswordField>
-      <Button layoutX="50.0" layoutY="263.0" mnemonicParsing="false" onAction="#loginButton" prefHeight="42.0" prefWidth="320.0" style="-fx-background-color: #ffffff; -fx-font-family: Arial; -fx-background-radius: 25;" text="Sign In">
+      <Button layoutX="50.0" layoutY="307.0" mnemonicParsing="false" onAction="#loginButton" prefHeight="42.0" prefWidth="320.0" style="-fx-background-color: #ffffff; -fx-font-family: Arial; -fx-background-radius: 25;" text="Sign In">
          <font>
             <Font size="16.0" />
          </font>
       </Button>
-      <Label layoutX="86.0" layoutY="333.0" text="Don't have an account?" textFill="WHITE">
+      <Label layoutX="86.0" layoutY="362.0" text="Don't have an account?" textFill="WHITE">
          <font>
             <Font name="System Bold" size="13.0" />
          </font></Label>
-      <Button layoutX="229.0" layoutY="329.0" mnemonicParsing="false" onAction="#switchScenetoRegisterPage" style="-fx-background-color: transparent; -fx-cursor: hand; -fx-font-style: bold;" text="Create One" textFill="WHITE" underline="true">
+      <Button layoutX="229.0" layoutY="358.0" mnemonicParsing="false" onAction="#switchScenetoRegisterPage" style="-fx-background-color: transparent; -fx-cursor: hand; -fx-font-style: bold;" text="Create One" textFill="WHITE" underline="true">
          <font>
             <Font size="13.0" />
          </font></Button>
+      <Text fx:id="loginText" layoutX="75.0" layoutY="256.0" strokeType="OUTSIDE" strokeWidth="0.0" />
    </children>
    <effect>
       <DropShadow blurType="TWO_PASS_BOX">

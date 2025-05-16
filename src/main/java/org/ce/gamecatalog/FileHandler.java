@@ -1,4 +1,4 @@
-package org.ce216.gamecatalog;
+package org.ce.gamecatalog;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -7,7 +7,6 @@ import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 
-import javafx.print.PrintColor;
 import org.json.*;
 
 public class FileHandler {
@@ -110,7 +109,7 @@ public class FileHandler {
         for (int i = 0; i < jsonArray.length(); i++) {
             JSONObject existingGame = jsonArray.getJSONObject(i);
             if (existingGame.optString("steamID").equalsIgnoreCase(newSteamID)) {
-                throw new IOException("Bu SteamID'ye sahip bir oyun zaten mevcut: " + newSteamID);
+                throw new IOException("A game with this SteamID already exists: " + newSteamID);
             }
         }
         JSONObject newGameJson = new JSONObject(game.toJSON());
@@ -123,7 +122,7 @@ public class FileHandler {
         File importFile = new File(filePath);
 
         if (!importFile.exists()) {
-            throw new IOException("Belirtilen dosya bulunamadı: " + filePath);
+            throw new IOException("The specified file was not found: " + filePath);
         }
 
         try {
@@ -136,17 +135,17 @@ public class FileHandler {
             }
             for (Game game : games) {
                 addGameToJson(game);
-                System.out.println("Yeni oyun başarıyla eklendi: " + game.getTitle());
+                System.out.println("New game added successfully: " + game.getTitle());
             }
 
         } catch (JSONException je) {
-            System.err.println("JSON formatı hatalı: " + je.getMessage());
-            throw new IOException("Geçersiz JSON formatı.");
+            System.err.println("Invalid JSON format: " + je.getMessage());
+            throw new IOException("Malformed JSON format.");
         } catch (IOException io) {
-            throw new IOException("Eklediğiniz dosyada uygulamada mevcut olan bir steamID mevcut.");
+            throw new IOException("The file you added contains a SteamID that already exists in the application.");
         } catch (Exception e) {
-            System.err.println("Bir hata oluştu: " + e.getMessage());
-            throw new IOException("Game nesnesi oluşturulamadı.");
+            System.err.println("An error occurred: " + e.getMessage());
+            throw new IOException("Failed to create Game object.");
         }
     }
 
@@ -166,7 +165,7 @@ public class FileHandler {
         }
 
         if (!found) {
-            throw new IOException("SteamID '" + steamID + "' ile eşleşen bir oyun bulunamadı.");
+            throw new IOException("No game found matching SteamID '" + steamID + "'.");
         }
 
         Files.write(file.toPath(), jsonArray.toString(4).getBytes());
@@ -174,7 +173,7 @@ public class FileHandler {
 
     public static int removeGamesMatchingSteamIDsFromFile(File fileWithGames) throws IOException {
         if (!fileWithGames.exists()) {
-            throw new FileNotFoundException("Dosya bulunamadı: " + fileWithGames.getPath());
+            throw new FileNotFoundException("File not found: " + fileWithGames.getPath());
         }
 
         String content = new String(Files.readAllBytes(fileWithGames.toPath()));
@@ -190,19 +189,62 @@ public class FileHandler {
                 removeGameFromJson(steamID);  // Zaten mevcut fonksiyon
                 removedCount++;
             } catch (IOException e) {
-                System.err.println("SteamID ile silme başarısız: " + steamID);
+                System.err.println("Failed to delete using SteamID: " + steamID);
             }
         }
 
         if (removedCount > 0) {
             boolean deleted = fileWithGames.delete();
             if (!deleted) {
-                System.err.println("Dosya silinemedi: " + fileWithGames.getName());
+                System.err.println("File could not be deleted: " + fileWithGames.getName());
             }
         }
 
         return removedCount;
     }
+
+    public static void updateGameInJson(Game updatedGame) throws IOException {
+        File file = new File(GAMESPATH);
+
+        if (!file.exists()) {
+            throw new IOException("Games JSON file not found.");
+        }
+
+        String content = new String(Files.readAllBytes(file.toPath()));
+        JSONArray jsonArray = new JSONArray(content);
+
+        String updatedSteamID = updatedGame.getSteamID();
+        boolean found = false;
+
+        for (int i = 0; i < jsonArray.length(); i++) {
+            JSONObject gameObj = jsonArray.getJSONObject(i);
+            if (gameObj.optString("steamID").equalsIgnoreCase(updatedSteamID)) {
+                JSONObject updatedGameJson = new JSONObject(updatedGame.toJSON());
+                jsonArray.put(i, updatedGameJson);
+                found = true;
+                break;
+            }
+        }
+
+        if (!found) {
+            throw new IOException("Game with SteamID " + updatedSteamID + " not found.");
+        }
+
+        Files.write(file.toPath(), jsonArray.toString(4).getBytes());
+    }
+
+    public static void saveUsersToJSON(List<User> users) throws IOException {
+        JSONArray jsonArray = new JSONArray();
+        for (User user : users) {
+            JSONObject userObj = new JSONObject(user.toJSON());
+            jsonArray.put(userObj);
+        }
+
+        Files.write(new File(USERSPATH).toPath(), jsonArray.toString(4).getBytes());
+    }
+
+
+
 
 }
 

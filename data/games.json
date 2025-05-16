@@ -1,6 +1,236 @@
 [
     {
         "format": "Digital",
+        "rating": 8.9,
+        "description": "Brave the frozen wilderness in a post-apocalyptic world where survival means mastering the environment and forging alliances.",
+        "language": "English",
+        "playtime": 85,
+        "title": "Frostbound",
+        "platforms": [
+            "PC",
+            "PS5",
+            "Xbox Series X"
+        ],
+        "tags": [
+            "Cold Survival",
+            "Exploration",
+            "Crafting"
+        ],
+        "steamID": "101",
+        "translators": [
+            "TranslatorA",
+            "TranslatorB"
+        ],
+        "coverImagePath": "/org/ce/gamecatalog/images/frostbound.png",
+        "genre": [
+            "Survival",
+            "Adventure"
+        ],
+        "publisher": "Icepeak Interactive",
+        "developer": "Northforge Studios",
+        "releaseYear": 2023
+    },
+    {
+        "format": "Physical",
+        "rating": 7.5,
+        "description": "Burn neon rubber in this synthwave-inspired racer featuring customizable cars and dazzling cityscapes.",
+        "language": "English",
+        "playtime": 40,
+        "title": "Neon Drift",
+        "platforms": [
+            "PC",
+            "PS4",
+            "Switch"
+        ],
+        "tags": [
+            "Retro Style",
+            "Drifting",
+            "High Speed"
+        ],
+        "steamID": "102",
+        "translators": ["TranslatorC"],
+        "coverImagePath": "/org/ce/gamecatalog/images/neondrift.png",
+        "genre": [
+            "Racing",
+            "Arcade"
+        ],
+        "publisher": "TurboByte Games",
+        "developer": "Velocity Works",
+        "releaseYear": 2019
+    },
+    {
+        "format": "Digital",
+        "rating": 9.3,
+        "description": "Lead a band of warriors through political intrigue and magical warfare in a world shaped by forgotten gods.",
+        "language": "English",
+        "playtime": 120,
+        "title": "Echoes of Arken",
+        "platforms": [
+            "PC",
+            "Switch"
+        ],
+        "tags": [
+            "Turn-Based",
+            "Magic",
+            "Strategy"
+        ],
+        "steamID": "103",
+        "translators": [
+            "TranslatorD",
+            "TranslatorE"
+        ],
+        "coverImagePath": "/org/ce/gamecatalog/images/echoes.png",
+        "genre": [
+            "Tactical RPG",
+            "Fantasy"
+        ],
+        "publisher": "Mystic Realm",
+        "developer": "Crownblade Studios",
+        "releaseYear": 2021
+    },
+    {
+        "format": "Digital",
+        "rating": 8.2,
+        "description": "Battle through metallic wastelands using advanced exo-suits and team-based tactics in this sci-fi shooter.",
+        "language": "English",
+        "playtime": 70,
+        "title": "Steel Horizon",
+        "platforms": [
+            "PC",
+            "PS5"
+        ],
+        "tags": [
+            "Futuristic",
+            "Mechs",
+            "Co-op"
+        ],
+        "steamID": "104",
+        "translators": ["TranslatorF"],
+        "coverImagePath": "/org/ce/gamecatalog/images/steelhorizon.png",
+        "genre": [
+            "FPS",
+            "Sci-Fi"
+        ],
+        "publisher": "Solar Core Media",
+        "developer": "Nebula Forge",
+        "releaseYear": 2024
+    },
+    {
+        "format": "Physical",
+        "rating": 8.7,
+        "description": "Uncover the truth behind a haunted town through the memories of a missing child and fractured souls.",
+        "language": "English",
+        "playtime": 30,
+        "title": "Lost Spirits",
+        "platforms": [
+            "PC",
+            "PS4",
+            "Xbox One"
+        ],
+        "tags": [
+            "Psychological",
+            "Mystery",
+            "Story Driven"
+        ],
+        "steamID": "105",
+        "translators": ["TranslatorG"],
+        "coverImagePath": "/org/ce/gamecatalog/images/lostspirits.png",
+        "genre": [
+            "Horror",
+            "Narrative"
+        ],
+        "publisher": "DarkVeil Entertainment",
+        "developer": "Candlelight Games",
+        "releaseYear": 2018
+    },
+    {
+        "format": "Digital",
+        "rating": 9.1,
+        "description": "Customize and battle giant mechs in high-stakes arenas designed for competitive play and fast-paced action.",
+        "language": "English",
+        "playtime": 150,
+        "title": "Mecha Arena X",
+        "platforms": [
+            "PC",
+            "PS5",
+            "Xbox Series X"
+        ],
+        "tags": [
+            "PvP",
+            "Customization",
+            "eSports"
+        ],
+        "steamID": "106",
+        "translators": [
+            "TranslatorH",
+            "TranslatorI"
+        ],
+        "coverImagePath": "/org/ce/gamecatalog/images/mechaarena.png",
+        "genre": [
+            "Action",
+            "Multiplayer"
+        ],
+        "publisher": "SkyStrike Inc.",
+        "developer": "IronPixel Studios",
+        "releaseYear": 2022
+    },
+    {
+        "format": "Digital",
+        "rating": 9,
+        "description": "Restore an overgrown valley to life by farming, building friendships, and shaping the village to your liking.",
+        "language": "English",
+        "playtime": 95,
+        "title": "Verdant Hollow",
+        "platforms": [
+            "PC",
+            "Switch",
+            "Mobile"
+        ],
+        "tags": [
+            "Relaxing",
+            "Life Sim",
+            "Customization"
+        ],
+        "steamID": "107",
+        "translators": ["TranslatorJ"],
+        "coverImagePath": "/org/ce/gamecatalog/images/verdant.png",
+        "genre": [
+            "Farming",
+            "Simulation"
+        ],
+        "publisher": "Greenthumb Studios",
+        "developer": "Willow & Fern",
+        "releaseYear": 2020
+    },
+    {
+        "format": "Digital",
+        "rating": 8.8,
+        "description": "Execute covert missions in a world teetering on the brink of war. Silence is your greatest weapon.",
+        "language": "English",
+        "playtime": 60,
+        "title": "Shadow Protocol",
+        "platforms": [
+            "PC",
+            "PS5"
+        ],
+        "tags": [
+            "Espionage",
+            "Tactical",
+            "Story Rich"
+        ],
+        "steamID": "108",
+        "translators": ["TranslatorK"],
+        "coverImagePath": "/org/ce/gamecatalog/images/shadowprotocol.png",
+        "genre": [
+            "Stealth",
+            "Thriller"
+        ],
+        "publisher": "StealthCore Studios",
+        "developer": "BlackFox Division",
+        "releaseYear": 2021
+    },
+    {
+        "format": "Digital",
         "rating": 9.5,
         "description": "A dark and expansive open-world RPG filled with challenging enemies and intricate lore, crafted by FromSoftware.",
         "language": "English",
@@ -21,7 +251,7 @@
             "Translator1",
             "Translator2"
         ],
-        "coverImagePath": "/org/ce216/gamecatalog/images/gta.png",
+        "coverImagePath": "/org/ce/gamecatalog/images/gta.png",
         "genre": [
             "Action RPG",
             "Fantasy"
@@ -50,7 +280,7 @@
         ],
         "steamID": "2",
         "translators": ["Translator3"],
-        "coverImagePath": "/org/ce216/gamecatalog/images/gta.png",
+        "coverImagePath": "/org/ce/gamecatalog/images/gta.png",
         "genre": [
             "RPG",
             "Adventure"
@@ -82,7 +312,7 @@
             "Translator4",
             "Translator5"
         ],
-        "coverImagePath": "/org/ce216/gamecatalog/images/lol.png",
+        "coverImagePath": "/org/ce/gamecatalog/images/lol.png",
         "genre": [
             "Metroidvania",
             "Platformer"
@@ -110,7 +340,7 @@
         ],
         "steamID": "4",
         "translators": ["Translator6"],
-        "coverImagePath": "/org/ce216/gamecatalog/images/rdr.png",
+        "coverImagePath": "/org/ce/gamecatalog/images/rdr.png",
         "genre": [
             "Action",
             "Adventure"
@@ -139,7 +369,7 @@
         ],
         "steamID": "5",
         "translators": ["Translator7"],
-        "coverImagePath": "/org/ce216/gamecatalog/images/minecraft.png",
+        "coverImagePath": "/org/ce/gamecatalog/images/minecraft.png",
         "genre": [
             "Platformer",
             "Indie"
@@ -170,7 +400,7 @@
             "Translator8",
             "Translator9"
         ],
-        "coverImagePath": "/org/ce216/gamecatalog/images/rdr.png",
+        "coverImagePath": "/org/ce/gamecatalog/images/rdr.png",
         "genre": [
             "RPG",
             "Sci-Fi"
@@ -200,7 +430,7 @@
         ],
         "steamID": "7",
         "translators": ["Translator10"],
-        "coverImagePath": "/org/ce216/gamecatalog/images/gta.png",
+        "coverImagePath": "/org/ce/gamecatalog/images/gta.png",
         "genre": [
             "Simulation",
             "Farming",
@@ -230,7 +460,7 @@
         ],
         "steamID": "8",
         "translators": ["Translator11"],
-        "coverImagePath": "/org/ce216/gamecatalog/images/lol.png",
+        "coverImagePath": "/org/ce/gamecatalog/images/lol.png",
         "genre": [
             "FPS",
             "Action"

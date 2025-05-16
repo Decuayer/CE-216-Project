@@ -8,12 +8,7 @@
         "passwordHash": "03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4",
         "age": 21,
         "email": "travisscott@gmail.com",
-        "gameCatalog": [
-            "2",
-            "1",
-            "3",
-            "4"
-        ],
+        "gameCatalog": ["2"],
         "username": "travis"
     },
     {
@@ -22,7 +17,7 @@
             "3",
             "4"
         ],
-        "passwordHash": "03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4",
+        "passwordHash": "466386c747aaa69ce6d65b30f124dadf03c01d03e896441f16ac2d8d48e5d5ae",
         "age": 20,
         "email": "demircucu@gmail.com",
         "gameCatalog": [
