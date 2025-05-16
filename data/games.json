@@ -1,131 +1,472 @@
 [
-  {
-    "title": "Elden Ring",
-    "genre": ["Action RPG", "Fantasy"],
-    "developer": "FromSoftware",
-    "publisher": "Bandai Namco",
-    "platforms": ["PC", "PS5", "Xbox Series X"],
-    "translators": ["Translator1", "Translator2"],
-    "steamID": "1",
-    "releaseYear": 2022,
-    "format": "Digital",
-    "language": "English",
-    "rating": 9.5,
-    "tags": ["Open World", "Soulslike", "Boss Fights"],
-    "coverImagePath": "/org/ce216/gamecatalog/images/gta.png",
-    "description": "A dark and expansive open-world RPG filled with challenging enemies and intricate lore, crafted by FromSoftware."
-  },
-  {
-    "title": "The Witcher 3",
-    "genre": ["RPG", "Adventure"],
-    "developer": "CD Projekt Red",
-    "publisher": "CD Projekt",
-    "platforms": ["PC", "PS4", "Xbox One", "Switch"],
-    "translators": ["Translator3"],
-    "steamID": "2",
-    "releaseYear": 2015,
-    "format": "Physical",
-    "language": "English",
-    "rating": 9.8,
-    "tags": ["Story Rich", "Open World", "Choices Matter"],
-    "coverImagePath": "/org/ce216/gamecatalog/images/gta.png",
-    "description": "Step into the shoes of Geralt of Rivia in this epic tale of monster hunting, deep narrative, and rich fantasy world."
-  },
-  {
-    "title": "Hollow Knight",
-    "genre": ["Metroidvania", "Platformer"],
-    "developer": "Team Cherry",
-    "publisher": "Team Cherry",
-    "platforms": ["PC", "Switch", "PS4", "Xbox One"],
-    "translators": ["Translator4", "Translator5"],
-    "steamID": "3",
-    "releaseYear": 2017,
-    "format": "Digital",
-    "language": "English",
-    "rating": 9.1,
-    "tags": ["Indie", "Exploration", "Challenging"],
-    "coverImagePath": "/org/ce216/gamecatalog/images/lol.png",
-    "description": "Descend into a beautifully hand-drawn world of insects and mystery in this challenging and atmospheric platformer."
-  },
-  {
-    "title": "Red Dead Redemption 2",
-    "genre": ["Action", "Adventure"],
-    "developer": "Rockstar Games",
-    "publisher": "Rockstar Games",
-    "platforms": ["PC", "PS4", "Xbox One"],
-    "translators": ["Translator6"],
-    "steamID": "4",
-    "releaseYear": 2018,
-    "format": "Physical",
-    "language": "English",
-    "rating": 9.7,
-    "tags": ["Western", "Open World", "Story Rich"],
-    "coverImagePath": "/org/ce216/gamecatalog/images/rdr.png",
-    "description": "Experience the American frontier through the eyes of Arthur Morgan in this cinematic masterpiece of an open-world western."
-  },
-  {
-    "title": "Celeste",
-    "genre": ["Platformer", "Indie"],
-    "developer": "Matt Makes Games",
-    "publisher": "Matt Makes Games",
-    "platforms": ["PC", "Switch", "PS4", "Xbox One"],
-    "translators": ["Translator7"],
-    "steamID": "5",
-    "releaseYear": 2018,
-    "format": "Digital",
-    "language": "English",
-    "rating": 9.2,
-    "tags": ["Precision", "Story Rich", "Mental Health"],
-    "coverImagePath": "/org/ce216/gamecatalog/images/minecraft.png",
-    "description": "Help Madeline survive her inner demons on a journey to the top of Celeste Mountain in this tight, emotional platformer."
-  },
-  {
-    "title": "Cyberpunk 2077",
-    "genre": ["RPG", "Sci-Fi"],
-    "developer": "CD Projekt Red",
-    "publisher": "CD Projekt",
-    "platforms": ["PC", "PS5", "Xbox Series X"],
-    "translators": ["Translator8", "Translator9"],
-    "steamID": "6",
-    "releaseYear": 2020,
-    "format": "Digital",
-    "language": "English",
-    "rating": 8.5,
-    "tags": ["Futuristic", "Choices Matter", "Narrative"],
-    "coverImagePath": "/org/ce216/gamecatalog/images/rdr.png",
-    "description": "Enter the dystopian future of Night City, where power, style, and body modification are the ultimate forms of identity."
-  },
-  {
-    "title": "Stardew Valley",
-    "genre": ["Simulation", "Farming", "Indie"],
-    "developer": "ConcernedApe",
-    "publisher": "ConcernedApe",
-    "platforms": ["PC", "Switch", "PS4", "Xbox One", "Mobile"],
-    "translators": ["Translator10"],
-    "steamID": "7",
-    "releaseYear": 2016,
-    "format": "Digital",
-    "language": "English",
-    "rating": 9.4,
-    "tags": ["Relaxing", "Farming", "Crafting"],
-    "coverImagePath": "/org/ce216/gamecatalog/images/gta.png",
-    "description": "Build a new life on your inherited farm as you grow crops, raise animals, and connect with the townsfolk."
-  },
-  {
-    "title": "DOOM Eternal",
-    "genre": ["FPS", "Action"],
-    "developer": "id Software",
-    "publisher": "Bethesda Softworks",
-    "platforms": ["PC", "PS4", "Xbox One", "Stadia"],
-    "translators": ["Translator11"],
-    "steamID": "8",
-    "releaseYear": 2020,
-    "format": "Digital",
-    "language": "English",
-    "rating": 9.0,
-    "tags": ["Fast-Paced", "Demons", "Heavy Metal"],
-    "coverImagePath": "/org/ce216/gamecatalog/images/lol.png",
-    "description": "Rip and tear through legions of demons in this high-octane sequel that pushes the limits of FPS combat."
-  }
-]
+    {
+        "format": "Digital",
+        "rating": 8.9,
+        "description": "Brave the frozen wilderness in a post-apocalyptic world where survival means mastering the environment and forging alliances.",
+        "language": "English",
+        "playtime": 85,
+        "title": "Frostbound",
+        "platforms": [
+            "PC",
+            "PS5",
+            "Xbox Series X"
+        ],
+        "tags": [
+            "Cold Survival",
+            "Exploration",
+            "Crafting"
+        ],
+        "steamID": "101",
+        "translators": [
+            "TranslatorA",
+            "TranslatorB"
+        ],
+        "coverImagePath": "/org/ce/gamecatalog/images/frostbound.png",
+        "genre": [
+            "Survival",
+            "Adventure"
+        ],
+        "publisher": "Icepeak Interactive",
+        "developer": "Northforge Studios",
+        "releaseYear": 2023
+    },
+    {
+        "format": "Physical",
+        "rating": 7.5,
+        "description": "Burn neon rubber in this synthwave-inspired racer featuring customizable cars and dazzling cityscapes.",
+        "language": "English",
+        "playtime": 40,
+        "title": "Neon Drift",
+        "platforms": [
+            "PC",
+            "PS4",
+            "Switch"
+        ],
+        "tags": [
+            "Retro Style",
+            "Drifting",
+            "High Speed"
+        ],
+        "steamID": "102",
+        "translators": ["TranslatorC"],
+        "coverImagePath": "/org/ce/gamecatalog/images/neondrift.png",
+        "genre": [
+            "Racing",
+            "Arcade"
+        ],
+        "publisher": "TurboByte Games",
+        "developer": "Velocity Works",
+        "releaseYear": 2019
+    },
+    {
+        "format": "Digital",
+        "rating": 9.3,
+        "description": "Lead a band of warriors through political intrigue and magical warfare in a world shaped by forgotten gods.",
+        "language": "English",
+        "playtime": 120,
+        "title": "Echoes of Arken",
+        "platforms": [
+            "PC",
+            "Switch"
+        ],
+        "tags": [
+            "Turn-Based",
+            "Magic",
+            "Strategy"
+        ],
+        "steamID": "103",
+        "translators": [
+            "TranslatorD",
+            "TranslatorE"
+        ],
+        "coverImagePath": "/org/ce/gamecatalog/images/echoes.png",
+        "genre": [
+            "Tactical RPG",
+            "Fantasy"
+        ],
+        "publisher": "Mystic Realm",
+        "developer": "Crownblade Studios",
+        "releaseYear": 2021
+    },
+    {
+        "format": "Digital",
+        "rating": 8.2,
+        "description": "Battle through metallic wastelands using advanced exo-suits and team-based tactics in this sci-fi shooter.",
+        "language": "English",
+        "playtime": 70,
+        "title": "Steel Horizon",
+        "platforms": [
+            "PC",
+            "PS5"
+        ],
+        "tags": [
+            "Futuristic",
+            "Mechs",
+            "Co-op"
+        ],
+        "steamID": "104",
+        "translators": ["TranslatorF"],
+        "coverImagePath": "/org/ce/gamecatalog/images/steelhorizon.png",
+        "genre": [
+            "FPS",
+            "Sci-Fi"
+        ],
+        "publisher": "Solar Core Media",
+        "developer": "Nebula Forge",
+        "releaseYear": 2024
+    },
+    {
+        "format": "Physical",
+        "rating": 8.7,
+        "description": "Uncover the truth behind a haunted town through the memories of a missing child and fractured souls.",
+        "language": "English",
+        "playtime": 30,
+        "title": "Lost Spirits",
+        "platforms": [
+            "PC",
+            "PS4",
+            "Xbox One"
+        ],
+        "tags": [
+            "Psychological",
+            "Mystery",
+            "Story Driven"
+        ],
+        "steamID": "105",
+        "translators": ["TranslatorG"],
+        "coverImagePath": "/org/ce/gamecatalog/images/lostspirits.png",
+        "genre": [
+            "Horror",
+            "Narrative"
+        ],
+        "publisher": "DarkVeil Entertainment",
+        "developer": "Candlelight Games",
+        "releaseYear": 2018
+    },
+    {
+        "format": "Digital",
+        "rating": 9.1,
+        "description": "Customize and battle giant mechs in high-stakes arenas designed for competitive play and fast-paced action.",
+        "language": "English",
+        "playtime": 150,
+        "title": "Mecha Arena X",
+        "platforms": [
+            "PC",
+            "PS5",
+            "Xbox Series X"
+        ],
+        "tags": [
+            "PvP",
+            "Customization",
+            "eSports"
+        ],
+        "steamID": "106",
+        "translators": [
+            "TranslatorH",
+            "TranslatorI"
+        ],
+        "coverImagePath": "/org/ce/gamecatalog/images/mechaarena.png",
+        "genre": [
+            "Action",
+            "Multiplayer"
+        ],
+        "publisher": "SkyStrike Inc.",
+        "developer": "IronPixel Studios",
+        "releaseYear": 2022
+    },
+    {
+        "format": "Digital",
+        "rating": 9,
+        "description": "Restore an overgrown valley to life by farming, building friendships, and shaping the village to your liking.",
+        "language": "English",
+        "playtime": 95,
+        "title": "Verdant Hollow",
+        "platforms": [
+            "PC",
+            "Switch",
+            "Mobile"
+        ],
+        "tags": [
+            "Relaxing",
+            "Life Sim",
+            "Customization"
+        ],
+        "steamID": "107",
+        "translators": ["TranslatorJ"],
+        "coverImagePath": "/org/ce/gamecatalog/images/verdant.png",
+        "genre": [
+            "Farming",
+            "Simulation"
+        ],
+        "publisher": "Greenthumb Studios",
+        "developer": "Willow & Fern",
+        "releaseYear": 2020
+    },
+    {
+        "format": "Digital",
+        "rating": 8.8,
+        "description": "Execute covert missions in a world teetering on the brink of war. Silence is your greatest weapon.",
+        "language": "English",
+        "playtime": 60,
+        "title": "Shadow Protocol",
+        "platforms": [
+            "PC",
+            "PS5"
+        ],
+        "tags": [
+            "Espionage",
+            "Tactical",
+            "Story Rich"
+        ],
+        "steamID": "108",
+        "translators": ["TranslatorK"],
+        "coverImagePath": "/org/ce/gamecatalog/images/shadowprotocol.png",
+        "genre": [
+            "Stealth",
+            "Thriller"
+        ],
+        "publisher": "StealthCore Studios",
+        "developer": "BlackFox Division",
+        "releaseYear": 2021
+    },
+    {
+        "format": "Digital",
+        "rating": 9.5,
+        "description": "A dark and expansive open-world RPG filled with challenging enemies and intricate lore, crafted by FromSoftware.",
+        "language": "English",
+        "playtime": 100,
+        "title": "Elden Ring",
+        "platforms": [
+            "PC",
+            "PS5",
+            "Xbox Series X"
+        ],
+        "tags": [
+            "Open World",
+            "Soulslike",
+            "Boss Fights"
+        ],
+        "steamID": "1",
+        "translators": [
+            "Translator1",
+            "Translator2"
+        ],
+        "coverImagePath": "/org/ce/gamecatalog/images/gta.png",
+        "genre": [
+            "Action RPG",
+            "Fantasy"
+        ],
+        "publisher": "Bandai Namco",
+        "developer": "FromSoftware",
+        "releaseYear": 2022
+    },
+    {
+        "format": "Physical",
+        "rating": 9.8,
+        "description": "Step into the shoes of Geralt of Rivia in this epic tale of monster hunting, deep narrative, and rich fantasy world.",
+        "language": "English",
+        "playtime": 100,
+        "title": "The Witcher 3",
+        "platforms": [
+            "PC",
+            "PS4",
+            "Xbox One",
+            "Switch"
+        ],
+        "tags": [
+            "Story Rich",
+            "Open World",
+            "Choices Matter"
+        ],
+        "steamID": "2",
+        "translators": ["Translator3"],
+        "coverImagePath": "/org/ce/gamecatalog/images/gta.png",
+        "genre": [
+            "RPG",
+            "Adventure"
+        ],
+        "publisher": "CD Projekt",
+        "developer": "CD Projekt Red",
+        "releaseYear": 2015
+    },
+    {
+        "format": "Digital",
+        "rating": 9.1,
+        "description": "Descend into a beautifully hand-drawn world of insects and mystery in this challenging and atmospheric platformer.",
+        "language": "English",
+        "playtime": 100,
+        "title": "Hollow Knight",
+        "platforms": [
+            "PC",
+            "Switch",
+            "PS4",
+            "Xbox One"
+        ],
+        "tags": [
+            "Indie",
+            "Exploration",
+            "Challenging"
+        ],
+        "steamID": "3",
+        "translators": [
+            "Translator4",
+            "Translator5"
+        ],
+        "coverImagePath": "/org/ce/gamecatalog/images/lol.png",
+        "genre": [
+            "Metroidvania",
+            "Platformer"
+        ],
+        "publisher": "Team Cherry",
+        "developer": "Team Cherry",
+        "releaseYear": 2017
+    },
+    {
+        "format": "Physical",
+        "rating": 9.7,
+        "description": "Experience the American frontier through the eyes of Arthur Morgan in this cinematic masterpiece of an open-world western.",
+        "language": "English",
+        "playtime": 100,
+        "title": "Red Dead Redemption 2",
+        "platforms": [
+            "PC",
+            "PS4",
+            "Xbox One"
+        ],
+        "tags": [
+            "Western",
+            "Open World",
+            "Story Rich"
+        ],
+        "steamID": "4",
+        "translators": ["Translator6"],
+        "coverImagePath": "/org/ce/gamecatalog/images/rdr.png",
+        "genre": [
+            "Action",
+            "Adventure"
+        ],
+        "publisher": "Rockstar Games",
+        "developer": "Rockstar Games",
+        "releaseYear": 2018
+    },
+    {
+        "format": "Digital",
+        "rating": 9.2,
+        "description": "Help Madeline survive her inner demons on a journey to the top of Celeste Mountain in this tight, emotional platformer.",
+        "language": "English",
+        "playtime": 100,
+        "title": "Celeste",
+        "platforms": [
+            "PC",
+            "Switch",
+            "PS4",
+            "Xbox One"
+        ],
+        "tags": [
+            "Precision",
+            "Story Rich",
+            "Mental Health"
+        ],
+        "steamID": "5",
+        "translators": ["Translator7"],
+        "coverImagePath": "/org/ce/gamecatalog/images/minecraft.png",
+        "genre": [
+            "Platformer",
+            "Indie"
+        ],
+        "publisher": "Matt Makes Games",
+        "developer": "Matt Makes Games",
+        "releaseYear": 2018
+    },
+    {
+        "format": "Digital",
+        "rating": 8.5,
+        "description": "Enter the dystopian future of Night City, where power, style, and body modification are the ultimate forms of identity.",
+        "language": "English",
+        "playtime": 100,
+        "title": "Cyberpunk 2077",
+        "platforms": [
+            "PC",
+            "PS5",
+            "Xbox Series X"
+        ],
+        "tags": [
+            "Futuristic",
+            "Choices Matter",
+            "Narrative"
+        ],
+        "steamID": "6",
+        "translators": [
+            "Translator8",
+            "Translator9"
+        ],
+        "coverImagePath": "/org/ce/gamecatalog/images/rdr.png",
+        "genre": [
+            "RPG",
+            "Sci-Fi"
+        ],
+        "publisher": "CD Projekt",
+        "developer": "CD Projekt Red",
+        "releaseYear": 2020
+    },
+    {
+        "format": "Digital",
+        "rating": 9.4,
+        "description": "Build a new life on your inherited farm as you grow crops, raise animals, and connect with the townsfolk.",
+        "language": "English",
+        "playtime": 100,
+        "title": "Stardew Valley",
+        "platforms": [
+            "PC",
+            "Switch",
+            "PS4",
+            "Xbox One",
+            "Mobile"
+        ],
+        "tags": [
+            "Relaxing",
+            "Farming",
+            "Crafting"
+        ],
+        "steamID": "7",
+        "translators": ["Translator10"],
+        "coverImagePath": "/org/ce/gamecatalog/images/gta.png",
+        "genre": [
+            "Simulation",
+            "Farming",
+            "Indie"
+        ],
+        "publisher": "ConcernedApe",
+        "developer": "ConcernedApe",
+        "releaseYear": 2016
+    },
+    {
+        "format": "Digital",
+        "rating": 9,
+        "description": "Rip and tear through legions of demons in this high-octane sequel that pushes the limits of FPS combat.",
+        "language": "English",
+        "playtime": 100,
+        "title": "DOOM Eternal",
+        "platforms": [
+            "PC",
+            "PS4",
+            "Xbox One",
+            "Stadia"
+        ],
+        "tags": [
+            "Fast-Paced",
+            "Demons",
+            "Heavy Metal"
+        ],
+        "steamID": "8",
+        "translators": ["Translator11"],
+        "coverImagePath": "/org/ce/gamecatalog/images/lol.png",
+        "genre": [
+            "FPS",
+            "Action"
+        ],
+        "publisher": "Bethesda Softworks",
+        "developer": "id Software",
+        "releaseYear": 2020
+    }
 ]

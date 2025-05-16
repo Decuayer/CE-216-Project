@@ -1,4 +1,4 @@
-package org.ce216.gamecatalog;
+package org.ce.gamecatalog;
 
 import java.util.*;
 import org.json.*;
@@ -37,6 +37,7 @@ public class Game {
     public List<String> getTags() {return tags;}
     public String getCoverImagePath() {return coverImagePath;}
     public String getDescription() {return description;}
+    public double getPlayTime() {return playtime;}
 
 
     public Game(String title, List<String> genre, String developer, String publisher, List<String> platforms, List<String> translators, String steamID, int releaseYear, double playtime, String format, String language, double rating, List<String> tags, String coverImagePath, String description) {

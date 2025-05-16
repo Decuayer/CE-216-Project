@@ -1,10 +1,9 @@
-package org.ce216.gamecatalog;
+package org.ce.gamecatalog;
 
 import java.io.IOException;
 import java.util.*;
 import org.json.*;
 
-import javax.xml.catalog.Catalog;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
@@ -41,8 +40,16 @@ public class User extends FileHandler {
         json.put("passwordHash", passwordHash);
         json.put("age", age);
         json.put("email", email);
-        json.put("gameCatalog", gameCatalog);
-        json.put("favoriteGames", favoriteGames);
+        JSONArray catalogIDs = new JSONArray();
+        for (Game game : gameCatalog) {
+            catalogIDs.put(game.getSteamID());
+        }
+        json.put("gameCatalog", catalogIDs);
+        JSONArray favoriteIDs = new JSONArray();
+        for (Game game : favoriteGames) {
+            favoriteIDs.put(game.getSteamID());
+        }
+        json.put("favoriteGames", favoriteIDs);
         json.put("favoriteGenre", favoriteGenre);
         return json.toString(4);
     }
@@ -108,4 +115,6 @@ public class User extends FileHandler {
             throw new RuntimeException("Error hashing password", e);
         }
     }
+
+
 }

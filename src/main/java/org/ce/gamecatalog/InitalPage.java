@@ -1,16 +1,20 @@
-package org.ce216.gamecatalog;
+package org.ce.gamecatalog;
 
+import javafx.animation.PauseTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.scene.control.TextField;
+import javafx.util.Duration;
 
 import java.io.IOException;
 import java.util.List;
@@ -28,6 +32,9 @@ public class InitalPage {
     public static User getLoggedInUser() {
         return loggedInUser;
     }
+    public static void setLoggedInUser(User user) {
+        loggedInUser = user;
+    }
 
 
     @FXML
@@ -38,6 +45,8 @@ public class InitalPage {
     private Stage stage;
     @FXML
     private Scene scene;
+    @FXML
+    private Text loginText;
 
     public void switchScenetoMainMenu(ActionEvent event) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("main-screen.fxml"));
@@ -73,13 +82,15 @@ public class InitalPage {
         stage.setTitle("Register Page");
         stage.show();
     }
+
+
     // Login Function
     public void loginButton(ActionEvent event) throws IOException {
         String username = usernameField.getText();
         String password = passwordField.getText();
 
         if(username.isEmpty() || password.isEmpty()) {
-            System.out.println("Username or Password is empty");
+            setMessage("Username or Password is empty", Color.RED);
             return;
         }
 
@@ -90,23 +101,39 @@ public class InitalPage {
             User user = users.stream().filter(u -> u.getUsername().equals(username)).findFirst().orElse(null);
 
             if (user == null) {
-                System.out.println("User not found");
+                setMessage("User not found", Color.RED);
                 return;
             }
-            System.out.println("Sifre: 1234");
 
             if (user.getPasswordHash().equals(user.hashPassword(password))) {
-                System.out.println("User logged in");
+                setMessage("User logged in " + user.getUsername(), Color.GREEN);
                 loggedInUser = user;
-                switchScenetoMainMenu(event);
+                PauseTransition pause = new PauseTransition(Duration.seconds(2));
+                pause.setOnFinished(e -> {
+                    try {
+                        switchScenetoMainMenu(event);
+                    } catch (IOException ex) {
+                        throw new RuntimeException(ex);
+                    }
+                });
+                pause.play();
             } else {
-                System.out.println("Password is wrong");
+                setMessage("Password is wrong", Color.RED);
             }
 
         }  catch (IOException e) {
             e.printStackTrace();
-            System.out.println("Error logging in");
+            setMessage("Error logging in", Color.RED);
         }
 
     }
+
+    private void setMessage(String message, Color color) {
+        loginText.setText(message);
+        loginText.setFont(Font.font("Arial", FontWeight.BOLD, 16));
+        loginText.setFill(color);
+    }
+
+
+
 }

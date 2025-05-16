@@ -1,22 +1,13 @@
-package org.ce216.gamecatalog;
+package org.ce.gamecatalog;
 
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
-import javafx.scene.layout.VBox;
-import javafx.scene.layout.HBox;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.geometry.Pos;
-import javafx.stage.StageStyle;
 
 
 public class UIManager extends Application {
@@ -24,9 +15,9 @@ public class UIManager extends Application {
     @Override
     public void start(Stage primaryStage) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("inital-page.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/ce/gamecatalog/inital-page.fxml"));
             Parent root = loader.load();
-            Image icon = new Image(getClass().getResourceAsStream("/org/ce216/gamecatalog/images/logo.png"));
+            Image icon = new Image(getClass().getResourceAsStream("/org/ce/gamecatalog/images/logo.png"));
             primaryStage.getIcons().add(icon);
             primaryStage.setTitle("Login Page");
             primaryStage.setScene(new Scene(root));
