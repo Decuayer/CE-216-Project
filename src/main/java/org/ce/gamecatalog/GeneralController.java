@@ -171,6 +171,31 @@ public class GeneralController implements Initializable {
         });
 
     }
+    public List<Game> searchGames(List<Game> games, String query) {
+        List<Game> results = new ArrayList<>();
+        String lowerQuery = query.toLowerCase();
+
+        for (Game game : games) {
+            if (
+                    game.getTitle().toLowerCase().contains(lowerQuery) ||
+                            game.getDeveloper().toLowerCase().contains(lowerQuery) ||
+                            game.getPublisher().toLowerCase().contains(lowerQuery) ||
+                            String.valueOf(game.getReleaseYear()).contains(lowerQuery) ||
+                            game.getGenre().stream().anyMatch(g -> g.toLowerCase().contains(lowerQuery)) ||
+                            game.getTags().stream().anyMatch(tag -> tag.toLowerCase().contains(lowerQuery)) ||
+                            game.getPlatforms().stream().anyMatch(p -> p.toLowerCase().contains(lowerQuery)) ||
+                            game.getTranslators().stream().anyMatch(t -> t.toLowerCase().contains(lowerQuery)) ||
+                            game.getLanguage().toLowerCase().contains(lowerQuery) ||
+                            String.valueOf(game.getSteamID()).contains(lowerQuery)
+            ) {
+                results.add(game);
+            }
+        }
+
+        return results;
+    }
+
+
 
     private Pane createGamePane(Game game) {
         VBox pane = new VBox(30);
@@ -1083,17 +1108,15 @@ public class GeneralController implements Initializable {
         String selectedSort = sortComboBox.getValue();
 
 
-        List<Game> results = allGames.stream()
-                .filter(game -> game.getTitle().toLowerCase().contains(query))
+        List<Game> textResults = searchGames(allGames, query);
+
+
+        List<Game> results = textResults.stream()
                 .filter(game -> selectedGenre == null || selectedGenre.equals("Genre") || game.getGenre().contains(selectedGenre))
-                .filter(game -> selectedTags == null
-                        || selectedTags.isEmpty()
-                        || selectedTags.contains("Tags")
-                        || Set.copyOf(game.getTags()).containsAll(selectedTags))
+                .filter(game -> selectedTags == null || selectedTags.isEmpty() || Set.copyOf(game.getTags()).containsAll(selectedTags))
                 .collect(Collectors.toList());
 
 
-        System.out.println(selectedSort);
         if (selectedSort != null) {
             switch (selectedSort) {
                 case "Rating: High to Low":
@@ -1119,8 +1142,7 @@ public class GeneralController implements Initializable {
 
         gamesContainerSearch.getChildren().clear();
 
-
-        for(Game game: results) {
+        for (Game game : results) {
             Pane gamePane = createGamePane(game);
             gamesContainerSearch.getChildren().add(gamePane);
         }
