@@ -24,6 +24,8 @@ import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+import org.controlsfx.control.CheckComboBox;
+import javafx.collections.ListChangeListener;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -70,7 +72,7 @@ public class GeneralController implements Initializable {
     @FXML
     private ComboBox<String> genreComboBox;
     @FXML
-    private ComboBox<String> tagsComboBox;
+    private CheckComboBox<String> tagsCheckComboBox;
     @FXML
     private ComboBox<String> sortComboBox;
     @FXML
@@ -109,12 +111,14 @@ public class GeneralController implements Initializable {
         loadFilters();
 
         searchButton = new Button("Search");
+        tagsCheckComboBox.setTitle("Tags");
         searchButton.setOnAction(e -> performSearch());
         performSearch();
 
         searchbar.textProperty().addListener((observable, oldValue, newValue) -> performSearch());
         genreComboBox.valueProperty().addListener((observable, oldValue, newValue) -> performSearch());
-        tagsComboBox.valueProperty().addListener((observable, oldValue, newValue) -> performSearch());
+        tagsCheckComboBox.getCheckModel().getCheckedItems().addListener((ListChangeListener<String>) c -> performSearch());
+
         sortComboBox.valueProperty().addListener((observable, oldValue, newValue) -> performSearch());
 
         // REFRESH METHOD
@@ -167,6 +171,31 @@ public class GeneralController implements Initializable {
         });
 
     }
+    public List<Game> searchGames(List<Game> games, String query) {
+        List<Game> results = new ArrayList<>();
+        String lowerQuery = query.toLowerCase();
+
+        for (Game game : games) {
+            if (
+                    game.getTitle().toLowerCase().contains(lowerQuery) ||
+                            game.getDeveloper().toLowerCase().contains(lowerQuery) ||
+                            game.getPublisher().toLowerCase().contains(lowerQuery) ||
+                            String.valueOf(game.getReleaseYear()).contains(lowerQuery) ||
+                            game.getGenre().stream().anyMatch(g -> g.toLowerCase().contains(lowerQuery)) ||
+                            game.getTags().stream().anyMatch(tag -> tag.toLowerCase().contains(lowerQuery)) ||
+                            game.getPlatforms().stream().anyMatch(p -> p.toLowerCase().contains(lowerQuery)) ||
+                            game.getTranslators().stream().anyMatch(t -> t.toLowerCase().contains(lowerQuery)) ||
+                            game.getLanguage().toLowerCase().contains(lowerQuery) ||
+                            String.valueOf(game.getSteamID()).contains(lowerQuery)
+            ) {
+                results.add(game);
+            }
+        }
+
+        return results;
+    }
+
+
 
     private Pane createGamePane(Game game) {
         VBox pane = new VBox(30);
@@ -634,7 +663,8 @@ public class GeneralController implements Initializable {
             gamesContainerSearch.getChildren().add(gamePane);
         }
         searchbar.clear();
-        tagsComboBox.getSelectionModel().clearSelection();
+        tagsCheckComboBox.getCheckModel().clearChecks();
+
         genreComboBox.getSelectionModel().clearSelection();
         genreComboBox.getSelectionModel().clearSelection();
         initializeAllGames();
@@ -1059,10 +1089,12 @@ public class GeneralController implements Initializable {
             tagList.add(0, "Tags");
 
             genreComboBox.setItems(genreList);
-            tagsComboBox.setItems(tagList);
+            tagsCheckComboBox.getItems().setAll(tagList);
+
 
             genreComboBox.getSelectionModel().clearSelection();
-            tagsComboBox.getSelectionModel().clearSelection();
+            tagsCheckComboBox.getCheckModel().clearChecks();
+
 
         } catch (IOException e) {
             System.err.println("Failed to load games: " + e.getMessage());
@@ -1072,17 +1104,19 @@ public class GeneralController implements Initializable {
     private List<Game> performSearch() {
         String query = searchbar.getText().trim().toLowerCase();
         String selectedGenre = genreComboBox.getValue();
-        String selectedTag = tagsComboBox.getValue();
+        ObservableList<String> selectedTags = tagsCheckComboBox.getCheckModel().getCheckedItems();
         String selectedSort = sortComboBox.getValue();
 
 
-        List<Game> results = allGames.stream()
-                .filter(game -> game.getTitle().toLowerCase().contains(query))
+        List<Game> textResults = searchGames(allGames, query);
+
+
+        List<Game> results = textResults.stream()
                 .filter(game -> selectedGenre == null || selectedGenre.equals("Genre") || game.getGenre().contains(selectedGenre))
-                .filter(game -> selectedTag == null || selectedTag.equals("Tags") || game.getTags().contains(selectedTag))
+                .filter(game -> selectedTags == null || selectedTags.isEmpty() || Set.copyOf(game.getTags()).containsAll(selectedTags))
                 .collect(Collectors.toList());
 
-        System.out.println(selectedSort);
+
         if (selectedSort != null) {
             switch (selectedSort) {
                 case "Rating: High to Low":
@@ -1108,8 +1142,7 @@ public class GeneralController implements Initializable {
 
         gamesContainerSearch.getChildren().clear();
 
-
-        for(Game game: results) {
+        for (Game game : results) {
             Pane gamePane = createGamePane(game);
             gamesContainerSearch.getChildren().add(gamePane);
         }
