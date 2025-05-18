@@ -1,21 +1,23 @@
 package org.ce.gamecatalog;
 
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.geometry.HPos;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
-import javafx.geometry.Rectangle2D;
+import javafx.geometry.*;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.CycleMethod;
+import javafx.scene.paint.RadialGradient;
+import javafx.scene.paint.Stop;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
@@ -94,8 +96,53 @@ public class GeneralController implements Initializable {
     @FXML
     private Text accountFavoriteGenre;
 
+    @FXML
+    private ScrollPane StoreGames;
+    @FXML
+    private ScrollPane StoreGames1;
+
+    final double[] dragStartX = {0};
+    final double[] dragStartX1 = {0};
+    final double[] dragStartX3 = {0};
+
+    @FXML
+    private SplitPane storeSplitPane;
+    @FXML
+    private ScrollPane storeScrollPane;
+    @FXML
+    private AnchorPane storeanchorpane;
+    @FXML
+    private SplitPane libSplitPane;
+    @FXML
+    private SplitPane jsonSplitPane;
+    @FXML
+    private SplitPane accountSplitPane;
+    @FXML
+    private TabPane mainTabPane;
+    @FXML
+    private Tab storetappane;
+    @FXML
+    private Tab librarytabpane;
+    @FXML
+    private Tab jsontabpane;
+    @FXML
+    private Tab accountTabPane;
+    @FXML
+    private Tab helptabpane;
 
 
+    Font tabFont = Font.font("System", 22);
+    private Label storeLabel = new Label("Store");
+    private Label libraryLabel = new Label("Library");
+    private Label jsonLabel = new Label("Json");
+    private Label helpLabel = new Label("Help");
+    private Label accountLabel = new Label("Account");
+    private Map<Tab, Label> tabLabels = new HashMap<>();
+
+    private double initialContainerWidth;
+    private double initialContainerHeight;
+
+    private Label noResultsLabel = new Label("No games found matching your search. New games will be added soon.");
 
 
     @Override
@@ -104,6 +151,302 @@ public class GeneralController implements Initializable {
         User loggedInUser = InitalPage.getLoggedInUser();
         userInfo(loggedInUser);
 
+
+        //ui için hepsi
+
+        storetappane.setGraphic(storeLabel);
+        librarytabpane.setGraphic(libraryLabel);
+        jsontabpane.setGraphic(jsonLabel);
+        helptabpane.setGraphic(helpLabel);
+        accountTabPane.setGraphic(accountLabel);
+
+        tabLabels.put(storetappane, storeLabel);
+        tabLabels.put(librarytabpane, libraryLabel);
+        tabLabels.put(jsontabpane, jsonLabel);
+        tabLabels.put(helptabpane, helpLabel);
+        tabLabels.put(accountTabPane, accountLabel);
+
+        applyTabLabelStyles();
+
+        highlightSelectedTab(storetappane);
+
+        mainTabPane.getSelectionModel().selectedItemProperty().addListener((obs, oldTab, newTab) -> {
+            highlightSelectedTab(newTab);
+        });
+
+
+        allGamesList.skinProperty().addListener((obs, oldSkin, newSkin) -> {
+            Set<javafx.scene.Node> nodes = allGamesList.lookupAll(".scroll-bar");
+            for (javafx.scene.Node node : nodes) {
+                if (node instanceof ScrollBar scrollBar) {
+                    if (scrollBar.getOrientation() == Orientation.VERTICAL) {
+                        scrollBar.setVisible(false);
+                        scrollBar.setPrefWidth(0);
+                    }
+                }
+            }
+        });
+
+        RadialGradient radialGradient = new RadialGradient(
+                0, 0, 0.5, 0.5, 0.5, true,
+                CycleMethod.NO_CYCLE,
+                new Stop(0, Color.web("#1f0036")),
+                new Stop(1, Color.web("#0d0010"))
+        );
+
+        Background bg = new Background(new BackgroundFill(radialGradient, CornerRadii.EMPTY, Insets.EMPTY));
+
+        StoreGames.setBackground(bg);
+        StoreGames.setBorder(Border.EMPTY);
+
+        StoreGames1.setBackground(bg);
+        StoreGames1.setBorder(Border.EMPTY);
+
+        storeScrollPane.setBackground(bg);
+        storeScrollPane.setBorder(Border.EMPTY);
+
+        storeSplitPane.setBackground(bg);
+        storeSplitPane.setBorder(Border.EMPTY);
+
+        storeanchorpane.setBackground(bg);
+        storeanchorpane.setBorder(Border.EMPTY);
+
+        jsonSplitPane.setBackground(bg);
+        jsonSplitPane.setBorder(Border.EMPTY);
+
+        Platform.runLater(() -> {
+            jsonSplitPane.lookupAll(".split-pane-divider").forEach(divider -> {
+                divider.setStyle("-fx-background-color: white;");
+                divider.setMouseTransparent(true);
+                if (divider instanceof Region) {
+                    ((Region)divider).setPrefWidth(2);
+                }
+            });
+        });
+
+        Platform.runLater(() -> {
+            accountSplitPane.lookupAll(".split-pane-divider").forEach(divider -> {
+                divider.setStyle("-fx-background-color: white;");
+                divider.setMouseTransparent(true);
+                if (divider instanceof Region) {
+                    ((Region)divider).setPrefWidth(2);
+                }
+            });
+        });
+
+
+        Platform.runLater(() -> {
+            libSplitPane.lookupAll(".split-pane-divider").forEach(divider -> {
+                divider.setStyle("-fx-background-color: white;");
+                divider.setMouseTransparent(true);
+                if (divider instanceof Region) {
+                    ((Region)divider).setPrefWidth(2);
+                }
+            });
+        });
+        libraryGames.setCellFactory(lv -> new ListCell<Game>() {
+
+            private final ImageView imageView = new ImageView();
+            private final HBox content = new HBox(10);
+            private final Label label = new Label();
+
+            {
+                label.setTextFill(Color.WHITE);
+                label.setFont(Font.font(16));
+                content.setAlignment(Pos.CENTER_LEFT);
+                content.getChildren().addAll(imageView, label);
+                content.setPadding(new Insets(10));
+                content.setBackground(new Background(
+                        new BackgroundFill(Color.rgb(20, 10, 40, 0.15), new CornerRadii(5), Insets.EMPTY)));
+            }
+
+            @Override
+            protected void updateItem(Game game, boolean empty) {
+                super.updateItem(game, empty);
+
+                if (empty || game == null) {
+                    setText(null);
+                    setGraphic(null);
+                    setBackground(null);
+                } else {
+                    label.setText(game.getTitle());
+
+                    String imagePath = game.getCoverImagePath();
+                    Image image;
+                    try {
+                        File file = new File(imagePath);
+                        if (file.exists()) {
+                            image = new Image(file.toURI().toString(), 45, 45, true, true);
+                        } else {
+                            URL imageUrl = getClass().getResource(imagePath.startsWith("/") ? imagePath : "/" + imagePath);
+                            if (imageUrl != null) {
+                                image = new Image(imageUrl.toExternalForm(), 45, 45, true, true);
+                            } else {
+                                image = new Image(getClass().getResource("/org/ce/gamecatalog/images/lol.png").toExternalForm(), 45, 45, true, true);
+                            }
+                        }
+                    } catch (Exception e) {
+                        image = new Image(getClass().getResource("/org/ce/gamecatalog/images/lol.png").toExternalForm(), 45, 45, true, true);
+                    }
+                    imageView.setImage(image);
+                    imageView.setFitWidth(45);
+                    imageView.setFitHeight(45);
+                    imageView.setPreserveRatio(true);
+
+                    setText(null);
+                    setGraphic(content);
+
+                    setBackground(Background.EMPTY);
+                    setPadding(new Insets(5, 0, 5, 0));
+                }
+            }
+        });
+
+
+        StoreGames.setHbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
+        StoreGames.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+
+        StoreGames.viewportBoundsProperty().addListener((obs, oldVal, newVal) -> {
+            gamesContainerSearch.setPrefWidth(newVal.getWidth());
+           // gamesContainerSearch.setPrefHeight(newVal.getHeight()); açma burayı
+        });
+
+        gamesContainerSearch.setSpacing(20);
+        gamesContainerSearch.setPadding(new Insets(10));
+
+
+        genreComboBox.setStyle(
+                "-fx-background-radius: 25; " +
+                        "-fx-border-radius: 25; " +
+                        "-fx-background-color: #3C0061; " +
+                        "-fx-text-fill: white;"
+        );
+        genreComboBox.setButtonCell(new ListCell<>() {  // prompt text beyaz yapmak için koskoca fonksiyon lazım amk olmuyo başka searchbar
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setText("Genre");
+                    setTextFill(Color.WHITE);
+                } else {
+                    setText(item);
+                    setTextFill(Color.WHITE);
+                }
+            }
+        });
+
+        tagsComboBox.setButtonCell(new ListCell<>() {
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setText("Genre");
+                    setTextFill(Color.WHITE);
+                } else {
+                    setText(item);
+                    setTextFill(Color.WHITE);
+                }
+            }
+        });
+
+        sortComboBox.setButtonCell(new ListCell<>() {
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setText("Genre");
+                    setTextFill(Color.WHITE);
+                } else {
+                    setText(item);
+                    setTextFill(Color.WHITE);
+                }
+            }
+        });
+
+
+
+        storeScrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        storeScrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+
+        StoreGames.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        StoreGames.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        StoreGames.setStyle(
+                "-fx-background-color: transparent;" +
+                        "-fx-background-color:  linear-gradient(from 0% 0% to 100% 100%, #0d0010, #1f0036);" +
+                        "-fx-padding: 0;"
+        );
+
+        StoreGames.getContent().setOnMousePressed(event -> {
+            dragStartX[0] = event.getSceneX();
+        });
+
+        StoreGames.getContent().setOnMouseDragged(event -> {
+            double dragDistance = dragStartX[0] - event.getSceneX();
+            double hValue = StoreGames.getHvalue();
+            double width = StoreGames.getContent().getBoundsInLocal().getWidth();
+            double viewportWidth = StoreGames.getViewportBounds().getWidth();
+
+            double deltaH = dragDistance / (width - viewportWidth);
+            StoreGames.setHvalue(Math.min(Math.max(hValue + deltaH, 0), 1));
+
+            dragStartX[0] = event.getSceneX();
+        });
+
+        StoreGames1.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        StoreGames1.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        StoreGames1.setStyle(
+                "-fx-background-color: transparent;" +
+                        "-fx-padding: 0;"
+        );
+
+        StoreGames1.getContent().setOnMousePressed(event -> {
+            dragStartX1[0] = event.getSceneX();
+        });
+
+        StoreGames1.getContent().setOnMouseDragged(event -> {
+            double dragDistance = dragStartX1[0] - event.getSceneX();
+            double hValue = StoreGames1.getHvalue();
+            double width = StoreGames1.getContent().getBoundsInLocal().getWidth();
+            double viewportWidth = StoreGames1.getViewportBounds().getWidth();
+
+            double deltaH = dragDistance / (width - viewportWidth);
+            StoreGames1.setHvalue(Math.min(Math.max(hValue + deltaH, 0), 1));
+
+            dragStartX1[0] = event.getSceneX();
+        });
+
+        Platform.runLater(() -> {
+            storeSplitPane.lookupAll(".split-pane-divider").forEach(divider -> {
+                if (divider instanceof Region) {
+                    ((Region) divider).setStyle(
+                            "-fx-background-color: transparent;" +
+                                    "-fx-border-width: 0;" +
+                                    "-fx-padding: 0;" +
+                                    "-fx-opacity: 0;"
+                    );
+                }
+            });
+        });
+
+        Platform.runLater(() -> {
+            initialContainerWidth = gamesContainerSearch.getWidth();
+            initialContainerHeight = gamesContainerSearch.getHeight();
+        });
+
+
+
+// bölücü hareketini engelliyo
+        storeSplitPane.getDividers().forEach(divider -> {
+            final double initialPos = divider.getPosition();
+
+            divider.positionProperty().addListener((obs, oldPos, newPos) -> {
+                if (!newPos.equals(initialPos)) {
+                    divider.setPosition(initialPos);
+                }
+            });
+        });
+
+        // ui sonu
 
 
         // SEARCH METHOD
@@ -137,7 +480,7 @@ public class GeneralController implements Initializable {
         libraryGames.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             libraryPane.getChildren().clear();
             if (newValue != null) {
-                Pane libraryPaneGame = createGameLibrary(newValue);  // Seçilen oyun bilgilerini sağ panelde güncelle
+                Pane libraryPaneGame = createGameLibrary(newValue);
                 libraryPane.getChildren().addAll(libraryPaneGame);
             }
         });
@@ -198,10 +541,32 @@ public class GeneralController implements Initializable {
 
 
     private Pane createGamePane(Game game) {
+
         VBox pane = new VBox(30);
         pane.setPrefWidth(400);
+        pane.setPrefHeight(600);
+        pane.setMinWidth(400);
+        pane.setMaxWidth(400);
+        pane.setMinHeight(600);
+        pane.setMaxHeight(600);
         pane.setPadding(new Insets(15));
-        pane.setStyle("-fx-background-color: #fff; -fx-border-color: #ccc; -fx-border-radius: 10; -fx-background-radius: 10;");
+
+
+        // ui için
+        RadialGradient radialGradient = new RadialGradient(
+                0, 0, 0.5, 0.5, 0.5, true,
+                CycleMethod.NO_CYCLE,
+                new Stop(0, Color.web("#1f0036")),
+                new Stop(1, Color.web("#0d0010"))
+        );
+
+        pane.setBackground(new Background(new BackgroundFill(radialGradient, new CornerRadii(0), Insets.EMPTY)));
+
+
+        pane.setBorder(Border.EMPTY);
+
+
+
 
         // For Photo
         VBox firstPane = new VBox();
@@ -238,18 +603,23 @@ public class GeneralController implements Initializable {
         // For Others
         VBox secondPane = new VBox(20);
 
+
         // Title
         VBox titleBox = new VBox();
         Label titleLabel = new Label(game.getTitle());
         titleLabel.setFont(Font.font("Arial", FontWeight.BOLD, 18));
+        titleLabel.setTextFill(Color.WHITE);
 
         // Description
         VBox descBox = new VBox(5);
         Label descTitle = new Label("Description");
         descTitle.setFont(Font.font("Arial", FontWeight.BOLD, 16));
+        descTitle.setStyle("-fx-text-fill: white;");
         Text descriptionText = new Text(game.getDescription());
+        descriptionText.setFill(Color.WHITE);
         descriptionText.setWrappingWidth(370);
         TextFlow descriptionFlow = new TextFlow(descriptionText);
+
 
         // Infromations
         VBox infoBox = new VBox(2);
@@ -269,6 +639,7 @@ public class GeneralController implements Initializable {
         );
 
 
+
         // Bottom Buttons
         Button detailButton = new Button("Detail");
         detailButton.setPrefSize(140, 46);
@@ -280,6 +651,9 @@ public class GeneralController implements Initializable {
         buttonBox.setLayoutX(60);
         buttonBox.setLayoutY(496);
         buttonBox.setAlignment(Pos.CENTER);
+        detailButton.setStyle("-fx-background-radius: 25; -fx-background-color:  #3C0061; -fx-text-fill: white;");
+        addLibraryButton.setStyle("-fx-background-radius: 25; -fx-background-color:  #3C0061; -fx-text-fill: white;");
+
 
 
 
@@ -332,6 +706,12 @@ public class GeneralController implements Initializable {
             showGameDetailPopup(game);
         });
 
+
+        pane.setStyle("-fx-background-color: linear-gradient(from 0% 0% to 100% 100%, #0d0010, #1f0036);");
+        storeScrollPane.setStyle("-fx-background-color: linear-gradient(from 0% 0% to 100% 100%, #0d0010, #1f0036);");
+        storeScrollPane.getContent().setStyle("-fx-background-color: linear-gradient(from 0% 0% to 100% 100%, #0d0010, #1f0036);");
+
+
         return pane;
     }
 
@@ -339,27 +719,39 @@ public class GeneralController implements Initializable {
     private Pane createGameLibrary(Game game) {
         VBox pane = new VBox(30);
         pane.setPadding(new Insets(15));
-        pane.setStyle("-fx-background-color: #fff; -fx-border-color: #ccc;");
 
+        // ui için
+        Platform.runLater(() -> {
+            RadialGradient radialGradient = new RadialGradient(
+                    0, 0, 0.5, 0.5, 0.5, true,
+                    CycleMethod.NO_CYCLE,
+                    new Stop(0, Color.web("#1f0036")),
+                    new Stop(1, Color.web("#0d0010"))
+            );
 
+            pane.setBackground(new Background(new BackgroundFill(radialGradient, new CornerRadii(0), Insets.EMPTY)));
+            pane.setBorder(new Border(new BorderStroke(Color.web("#ccc"), BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
 
-        // For Photo
+            libraryGames.setBackground(new Background(new BackgroundFill(radialGradient, null, null)));
+        });
+
+        // Fotoğraf için VBox
         VBox firstPane = new VBox();
         firstPane.setPrefHeight(Control.USE_COMPUTED_SIZE);
         firstPane.setMaxHeight(Double.MAX_VALUE);
         firstPane.setMinHeight(0);
         firstPane.setAlignment(Pos.CENTER);
 
-        // Photo
+        // Fotoğraf yükleme
         Image image;
         String imagePath = game.getCoverImagePath();
         try {
             File file = new File(imagePath);
-            if(file.exists()) {
+            if (file.exists()) {
                 image = new Image(file.toURI().toString(), 200, 150, true, true);
-            }else {
+            } else {
                 URL imageUrl = getClass().getResource(imagePath.startsWith("/") ? imagePath : "/" + imagePath);
-                if(imageUrl != null) {
+                if (imageUrl != null) {
                     image = new Image(imageUrl.toExternalForm(), 200, 150, true, true);
                 } else {
                     throw new FileNotFoundException("Image not found: " + imagePath);
@@ -374,23 +766,23 @@ public class GeneralController implements Initializable {
         imageView.setSmooth(true);
         imageView.setCache(true);
 
-        // For Others
+        // Diğer bilgiler için VBox
         VBox secondPane = new VBox(20);
 
-        // Title
         VBox titleBox = new VBox();
         Label titleLabel = new Label(game.getTitle());
         titleLabel.setFont(Font.font("Arial", FontWeight.BOLD, 18));
+        titleLabel.setStyle("-fx-text-fill: white;");
 
-        // Description
         VBox descBox = new VBox(5);
         Label descTitle = new Label("Description");
         descTitle.setFont(Font.font("Arial", FontWeight.BOLD, 16));
+        descTitle.setStyle("-fx-text-fill: white;");
         Text descriptionText = new Text(game.getDescription());
+        descriptionText.setFill(Color.WHITE);
         descriptionText.setWrappingWidth(370);
         TextFlow descriptionFlow = new TextFlow(descriptionText);
 
-        // Infromations
         VBox infoBox = new VBox(2);
         infoBox.getChildren().addAll(
                 boldLabel("Genre", String.join(", ", game.getGenre())),
@@ -407,30 +799,28 @@ public class GeneralController implements Initializable {
                 boldLabel("Tags", String.join(", ", game.getTags()))
         );
 
-
-        // Bottom Buttons
+        // Butonlar
         Button detailButton = new Button("Detail");
         detailButton.setPrefSize(140, 46);
         detailButton.setFont(Font.font(16));
+        detailButton.setStyle("-fx-background-radius: 25; -fx-background-color:  #3C0061; -fx-text-fill: white;");
+
         Button deleteLibraryButton = new Button("Delete Library");
         deleteLibraryButton.setPrefSize(140, 46);
         deleteLibraryButton.setFont(Font.font(16));
+        deleteLibraryButton.setStyle("-fx-background-radius: 25; -fx-background-color:  #3C0061; -fx-text-fill: white;");
+
         HBox buttonBox = new HBox(20);
-        buttonBox.setLayoutX(60);
-        buttonBox.setLayoutY(496);
         buttonBox.setAlignment(Pos.CENTER);
-
-
+        buttonBox.getChildren().addAll(detailButton, deleteLibraryButton);
 
         titleBox.getChildren().addAll(titleLabel);
         descBox.getChildren().addAll(descTitle, descriptionFlow);
-        buttonBox.getChildren().addAll(detailButton, deleteLibraryButton);
-
+        secondPane.getChildren().addAll(titleBox, descBox, infoBox, buttonBox);
         firstPane.getChildren().addAll(imageView);
-        secondPane.getChildren().addAll(titleBox, descBox,infoBox,buttonBox);
-
         pane.getChildren().addAll(firstPane, secondPane);
 
+        // Buton eventleri
         deleteLibraryButton.setOnAction(event -> {
             User loggedInUser = InitalPage.getLoggedInUser();
 
@@ -470,8 +860,26 @@ public class GeneralController implements Initializable {
             showGameDetailPopup(game);
         });
 
+
+
+        Platform.runLater(() -> {
+            libSplitPane.lookupAll(".split-pane-divider").forEach(divider -> {
+                divider.setStyle("-fx-background-color: white;");
+                divider.setMouseTransparent(true);
+                if (divider instanceof Region) {
+                    ((Region)divider).setPrefWidth(2); // İnce beyaz çizgi
+                }
+            });
+        });
+        libSplitPane.setOnMousePressed(event -> event.consume());
+        libSplitPane.setOnMouseDragged(event -> event.consume());
+        libSplitPane.setOnMouseReleased(event -> event.consume());
+
+        pane.prefHeightProperty().bind(libraryPane.heightProperty());
+
         return pane;
     }
+
 
     public void showAddGameDialog() {
         Stage addGameStage = new Stage();
@@ -635,12 +1043,15 @@ public class GeneralController implements Initializable {
     private TextFlow boldLabel(String label, String value) {
         Text labelText = new Text(label + ": ");
         labelText.setFont(Font.font("Arial", FontWeight.BOLD, 12));
+        labelText.setFill(Color.WHITE);
 
         Text valueText = new Text(value);
         valueText.setFont(Font.font("Arial", FontWeight.NORMAL, 12));
+        valueText.setFill(Color.WHITE); //yazıların rengi
 
         return new TextFlow(labelText, valueText);
     }
+
 
     private void refreshLibrary() {
         User loggedInUser = InitalPage.getLoggedInUser();
@@ -678,7 +1089,7 @@ public class GeneralController implements Initializable {
 
         VBox detailPane = new VBox(10);
         detailPane.setPadding(new Insets(15));
-        detailPane.setStyle("-fx-background-color: white;");
+        detailPane.setStyle("-fx-background-color: linear-gradient(from 0% 0% to 100% 100%, #0d0010, #1f0036);");
         detailPane.setAlignment(Pos.TOP_LEFT);
 
         Image image;
@@ -706,8 +1117,12 @@ public class GeneralController implements Initializable {
 
         Label title = new Label(game.getTitle());
         title.setFont(Font.font("Arial", FontWeight.BOLD, 20));
+        title.setStyle("-fx-text-fill: white;");
 
-        TextFlow descriptionFlow = new TextFlow(new Text(game.getDescription()));
+        Text descriptionText = new Text(game.getDescription());
+        descriptionText.setFill(Color.WHITE);
+
+        TextFlow descriptionFlow = new TextFlow(descriptionText);
         descriptionFlow.setMaxWidth(400);
 
         VBox infoBox = new VBox(5);
@@ -727,10 +1142,24 @@ public class GeneralController implements Initializable {
         );
 
         ScrollPane scrollPane = new ScrollPane();
+
         VBox content = new VBox(15, imageView, title, descriptionFlow, infoBox);
         content.setPadding(new Insets(10));
+        content.setStyle("-fx-background-color: linear-gradient(from 0% 0% to 100% 100%, #1a001f, #3f0073);");
+
+        content.prefHeightProperty().bind(scrollPane.heightProperty());
+
+
         scrollPane.setContent(content);
         scrollPane.setFitToWidth(true);
+        scrollPane.setStyle(
+                "-fx-background-color: transparent;" +
+                        "-fx-background-insets: 0;" +
+                        "-fx-padding: 0;"
+        );
+
+
+
 
         Scene popupScene = new Scene(scrollPane, 500, 600);
         popupStage.setScene(popupScene);
@@ -1106,16 +1535,13 @@ public class GeneralController implements Initializable {
         String selectedGenre = genreComboBox.getValue();
         ObservableList<String> selectedTags = tagsCheckComboBox.getCheckModel().getCheckedItems();
         String selectedSort = sortComboBox.getValue();
-
-
-        List<Game> textResults = searchGames(allGames, query);
-
-
-        List<Game> results = textResults.stream()
+      
+      
+        List<Game> results = allGames.stream()
+                .filter(game -> game.getTitle().toLowerCase().contains(query))
                 .filter(game -> selectedGenre == null || selectedGenre.equals("Genre") || game.getGenre().contains(selectedGenre))
                 .filter(game -> selectedTags == null || selectedTags.isEmpty() || Set.copyOf(game.getTags()).containsAll(selectedTags))
                 .collect(Collectors.toList());
-
 
         if (selectedSort != null) {
             switch (selectedSort) {
@@ -1140,15 +1566,33 @@ public class GeneralController implements Initializable {
             }
         }
 
+        // hbox temizleme
         gamesContainerSearch.getChildren().clear();
 
-        for (Game game : results) {
-            Pane gamePane = createGamePane(game);
-            gamesContainerSearch.getChildren().add(gamePane);
+        if (results.isEmpty()) {
+            // games not found yazısı
+            VBox emptyBox = new VBox(noResultsLabel);
+            emptyBox.setAlignment(Pos.CENTER);
+            emptyBox.setPrefWidth(gamesContainerSearch.getWidth());
+            emptyBox.setStyle("-fx-background-color: linear-gradient(from 0% 0% to 100% 100%, #0d0010, #1f0036);");
+            noResultsLabel.setFont(new Font("Arial", 20));
+            emptyBox.setPrefWidth(StoreGames.getViewportBounds().getWidth());
+            emptyBox.setPrefHeight(StoreGames.getViewportBounds().getHeight());
+            noResultsLabel.setTextFill(Color.WHITE);
+            StoreGames.setContent(emptyBox);
+        } else {
+            // scrollpane içeriği deşiyo
+            StoreGames.setContent(gamesContainerSearch);
+
+            for (Game game : results) {
+                Pane gamePane = createGamePane(game);
+                gamesContainerSearch.getChildren().add(gamePane);
+            }
         }
 
         return results;
     }
+
 
 
     @FXML
@@ -1251,6 +1695,30 @@ public class GeneralController implements Initializable {
         }
 
         return gamesContainerHighlights;
+    }
+
+    private void highlightSelectedTab(Tab selectedTab) {
+        tabLabels.forEach((tab, label) -> {
+            if (tab.equals(selectedTab)) {
+                label.setTextFill(Color.PURPLE);
+                label.setUnderline(true);
+                label.setFont(Font.font(label.getFont().getFamily(), FontWeight.BOLD, label.getFont().getSize())); // Kalın yap
+            } else {
+                label.setTextFill(Color.BLACK);
+                label.setUnderline(false);
+                label.setFont(Font.font(label.getFont().getFamily(), FontWeight.NORMAL, label.getFont().getSize())); // Normal yap
+            }
+        });
+    }
+
+    private void applyTabLabelStyles() {
+        for (Label label : tabLabels.values()) {
+            label.setFont(Font.font("System", 22));          // büyük font
+            label.setMaxWidth(80);                           // en fazla 80px
+            label.setMinWidth(Region.USE_PREF_SIZE);         // minimumu otomatik
+            label.setWrapText(false);
+            label.setEllipsisString("...");                  // sığmazsa üç nokta koy
+        }
     }
 
 
