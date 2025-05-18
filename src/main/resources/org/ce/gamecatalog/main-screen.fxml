@@ -20,6 +20,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 <?import javafx.scene.text.TextFlow?>
+<?import org.controlsfx.control.CheckComboBox?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="850.0" prefWidth="1300.0" style="-fx-background-color: linear-gradient(from 0% 0% to 100% 100%, #1a001f, #3f0073);" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.ce.gamecatalog.GeneralController">
    <children>
@@ -41,7 +42,7 @@
                                              </font>
                                           </TextField>
                                           <ComboBox fx:id="genreComboBox" prefWidth="150.0" promptText="Genre" style="-fx-background-color: #3C0061; -fx-background-radius: 25; -fx-border-radius: 25; -fx-prompt-text-fill: #FFFFFF;" />
-                                          <ComboBox fx:id="tagsComboBox" prefWidth="150.0" promptText="Tags" style="-fx-background-color: #3C0061; -fx-background-radius: 25; -fx-border-radius: 25;" />
+                                          <org.controlsfx.control.CheckComboBox fx:id="tagsCheckComboBox" prefWidth="150.0" promptText="Tags" style="-fx-background-color: #3C0061; -fx-background-radius: 25; -fx-border-radius: 25;" />
                                           <ComboBox fx:id="sortComboBox" prefWidth="150.0" promptText="Sort" style="-fx-background-color: #3C0061; -fx-background-radius: 25; -fx-border-radius: 25; -fx-prompt-text-fill: Color.WHITE;" />
                                           <Button fx:id="searchButton" mnemonicParsing="false" style="-fx-background-color: #3C0061; -fx-background-radius: 25;" text="Search" textFill="WHITE" />
                                        </children>

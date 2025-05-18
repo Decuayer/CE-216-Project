@@ -4,6 +4,7 @@ module org.ce.gamecatalog {
     requires org.json;
     requires javafx.graphics;
     requires java.xml;
+    requires org.controlsfx.controls;
 
 
     opens org.ce.gamecatalog to javafx.fxml;
