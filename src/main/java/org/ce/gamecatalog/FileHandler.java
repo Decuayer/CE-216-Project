@@ -28,7 +28,12 @@ public class FileHandler {
         JSONArray jsonArray = new JSONArray(content);
         List<User> users = new ArrayList<>();
         for(int i = 0; i < jsonArray.length(); i++) {
-            users.add(User.fromJSON(jsonArray.getJSONObject(i).toString()));
+            User user = User.fromJSON(jsonArray.getJSONObject(i).toString());
+            if(user != null) {
+                users.add(user);
+            } else {
+                System.out.println("Warning: Skipped null user at index " + i);
+            }
         }
         return users;
     }

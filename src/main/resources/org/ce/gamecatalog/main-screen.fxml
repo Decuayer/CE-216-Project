@@ -338,7 +338,7 @@
                                                                   <Font name="System Bold" size="15.0" />
                                                                </font>
                                                             </Text>
-                                                            <Text fx:id="accountUsername" strokeType="OUTSIDE" strokeWidth="0.0" text=" Decu">
+                                                            <Text fx:id="accountUsername" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text=" Decu">
                                                                <font>
                                                                   <Font size="15.0" />
                                                                </font>

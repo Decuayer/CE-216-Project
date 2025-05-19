@@ -55,26 +55,26 @@ public class User extends FileHandler {
     }
 
     public static User fromJSON(String jsonStr) {
-        JSONObject json = new JSONObject(jsonStr);
-
-        FileHandler fh = new FileHandler();
-        List<Game> allgames;
         try {
-            allgames = fh.loadFromJSONGames();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+            JSONObject json = new JSONObject(jsonStr);
+
+            FileHandler fh = new FileHandler();
+            List<Game> allgames = fh.loadFromJSONGames();
+
+            String username = json.getString("username");
+            String passwordHash = json.getString("passwordHash");
+            int age = json.getInt("age");
+            String email = json.getString("email");
+            String favoriteGenre = json.getString("favoriteGenre");
+
+            List<Game> gameCatalog = getGamesBySteamIDs(json.getJSONArray("gameCatalog"), allgames);
+            List<Game> favoriteGames  = getGamesBySteamIDs(json.getJSONArray("favoriteGames"), allgames);
+
+            return new User(username, passwordHash, age, email, gameCatalog, favoriteGames, favoriteGenre);
+        } catch (Exception e) {
+            System.out.println("Failed to parse User from JSON: " + e.getMessage());
+            return null;
         }
-
-        String username = json.getString("username");
-        String passwordHash = json.getString("passwordHash");
-        int age = json.getInt("age");
-        String email = json.getString("email");
-        String favoriteGenre = json.getString("favoriteGenre");
-
-        List<Game> gameCatalog = getGamesBySteamIDs(json.getJSONArray("gameCatalog"), allgames);
-        List<Game> favoriteGames  = getGamesBySteamIDs(json.getJSONArray("favoriteGames"), allgames);
-
-        return new User(username, passwordHash, age, email, gameCatalog, favoriteGames, favoriteGenre);
     }
 
     private static List<Game> getGamesBySteamIDs(JSONArray steamIds, List<Game> allgames) {
@@ -102,7 +102,7 @@ public class User extends FileHandler {
         return this.passwordHash.equals(hashPassword(password));
     }
 
-    public String hashPassword(String password) {
+    public static String hashPassword(String password) {
         try {
             MessageDigest md = MessageDigest.getInstance("SHA-256");
             byte[] hash = md.digest(password.getBytes());
