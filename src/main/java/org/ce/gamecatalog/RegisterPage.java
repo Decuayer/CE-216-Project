@@ -8,15 +8,15 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
-// TODO
-// Terminale kayıt oldunuz hata falan diye yazılan şeyler ya popup ekran şekilde çıkacak ya da menün içersinde bir yerde belirecek.
-
 
 
 public class RegisterPage {
@@ -26,7 +26,6 @@ public class RegisterPage {
     @FXML private TextField passwordregisterfield;
     @FXML private TextField passwordregisteragainfield;
     @FXML private ComboBox<String> registerselectionBox;
-    //bunları jsona ekliycez her user için
 
 
     @FXML
@@ -34,11 +33,7 @@ public class RegisterPage {
     @FXML
     private Scene scene;
     @FXML
-    private Button btCloseReg;
-    @FXML
-    private Button btMinReg;
-    protected double offsetX;
-    protected double offsetY;
+    private Text registerText;
 
     public void switchScenetoMainMenu(ActionEvent event) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("main-screen.fxml"));
@@ -50,43 +45,90 @@ public class RegisterPage {
         stage.show();
     }
 
-    //kayıt json methodu.
+
+    public void switchScenetoInitialPage(ActionEvent event) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/ce/gamecatalog/inital-page.fxml"));
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        Scene scene = new Scene(fxmlLoader.load());
+        stage.setScene(scene);
+        stage.setResizable(true);
+        stage.setTitle("Initial Page");
+        stage.show();
+    }
+
+
     public void registerButton(ActionEvent event) throws Exception {
-        System.out.println("girdi");
         try {
             String username = usernameregisterfield.getText();
             String password = passwordregisterfield.getText();
+            String passwordConfirm = passwordregisteragainfield.getText();
             int age = Integer.parseInt(registeragefield.getText());
             String email  = emailaddresfield.getText();
             String favoriteGenre = registerselectionBox.getSelectionModel().getSelectedItem();
 
-            List<Game> userLibrary = new ArrayList<>();
-            List<Game> gameLibrary = new ArrayList<>();
-
-            User newUser = new User (username,password,age,email,gameLibrary,userLibrary,favoriteGenre);
-
-            List<User> users = FileHandler.loadFromJSONUsers();
-
-            boolean userExists = users.stream().anyMatch(u -> u.getUsername().equalsIgnoreCase(username));
-            if (userExists) {
-                System.out.println("Username already exists");
+            if (username.isEmpty()) {
+                setMessage("Username cannot be empty", Color.RED);
+                return;
+            }
+            if (password.isEmpty() || passwordConfirm.isEmpty()) {
+                setMessage("Password fields cannot be empty", Color.RED);
+                return;
+            }
+            if (!password.equals(passwordConfirm)) {
+                setMessage("Passwords do not match", Color.RED);
+                return;
+            }
+            if (age < 0 || age > 149) {
+                setMessage("Age must be between 0 and 149", Color.RED);
+                return;
+            }
+            if (!isValidEmail(email)) {
+                setMessage("Invalid email format", Color.RED);
                 return;
             }
 
+
+            List<Game> userLibrary = new ArrayList<>();
+            List<Game> gameLibrary = new ArrayList<>();
+
+            String hashedPassword = User.hashPassword(password);
+
+            User newUser = new User(username, hashedPassword, age, email, gameLibrary, userLibrary, favoriteGenre);
+
+            List<User> users = FileHandler.loadFromJSONUsers();
+
+            users.removeIf(u -> u == null || u.getUsername() == null);
+
+            boolean userExists = users.stream()
+                    .anyMatch(u -> u.getUsername().equalsIgnoreCase(username));
+
+            if (userExists) {
+                setMessage("Username already exists", Color.RED);
+                return;
+            }
             users.add(newUser);
-            // TODO
-            // User Manager classı kaldırıldı GSON kütüphnaesi kaldırıldığı için
-            // File Handler içerisine saveUsers() fonksiyonu yazılacak.
-            // FONKSİYONUN İSMİ DÜZGÜN OLSUN => saveFromUsersToJSON()
-            // UserManager.saveUsers(users); (KALDIRILDI).
-
-
-            System.out.println("User added");
+            FileHandler.saveUsersToJSON(users);
+            setMessage("User added successfully " + newUser.getUsername(), Color.GREEN);
+            switchScenetoInitialPage(event);
+        } catch (NumberFormatException nfe) {
+            setMessage("Age must be a valid number", Color.RED);
         } catch (Exception e) {
             e.printStackTrace();
-            System.out.println("Error occured");
+            setMessage("Error occured", Color.RED);
         }
-        switchScenetoMainMenu(event);
+    }
+
+    private boolean isValidEmail(String email) {
+        if (email == null) return false;
+        email = email.toLowerCase();
+        return email.matches("^[\\w\\.-]+@(hotmail|gmail)\\.com$");
+    }
+
+
+    private void setMessage(String message, Color color) {
+        registerText.setText(message);
+        registerText.setFont(Font.font("Arial", FontWeight.BOLD, 16));
+        registerText.setFill(color);
     }
 
 }

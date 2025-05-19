@@ -2,6 +2,10 @@ package org.ce.gamecatalog;
 
 import java.io.IOException;
 import java.util.*;
+
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import org.json.*;
 
 import java.security.MessageDigest;
@@ -102,7 +106,7 @@ public class User extends FileHandler {
         return this.passwordHash.equals(hashPassword(password));
     }
 
-    public String hashPassword(String password) {
+    public static String hashPassword(String password) {
         try {
             MessageDigest md = MessageDigest.getInstance("SHA-256");
             byte[] hash = md.digest(password.getBytes());
@@ -115,6 +119,7 @@ public class User extends FileHandler {
             throw new RuntimeException("Error hashing password", e);
         }
     }
+
 
 
 }

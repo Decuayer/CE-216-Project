@@ -12,10 +12,16 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
 <AnchorPane fx:id="btFullScreenMain" prefHeight="420.0" prefWidth="420.0" style="-fx-background-color: linear-gradient(to bottom right, #7f00ff, #e100ff);" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.ce.gamecatalog.RegisterPage">
    <children>
-      <ImageView fitHeight="420.0" fitWidth="422.0" pickOnBounds="true" style="-fx-preserve-ratio: 0.9;">
+      <Label layoutX="74.0" layoutY="14.0" prefHeight="32.0" prefWidth="274.0" text="CREATE YOUR ACCOUNT" textFill="WHITE">
+         <font>
+            <Font name="Arial" size="21.0" />
+         </font>
+      </Label>
+      <ImageView fitHeight="485.0" fitWidth="422.0" pickOnBounds="true" style="-fx-preserve-ratio: 0.9;">
          <image>
             <Image url="@images/background.png" />
          </image>
@@ -28,11 +34,6 @@
             <Font name="Arial Bold" size="15.0" />
          </font>
       </TextField>
-      <Label layoutX="74.0" layoutY="14.0" prefHeight="32.0" prefWidth="274.0" text="CREATE YOUR ACCOUNT" textFill="WHITE">
-         <font>
-            <Font name="Arial" size="21.0" />
-         </font>
-      </Label>
       <PasswordField fx:id="passwordregisterfield" layoutX="51.0" layoutY="104.0" prefHeight="42.0" prefWidth="320.0" promptText="  Password" style="-fx-background-color: #27323f; -fx-text-fill: #FFFFFF; -fx-background-radius: 25; -fx-opacity: 0.5; -fx-prompt-text-fill: #FFFFFF;">
          <font>
             <Font name="Arial Bold" size="15.0" />
@@ -43,11 +44,6 @@
             <Font name="Arial Bold" size="15.0" />
          </font>
       </PasswordField>
-      <Button layoutX="51.0" layoutY="363.0" mnemonicParsing="false" onAction="#registerButton" prefHeight="42.0" prefWidth="320.0" style="-fx-background-color: #ffffff; -fx-font-family: Arial; -fx-background-radius: 25;" text="Continue">
-         <font>
-            <Font name="Arial" size="16.0" />
-         </font>
-      </Button>
       <TextField id="emailaddressfield" fx:id="emailaddresfield" layoutX="51.0" layoutY="210.0" prefHeight="42.0" prefWidth="320.0" promptText="  Email Address" style="-fx-background-color: #27323f; -fx-text-fill: #FFFFFF; -fx-background-radius: 25; -fx-opacity: 0.5; -fx-prompt-text-fill: #FFFFFF;">
          <font>
             <Font name="Arial Bold" size="15.0" />
@@ -73,5 +69,11 @@
             </FXCollections>
          </items>
       </ComboBox>
+      <Button layoutX="51.0" layoutY="419.0" mnemonicParsing="false" onAction="#registerButton" prefHeight="42.0" prefWidth="320.0" style="-fx-background-color: #ffffff; -fx-font-family: Arial; -fx-background-radius: 25;" text="Continue">
+         <font>
+            <Font name="Arial" size="16.0" />
+         </font>
+      </Button>
+      <Text fx:id="registerText" layoutX="74.0" layoutY="384.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="79.13671875" />
    </children>
 </AnchorPane>
