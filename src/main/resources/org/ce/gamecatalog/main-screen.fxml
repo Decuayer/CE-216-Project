@@ -267,42 +267,66 @@
                </content>
             </Tab>
             <Tab fx:id="helptabpane" style="-fx-background-color: transparent; -fx-faint-focus-color: transparent; -fx-focus-color: transparent;">
-               <content>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: linear-gradient(from 0% 0% to 100% 100%, #0d0010, #1f0036);;">
-                     <children>
-                        <Accordion layoutX="438.0" layoutY="297.0" AnchorPane.leftAnchor="300.0" AnchorPane.rightAnchor="300.0" AnchorPane.topAnchor="150.0">
-                          <panes>
-                            <TitledPane animated="false" text="Help 1">
-                              <content>
-                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                                       <children>
-                                          <Text layoutX="117.0" layoutY="86.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Help Text 1" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                                       </children>
-                                    </AnchorPane>
-                              </content>
-                            </TitledPane>
-                            <TitledPane animated="false" text="Help 2">
-                              <content>
-                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                                       <children>
-                                          <Text layoutX="101.0" layoutY="63.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Help Text 2" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                                       </children>
-                                    </AnchorPane>
-                              </content>
-                            </TitledPane>
-                            <TitledPane animated="false" text="Help 3">
-                              <content>
-                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                                       <children>
-                                          <Text layoutX="78.0" layoutY="66.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Help Text 2" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                                       </children>
-                                    </AnchorPane>
-                              </content>
-                            </TitledPane>
-                          </panes>
-                        </Accordion>
-                     </children></AnchorPane>
-               </content>
+                <content>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: linear-gradient(from 0% 0% to 100% 100%, #0d0010, #1f0036);;">
+                        <children>
+                            <Accordion layoutX="438.0" layoutY="297.0" AnchorPane.leftAnchor="300.0" AnchorPane.rightAnchor="300.0" AnchorPane.topAnchor="150.0">
+                                <panes>
+                                    <TitledPane animated="false" text="Add ,Edit and Delete Games" style="-fx-font-size: 20px;">
+                                        <content>
+                                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                                <children>
+                                                    <Text fx:id="helpText1" layoutX="117.0" layoutY="86.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Help Text 1" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                                </children>
+                                            </AnchorPane>
+                                        </content>
+                                    </TitledPane>
+                                    <TitledPane animated="false" text="Importing and Exporting Games with JSON" style="-fx-font-size: 20px;">
+                                        <content>
+                                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                                <children>
+                                                    <Text fx:id="helpText2" layoutX="101.0" layoutY="63.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Help Text 2" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                                </children>
+                                            </AnchorPane>
+                                        </content>
+                                    </TitledPane>
+                                    <TitledPane animated="false" text=" Using Search and Filters" style="-fx-font-size: 20px;">
+                                        <content>
+                                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                                <children>
+                                                    <Text  fx:id="helpText3" layoutX="78.0" layoutY="66.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Help Text 2" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                                </children>
+                                            </AnchorPane>
+                                        </content>
+                                    </TitledPane>
+                                    <TitledPane animated="false" text="Managing Your Account" style="-fx-font-size: 20px;">
+                                        <content>
+                                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                                <children>
+                                                    <Text fx:id="helpText4"
+                                                          layoutX="78.0" layoutY="66.0" strokeType="OUTSIDE" strokeWidth="0.0"
+
+                                                          AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                                </children>
+                                            </AnchorPane>
+                                        </content>
+                                    </TitledPane>
+                                    <TitledPane animated="false" text="Using the Store Tab" style="-fx-font-size: 20px;">
+                                        <content>
+                                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                                <children>
+                                                    <Text fx:id="helpText5"
+                                                          layoutX="78.0" layoutY="66.0" strokeType="OUTSIDE" strokeWidth="0.0"
+
+                                                          AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                                </children>
+                                            </AnchorPane>
+                                        </content>
+                                    </TitledPane>
+                                </panes>
+                            </Accordion>
+                        </children></AnchorPane>
+                </content>
             </Tab>
             <Tab fx:id="accountTabPane" style="-fx-background-color: transparent; -fx-faint-focus-color: transparent; -fx-focus-color: transparent;">
                <content>

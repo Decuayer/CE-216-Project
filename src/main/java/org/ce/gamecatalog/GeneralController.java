@@ -83,6 +83,12 @@ public class GeneralController implements Initializable {
     private List<Game> allGames;
 
 
+    @FXML private Text helpText1;
+    @FXML private Text helpText2;
+    @FXML private Text helpText3;
+    @FXML private Text helpText4;
+    @FXML private Text helpText5;
+
 
     // ACCOUNT PAGE SECTION
     @FXML
@@ -500,7 +506,45 @@ public class GeneralController implements Initializable {
                 alert.showAndWait();
             }
         });
-
+        helpText1.setFont(Font.font(18));
+        helpText1.setText(
+                "To add a new game, click the Add Game button and fill in the required fields such as title, developer, and release year. \n" +
+                        "You can select multiple genres and tags by using the multi-select controls. \n" +
+                        "Make sure to provide the Steam App ID if available, as it uniquely identifies the game.\n" +
+                        "To edit an existing game, select it from the list and click Edit. \n" +
+                        "Modify the details and save your changes. Keep your game information accurate and complete to get the best results when searching and filtering your catalog.\n"
+        );
+        helpText2.setFont(Font.font(18));
+        helpText2.setText(
+                "The program supports JSON files even if some game details are missing or the order of keys varies. \n" +
+                        "You can import your game data from JSON files by using the Import feature.\n" +
+                        "When exporting, your catalog will save all current data to a JSON file that can be shared or used in other programs.\n" +
+                        "If a game’s cover image path is invalid during import, the image will not show, but the rest of the game data will still be imported.\n" +
+                        "For the best experience, always keep a backup of your JSON files before importing,editing or deleting JSON files."
+        );
+        helpText3.setFont(Font.font(18));
+        helpText3.setText(
+                "The search bar allows you to find games by typing keywords that match titles, developers, publishers, ID's or anything you wish to search for.\n" +
+                        "Use the genre dropdown and tags multi-select to narrow down results to exactly what you want. \n" +
+                        "You can choose more than one tag working paralel with genres.\n" +
+                        "You can also sort results by rating, playtime, or release year to quickly find your favorite or newest games. \n" +
+                        "Remember to clear filters if you want to see the full list again."
+        );
+        helpText4.setFont(Font.font(18));
+        helpText4.setText("To access account options, go to the Account tab in the menu.\n" +
+                "You can log in or log out using the available options.\n" +
+                "You can create a new account by choosing the Register option before logging into the app \n" +
+                "After logging in, you can change your user details such as your password.\n" +
+                "Your account tracks your library and activity like games you’ve added or modified." +
+                "Make sure to log in for full access to features such as editing and deleting games.");
+        helpText5.setFont(Font.font(18));
+        helpText5.setText("The Store tab works like a digital game store.\n" +
+                "You can browse a wide selection of games presented in a scrollable layout. \n" +
+                "You can find out the games preferably liked by you depending on your favorite genres in the highlights tab under search section. \n" +
+                "Use the filters for Genre, Tags, and Sorting options to narrow down your search.\n" +
+                "Sorting includes options like Rating, Playtime, and Release Year." +
+                "Clicking a game will show more details including its description, image, and attributes where you can find all the information.\n"
+        );
     }
     public List<Game> searchGames(List<Game> games, String query) {
         List<Game> results = new ArrayList<>();
