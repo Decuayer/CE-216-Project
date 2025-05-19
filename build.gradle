@@ -2,43 +2,62 @@ plugins {
   id 'java'
   id 'application'
   id 'org.openjfx.javafxplugin' version '0.0.13'
+  id 'com.github.johnrengelman.shadow' version '7.1.2'
+
 }
 
-group 'org.CE'
+group 'org.ce'
 version '1.0'
 
 repositories {
   mavenCentral()
 }
 
+java {
+  modularity.inferModulePath = true
+}
+
 dependencies {
+  implementation 'org.openjfx:javafx-base:21'
+  implementation 'org.openjfx:javafx-graphics:21'
   implementation 'org.openjfx:javafx-controls:21'
   implementation 'org.openjfx:javafx-fxml:21'
-  implementation files('libs/json-20250107.jar')  // Projeye özgü kütüphaneler
-  implementation 'org.controlsfx:controlsfx:11.1.2' //checkbox için
+  implementation 'org.controlsfx:controlsfx:11.1.2'
+  implementation files('libs/json-20250107.jar')
 
+}
+
+javafx {
+  version = '21'
+  modules = ['javafx.controls', 'javafx.fxml', 'javafx.graphics']
 }
 
 application {
   mainClass = 'org.ce.gamecatalog.UIManager'
 }
 
-javafx {
-  version = '21'
-  modules = ['javafx.controls', 'javafx.fxml']
+tasks.withType(JavaCompile).configureEach {
+  options.encoding = 'UTF-8'
+  options.compilerArgs += [
+          '--module-path', classpath.asPath,
+          '--add-modules', 'javafx.controls,javafx.fxml,javafx.graphics'
+  ]
 }
 
 run {
   jvmArgs = [
-          '--module-path', 'C:/Java/lib',  // Burada doğru JavaFX modül yolunu belirtmelisin
-          '--add-modules', 'javafx.controls,javafx.fxml'
+          '--module-path', classpath.asPath,
+          '--add-modules', 'javafx.controls,javafx.fxml,javafx.graphics'
   ]
 }
 
-jar {
+shadowJar {
+  archiveBaseName.set('GameCatalog-all')
+  archiveClassifier.set('')
+  archiveVersion.set('1.0')
+  mergeServiceFiles()
   manifest {
-    attributes(
-            'Main-Class': 'org.ce.gamecatalog.UIManager'
-    )
+    attributes('Main-Class': 'org.ce.gamecatalog.UIManager')
   }
 }
+

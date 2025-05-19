@@ -152,7 +152,7 @@ public class GeneralController implements Initializable {
         userInfo(loggedInUser);
 
 
-        //ui için hepsi
+        // UI Design
 
         storetappane.setGraphic(storeLabel);
         librarytabpane.setGraphic(libraryLabel);
@@ -308,7 +308,7 @@ public class GeneralController implements Initializable {
 
         StoreGames.viewportBoundsProperty().addListener((obs, oldVal, newVal) -> {
             gamesContainerSearch.setPrefWidth(newVal.getWidth());
-           // gamesContainerSearch.setPrefHeight(newVal.getHeight()); açma burayı
+           // gamesContainerSearch.setPrefHeight(newVal.getHeight());
         });
 
         gamesContainerSearch.setSpacing(20);
@@ -321,7 +321,7 @@ public class GeneralController implements Initializable {
                         "-fx-background-color: #3C0061; " +
                         "-fx-text-fill: white;"
         );
-        genreComboBox.setButtonCell(new ListCell<>() {  // prompt text beyaz yapmak için koskoca fonksiyon lazım amk olmuyo başka searchbar
+        genreComboBox.setButtonCell(new ListCell<>() {
             @Override
             protected void updateItem(String item, boolean empty) {
                 super.updateItem(item, empty);
@@ -335,18 +335,12 @@ public class GeneralController implements Initializable {
             }
         });
 
-        tagsComboBox.setButtonCell(new ListCell<>() {
-            @Override
-            protected void updateItem(String item, boolean empty) {
-                super.updateItem(item, empty);
-                if (empty || item == null) {
-                    setText("Genre");
-                    setTextFill(Color.WHITE);
-                } else {
-                    setText(item);
-                    setTextFill(Color.WHITE);
-                }
-            }
+        tagsCheckComboBox.getCheckModel().getCheckedItems().addListener((ListChangeListener<String>) c -> {
+            List<String> selectedItems = tagsCheckComboBox.getCheckModel().getCheckedItems();
+            String displayText = selectedItems.isEmpty() ? "Genre" : String.join(", ", selectedItems);
+
+            Tooltip tooltip = new Tooltip(displayText);
+            tagsCheckComboBox.setTooltip(tooltip);
         });
 
         sortComboBox.setButtonCell(new ListCell<>() {
@@ -434,8 +428,6 @@ public class GeneralController implements Initializable {
         });
 
 
-
-// bölücü hareketini engelliyo
         storeSplitPane.getDividers().forEach(divider -> {
             final double initialPos = divider.getPosition();
 
@@ -446,11 +438,7 @@ public class GeneralController implements Initializable {
             });
         });
 
-        // ui sonu
-
-
         // SEARCH METHOD
-
         loadFilters();
 
         searchButton = new Button("Search");
@@ -551,22 +539,15 @@ public class GeneralController implements Initializable {
         pane.setMaxHeight(600);
         pane.setPadding(new Insets(15));
 
-
-        // ui için
+        // UI
         RadialGradient radialGradient = new RadialGradient(
                 0, 0, 0.5, 0.5, 0.5, true,
                 CycleMethod.NO_CYCLE,
                 new Stop(0, Color.web("#1f0036")),
                 new Stop(1, Color.web("#0d0010"))
         );
-
         pane.setBackground(new Background(new BackgroundFill(radialGradient, new CornerRadii(0), Insets.EMPTY)));
-
-
         pane.setBorder(Border.EMPTY);
-
-
-
 
         // For Photo
         VBox firstPane = new VBox();
@@ -638,8 +619,6 @@ public class GeneralController implements Initializable {
                 boldLabel("Tags", String.join(", ", game.getTags()))
         );
 
-
-
         // Bottom Buttons
         Button detailButton = new Button("Detail");
         detailButton.setPrefSize(140, 46);
@@ -653,9 +632,6 @@ public class GeneralController implements Initializable {
         buttonBox.setAlignment(Pos.CENTER);
         detailButton.setStyle("-fx-background-radius: 25; -fx-background-color:  #3C0061; -fx-text-fill: white;");
         addLibraryButton.setStyle("-fx-background-radius: 25; -fx-background-color:  #3C0061; -fx-text-fill: white;");
-
-
-
 
         titleBox.getChildren().addAll(titleLabel);
         descBox.getChildren().addAll(descTitle, descriptionFlow);
@@ -706,21 +682,18 @@ public class GeneralController implements Initializable {
             showGameDetailPopup(game);
         });
 
-
         pane.setStyle("-fx-background-color: linear-gradient(from 0% 0% to 100% 100%, #0d0010, #1f0036);");
         storeScrollPane.setStyle("-fx-background-color: linear-gradient(from 0% 0% to 100% 100%, #0d0010, #1f0036);");
         storeScrollPane.getContent().setStyle("-fx-background-color: linear-gradient(from 0% 0% to 100% 100%, #0d0010, #1f0036);");
 
-
         return pane;
     }
-
 
     private Pane createGameLibrary(Game game) {
         VBox pane = new VBox(30);
         pane.setPadding(new Insets(15));
 
-        // ui için
+        // UI
         Platform.runLater(() -> {
             RadialGradient radialGradient = new RadialGradient(
                     0, 0, 0.5, 0.5, 0.5, true,
@@ -735,14 +708,14 @@ public class GeneralController implements Initializable {
             libraryGames.setBackground(new Background(new BackgroundFill(radialGradient, null, null)));
         });
 
-        // Fotoğraf için VBox
+        // Photo
         VBox firstPane = new VBox();
         firstPane.setPrefHeight(Control.USE_COMPUTED_SIZE);
         firstPane.setMaxHeight(Double.MAX_VALUE);
         firstPane.setMinHeight(0);
         firstPane.setAlignment(Pos.CENTER);
 
-        // Fotoğraf yükleme
+        // For Photo
         Image image;
         String imagePath = game.getCoverImagePath();
         try {
@@ -766,7 +739,6 @@ public class GeneralController implements Initializable {
         imageView.setSmooth(true);
         imageView.setCache(true);
 
-        // Diğer bilgiler için VBox
         VBox secondPane = new VBox(20);
 
         VBox titleBox = new VBox();
@@ -799,7 +771,7 @@ public class GeneralController implements Initializable {
                 boldLabel("Tags", String.join(", ", game.getTags()))
         );
 
-        // Butonlar
+        // Butons
         Button detailButton = new Button("Detail");
         detailButton.setPrefSize(140, 46);
         detailButton.setFont(Font.font(16));
@@ -820,7 +792,7 @@ public class GeneralController implements Initializable {
         firstPane.getChildren().addAll(imageView);
         pane.getChildren().addAll(firstPane, secondPane);
 
-        // Buton eventleri
+        // Buton events
         deleteLibraryButton.setOnAction(event -> {
             User loggedInUser = InitalPage.getLoggedInUser();
 
@@ -861,13 +833,12 @@ public class GeneralController implements Initializable {
         });
 
 
-
         Platform.runLater(() -> {
             libSplitPane.lookupAll(".split-pane-divider").forEach(divider -> {
                 divider.setStyle("-fx-background-color: white;");
                 divider.setMouseTransparent(true);
                 if (divider instanceof Region) {
-                    ((Region)divider).setPrefWidth(2); // İnce beyaz çizgi
+                    ((Region)divider).setPrefWidth(2);
                 }
             });
         });
@@ -879,7 +850,6 @@ public class GeneralController implements Initializable {
 
         return pane;
     }
-
 
     public void showAddGameDialog() {
         Stage addGameStage = new Stage();
@@ -912,7 +882,7 @@ public class GeneralController implements Initializable {
         TextField ratingField = new TextField("1");
         TextField tagsField = new TextField("Test"); // comma-separated
         TextField coverImagePathField = new TextField();
-        coverImagePathField.setEditable(false); // Elle yazılamasın
+        coverImagePathField.setEditable(false);
         TextArea descriptionArea = new TextArea("Test");
 
         Button browseButton = new Button("Browse...");
@@ -925,14 +895,12 @@ public class GeneralController implements Initializable {
             File selectedFile = fileChooser.showOpenDialog(addGameStage);
             if (selectedFile != null) {
                 try {
-                    // Dosyayı resources/images içine kopyala
                     Path destinationDir = Paths.get("src/main/resources/org/ce/gamecatalog/images/");
-                    Files.createDirectories(destinationDir); // klasör yoksa oluştur
+                    Files.createDirectories(destinationDir);
 
                     Path destinationPath = destinationDir.resolve(selectedFile.getName());
                     Files.copy(selectedFile.toPath(), destinationPath, StandardCopyOption.REPLACE_EXISTING);
 
-                    // TextField'a göreli path'i yaz
                     coverImagePathField.setText("/org/ce/gamecatalog/images/" + selectedFile.getName());
                 } catch (IOException ex) {
                     ex.printStackTrace();
@@ -1140,7 +1108,6 @@ public class GeneralController implements Initializable {
                 boldLabel("Rating", game.getRating() + "/10"),
                 boldLabel("Tags", String.join(", ", game.getTags()))
         );
-
         ScrollPane scrollPane = new ScrollPane();
 
         VBox content = new VBox(15, imageView, title, descriptionFlow, infoBox);
@@ -1149,7 +1116,6 @@ public class GeneralController implements Initializable {
 
         content.prefHeightProperty().bind(scrollPane.heightProperty());
 
-
         scrollPane.setContent(content);
         scrollPane.setFitToWidth(true);
         scrollPane.setStyle(
@@ -1157,9 +1123,6 @@ public class GeneralController implements Initializable {
                         "-fx-background-insets: 0;" +
                         "-fx-padding: 0;"
         );
-
-
-
 
         Scene popupScene = new Scene(scrollPane, 500, 600);
         popupStage.setScene(popupScene);
@@ -1172,10 +1135,10 @@ public class GeneralController implements Initializable {
         fileChooser.setTitle("Select Game JSON File");
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("JSON files", "*.json"));
 
-        File selectedFile = fileChooser.showOpenDialog(null); // veya sahne referansını ver
+        File selectedFile = fileChooser.showOpenDialog(null);
 
         if (selectedFile != null) {
-            File copiedFile = null;  // try dışına alındı
+            File copiedFile = null;
             try {
                 File targetDir = new File("data/added");
                 if (!targetDir.exists()) {
@@ -1566,11 +1529,9 @@ public class GeneralController implements Initializable {
             }
         }
 
-        // hbox temizleme
         gamesContainerSearch.getChildren().clear();
 
         if (results.isEmpty()) {
-            // games not found yazısı
             VBox emptyBox = new VBox(noResultsLabel);
             emptyBox.setAlignment(Pos.CENTER);
             emptyBox.setPrefWidth(gamesContainerSearch.getWidth());
@@ -1581,9 +1542,7 @@ public class GeneralController implements Initializable {
             noResultsLabel.setTextFill(Color.WHITE);
             StoreGames.setContent(emptyBox);
         } else {
-            // scrollpane içeriği deşiyo
             StoreGames.setContent(gamesContainerSearch);
-
             for (Game game : results) {
                 Pane gamePane = createGamePane(game);
                 gamesContainerSearch.getChildren().add(gamePane);
@@ -1713,11 +1672,11 @@ public class GeneralController implements Initializable {
 
     private void applyTabLabelStyles() {
         for (Label label : tabLabels.values()) {
-            label.setFont(Font.font("System", 22));          // büyük font
-            label.setMaxWidth(80);                           // en fazla 80px
-            label.setMinWidth(Region.USE_PREF_SIZE);         // minimumu otomatik
+            label.setFont(Font.font("System", 22));
+            label.setMaxWidth(80);
+            label.setMinWidth(Region.USE_PREF_SIZE);
             label.setWrapText(false);
-            label.setEllipsisString("...");                  // sığmazsa üç nokta koy
+            label.setEllipsisString("...");
         }
     }
 
